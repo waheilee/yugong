@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::middleware('cors')->group(function () {
 //登录
     Route::post('login', 'Api\ServiceUserController@login');
@@ -27,8 +28,6 @@ Route::middleware('cors')->group(function () {
         //安全登出接口
         Route::post('logout', 'Api\ServiceUserController@logout');
     });
-
-
 });
 
 

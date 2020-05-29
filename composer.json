@@ -13,13 +13,14 @@
         "doctrine/dbal": "^2.8",
         "encore/laravel-admin": "^1.7",
         "fideloper/proxy": "^4.0",
+        "fruitcake/laravel-cors": "^2.0",
+        "guzzlehttp/guzzle": "^6.3",
         "laravel-admin-ext/media-player": "^1.1",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
         "maatwebsite/excel": "^3.1",
         "predis/predis": "^1.1",
-        "tymon/jwt-auth": "dev-develop",
-        "guzzlehttp/guzzle": "^6.3"
+        "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {
         "filp/whoops": "^2.0",
