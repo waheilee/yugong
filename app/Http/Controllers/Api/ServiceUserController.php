@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\Controller;
-use App\Services\SerUserService;
+use App\Services\Api\SerUserService;
 use App\Services\VerificationCodeService;
 use Illuminate\Http\Request;
 

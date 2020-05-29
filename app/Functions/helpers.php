@@ -3,7 +3,10 @@
 use Ramsey\Uuid\Uuid;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
-
+use App\Exceptions\ServiceException;
+use App\Constants\BaseConstants;
+use App\Constants\ErrorMsgConstants;
+use App\Models\ServiceUserModel;
 /**
  * 数组转json字符串(非json串)
  * @param $array
@@ -127,7 +130,7 @@ function generateNewUuid()
 
 function getAppUserUuid()
 {
-    $userUuid = auth('api')->user()->getAuthIdentifier();
+    $userUuid = auth('api')->id();
     return $userUuid;
 }
 
@@ -167,5 +170,23 @@ function categoryTree($category, $parent_id = 0, $level = 0)
     return $res;
 }
 
+/**
+ * @return ServiceUserModel|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null|object
+ */
+function getAppUserModel()
+{
+    $id = getAppUserUuid();
+    $appUser = ServiceUserModel::whereId($id)->first();
+    if (!$appUser) {
+        throw new ServiceException(ErrorMsgConstants::TOKEN_ERROR,
+            "获取用户信息失败!请重新登录!");
+    }
 
+//    if ($appUser->status != BaseConstants::USER_STATUS_NORMAL) {
+//        throw new ServiceException(ErrorMsgConstants::DEFAULT_ERROR,
+//            "用户状态异常,当前状态:" . BaseConstants::USER_STATUS_MAP[$appUser->status]);
+//    }
+
+    return $appUser;
+}
 

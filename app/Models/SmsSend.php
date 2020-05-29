@@ -33,6 +33,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsSend whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsSend whereUuid($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\SmsSend onlyTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\SmsSend withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\SmsSend withoutTrashed()
  */
 class SmsSend extends Model
 {

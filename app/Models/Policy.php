@@ -37,6 +37,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Policy whereUserName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Policy whereUserPhone($value)
  * @mixin \Eloquent
+ * @property string|null $active_user_id 激活用户ID
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Policy whereActiveUserId($value)
  */
 class Policy extends Model
 {
