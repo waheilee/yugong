@@ -37,12 +37,14 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\AccessControlAllowOrigin::class,
         ],
 
         'api' => [
 //            'throttle:60,1',
             'bindings',
             ApiMiddleware::class,
+            'cors'
         ],
     ];
 
@@ -64,6 +66,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'jwtAuth'    => AuthJWT::class,
+        'cors' => \App\Http\Middleware\AccessControlAllowOrigin::class,
     ];
 
     /**
