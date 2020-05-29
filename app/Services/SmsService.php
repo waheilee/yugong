@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: zrb
- * Date: 2018/7/19
- * Time: 下午7:53
- */
 
 namespace App\Services;
 

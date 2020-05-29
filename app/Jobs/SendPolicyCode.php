@@ -9,7 +9,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-
 class SendPolicyCode implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -33,24 +32,24 @@ class SendPolicyCode implements ShouldQueue
         $this->phone = $phone;
         $this->code = $code;
         $this->type = $type;
-        $this->logger = customerLoggerHandle("SendPolicyCode");
+        $this->logger = customerLoggerHandle("SendPolicy");
     }
 
     /**
+     * @param SmsService $smsService
      * @return bool
      * @throws \Exception
      */
-    public function handle()
+    public function handle(SmsService $smsService)
     {
-        $note = "尊敬的".$this->name."先生/女士，您在愚公点评购买了".BaseConstants::POLICY_TYPE_MAP[$this->type]."。激活码：".$this->code."。请妥善保管激活码并及时到愚公点评注册并激活";
+        $note = "尊敬的 ".$this->name." 先生/女士，您在愚公点评购买了".BaseConstants::POLICY_TYPE_MAP[$this->type]."。激活码：[".$this->code."]。请妥善保管激活码并及时到愚公点评注册并激活";
         try {
-            $sms = app(SmsService::class) ;
-            $sms->sendMessage($note, $this->phone);
+//            $sms = app(SmsService::class);
+            $smsService->sendMessage($note, $this->phone);
             $this->logger->debug("队列执行完成", [
                 "name"     => $this->name,
                 "phone"     => $this->phone,
                 "code"     => $this->code,
-                "type"     => $this->type,
             ]);
             return true;
 

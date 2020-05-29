@@ -144,4 +144,28 @@ class VerificationCodeService
         }
     }
 
+    /**
+     * @param $note
+     * @param $phone
+     * @return bool
+     * @throws \Exception
+     */
+    public function sendPolicy($note,$phone)
+    {
+        try {
+            $this->smsService->sendMessage($note, $phone);
+            $this->logger->debug("队列执行完成", [
+                "name"     => $note,
+                "phone"     => $phone,
+//                "code"     => $this->code,
+//                "type"     => $this->type,
+            ]);
+            return true;
+
+        } catch (\Exception $exception) {
+
+            throw $exception;
+        }
+    }
+
 }
