@@ -19,6 +19,7 @@ class SerUserService
         $this->logger = customerLoggerHandle("SerUserService");
     }
     /**
+     * 手艺人登录
      * @param $name
      * @param $password
      * @return array
@@ -128,6 +129,10 @@ class SerUserService
         return ['name' => $phone, 'loginPage' => $goLoginPage];
     }
 
+    /**
+     * 获取token
+     * @param ServiceUserModel $appUser
+     */
     private function getToken(ServiceUserModel $appUser)
     {
 

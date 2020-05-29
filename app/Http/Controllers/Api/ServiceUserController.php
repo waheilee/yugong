@@ -19,13 +19,13 @@ class ServiceUserController extends Controller
     }
 
     /**
-     * App 用户登录接口
+     * 用户登录接口
      * @param Request $request
      * @return array
      */
     public function login(Request $request)
     {
-//        try {
+        try {
             $validatorRules = [
                 'phone'       => 'required',
                 'password'   => 'required',
@@ -42,14 +42,13 @@ class ServiceUserController extends Controller
             $password = $request->input('password');
             $data = $this->serUserService->login($name, $password);
             return $this->wrapSuccessReturn(compact('data'));
-//        } catch (\Exception $exception) {
-//
-//            return $this->wrapErrorReturn($exception);
-//        }
+        } catch (\Exception $exception) {
+            return $this->wrapErrorReturn($exception);
+        }
     }
 
     /**
-     * 注册接口
+     * 用户注册接口
      * @param Request $request
      * @return array
      */
