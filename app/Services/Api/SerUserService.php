@@ -6,7 +6,9 @@ namespace App\Services\Api;
 use App\Constants\BaseConstants;
 use App\Constants\ErrorMsgConstants;
 use App\Exceptions\ServiceException;
+use App\Models\Policy;
 use App\Models\ServiceUserModel;
+use App\Services\VerificationCodeService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
@@ -215,6 +217,26 @@ class SerUserService
         } catch (\Exception $exception) {
             $this->logger->debug("异常", getExceptionMainInfo($exception));
             throw $exception;
+        }
+    }
+
+    public function userInfo()
+    {
+
+        $appUser = getAppUserModel();
+        if ($appUser){
+            $policyModel = Policy::whereUserCardId($appUser->id_card)->where('end_time', '<=', date('Y-m-d H:i:s'))->get(['type','begin_time','end_time']);
+            $data['name'] = $appUser->name;
+            $data['phone'] = $appUser->phone;
+            $data['avatar'] = $appUser->avatar;
+            $data['bank'] = $appUser->bank;
+            $data['bank_branch'] = $appUser->bank_branch;
+            $data['bank_num'] = $appUser->bank_num;
+            $data['level'] = $appUser->level;
+            $data['policy'] = $policyModel;
+            return $data;
+        }else{
+            throw new ServiceException(ErrorMsgConstants::DEFAULT_ERROR, "用户信息不存在!");
         }
     }
 }

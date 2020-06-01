@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\Policy;
 use App\Services\Api\ActivePolicyService;
 use Illuminate\Http\Request;
 
@@ -63,18 +64,16 @@ class ActivePolicyController extends Controller
     }
 
     /**
-     * 用户详情接口
-     * @return array
+     *  保单列表
+     * @return Policy[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function userInfo()
+    public function policyList()
     {
-        try {
-
-            $data = $this->active->userInfo();
-            return $this->wrapSuccessReturn(compact('data'));
-        } catch (\Exception $exception) {
-            return $this->wrapErrorReturn($exception);
-        }
+        $userId = getAppUserModel();
+        $policyModel = Policy::whereActiveUserId($userId->id)->get(['number','user_name','begin_time','end_time','type']);
+        return $policyModel;
     }
+
+
 
 }

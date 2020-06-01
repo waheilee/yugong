@@ -3,6 +3,8 @@
 namespace App\Services\Api;
 
 
+use App\Constants\ErrorMsgConstants;
+use App\Exceptions\ServiceException;
 use App\Models\Policy;
 use App\Models\ServiceUserModel;
 
@@ -33,6 +35,9 @@ class ActivePolicyService
     public function activePolicyConfirm($code,$userId)
     {
         $policyModel = Policy::whereCode($code)->first();
+        $serUser = ServiceUserModel::whereId($userId)->first();
+        $serUser->id_card = $policyModel->user_card_id;
+        $serUser->update();
         $policyModel->is_active = 1;
         $policyModel->begin_time = date('Y-m-d');
         $policyModel->end_time = date('Y-m-d', strtotime('+ 30 days'));
@@ -41,17 +46,5 @@ class ActivePolicyService
     }
 
 
-    public function userInfo()
-    {
-        $appUser = getAppUserModel();
-        $data['name'] = $appUser->name;
-        $data['phone'] = $appUser->phone;
-        $data['avatar'] = $appUser->avatar;
-        $data['bank'] = $appUser->bank;
-        $data['bank_branch'] = $appUser->bank_branch;
-        $data['bank_num'] = $appUser->bank_num;
-        $data['level'] = $appUser->level;
-        return $data;
 
-    }
 }

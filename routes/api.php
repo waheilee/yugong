@@ -32,7 +32,10 @@ Route::middleware('cors')->group(function () {
         Route::post('logout', 'Api\ServiceUserController@logout');
 
         //用户详情接口
-        Route::post('userInfo', 'Api\ActivePolicyController@userInfo');
+        Route::post('userInfo', 'Api\ServiceUserController@userInfo');
+
+        //保单列表
+        Route::post('policyList','Api\ActivePolicyController@policyList');
 
         //邀请码查询保单信息
         Route::post('searchPolicyInfo','Api\ActivePolicyController@activeCode');
