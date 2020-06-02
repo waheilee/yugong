@@ -16,8 +16,11 @@ Route::group([
      */
     $router->resource('question', 'QuestionController');
 
-
     $router->resource('video', 'VideoController');
+
     $router->resource('exam_category', 'CategoryController');
+
     $router->resource('policy', 'PolicyController');
+
+    $router->resource('lesson','LessonController');
 });

@@ -23,6 +23,7 @@ Route::middleware('cors')->group(function () {
 //注册
     Route::post('register', 'Api\ServiceUserController@register');
 
+    Route::post('getCategory','Api\CategoryController@treeView');
 
 
 
