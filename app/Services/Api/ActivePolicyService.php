@@ -41,7 +41,7 @@ class ActivePolicyService
         $policyModel->is_active = 1;
         $policyModel->begin_time = date('Y-m-d');
         $policyModel->end_time = date('Y-m-d', strtotime('+ 30 days'));
-        $policyModel->active_user_id = $userId;
+        $policyModel->active_user_id = $userId->id;
         return $policyModel->update();
     }
 
