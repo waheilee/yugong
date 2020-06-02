@@ -29,13 +29,13 @@ class ActivePolicyService
     /**
      * 确认激活保单
      * @param $code
-     * @param $userId
      * @return bool|int
      */
-    public function activePolicyConfirm($code,$userId)
+    public function activePolicyConfirm($code)
     {
+        $userId = getAppUserModel();
         $policyModel = Policy::whereCode($code)->first();
-        $serUser = ServiceUserModel::whereId($userId)->first();
+        $serUser = ServiceUserModel::whereId($userId->id)->first();
         $serUser->id_card = $policyModel->user_card_id;
         $serUser->update();
         $policyModel->is_active = 1;

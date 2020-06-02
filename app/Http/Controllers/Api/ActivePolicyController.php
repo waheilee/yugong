@@ -46,17 +46,17 @@ class ActivePolicyController extends Controller
         try{
             $validatorRules = [
                 'code'       => 'required',
-                'user_id' => 'required',
+//                'user_id' => 'required',
 
             ];
             $validatorMessages = [
                 'code.required'       => "激活码不能为空!",
-                'user_id.required' => "激活用户Id不能为空!",
+//                'user_id.required' => "激活用户Id不能为空!",
             ];
             $this->requestValidator($request, $validatorRules, $validatorMessages);
             $code = $request->input('code');
-            $userId = $request->input('user_id');
-            $data = $this->active->activePolicyConfirm($code,$userId);
+//            $userId = $request->input('user_id');
+            $data = $this->active->activePolicyConfirm($code);
             return $this->wrapSuccessReturn(compact('data'));
         } catch(\Exception $exception){
             return $this->wrapErrorReturn($exception);
