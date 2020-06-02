@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Encore\Admin\Tree;
 
-class CategoryController
+class CategoryController extends Controller
 {
 
     /**
@@ -18,8 +19,8 @@ class CategoryController
         $menuModel = new Category();
 
         $tree = new Tree(new $menuModel());
-
-        return response()->json($tree->getItems());
+        $data = $tree->getItems();
+        return $this->wrapSuccessReturn(compact('data'));
 
     }
 
