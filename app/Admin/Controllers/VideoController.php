@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 
 use App\Models\Category;
+use App\Models\SectionModel;
 use App\Models\Tags;
 use App\Models\Video;
 use Encore\Admin\Form;
@@ -39,12 +40,13 @@ class VideoController
      * @param Content $content
      * @return Content
      */
-    public function create(Content $content)
+    public function create(Request $request, Content $content)
     {
+        $id = $request->input('lesson_id');
         return $content
-            ->header('新建')
-            ->description('')
-            ->body($this->form());
+            ->header('添加课件')
+            ->description('课件')
+            ->body($this->form($id));
     }
 
     /**
@@ -54,13 +56,13 @@ class VideoController
      * @param Content $content
      * @return Content
      */
-    public function edit($id, Content $content)
-    {
-        return $content
-            ->header('编辑')
-            ->description('')
-            ->body($this->form()->edit($id));
-    }
+//    public function edit($id, Content $content)
+//    {
+//        return $content
+//            ->header('编辑')
+//            ->description('')
+//            ->body($this->form()->edit($id));
+//    }
 
     /**
      * 显示详情页
@@ -78,17 +80,19 @@ class VideoController
 
     public function store(Request $request)
     {
+//        dd($request->all());
         $title = $request->input('title');
-        $categoryId = $request->input('category_id');
         $url = $request->input('url');
-        $tags = $request->input('tags');
+        $categoryId = $request->input('section_id');
+        $lessonId = $request->input('lesson_id');
             $videoModel = new Video();
             $videoModel->title = $title;
-            $videoModel->category_id = $categoryId;
+            $videoModel->section_id = $categoryId;
+            $videoModel->lesson_id = $lessonId;
             $videoModel->url = $url;
-            $videoModel->tags = json_encode(array_filter($tags));
             $videoModel->save();
-//        dd($request->all());
+        admin_toastr('添加课件成功','success');
+        return redirect('admin/lesson/'.$lessonId);
     }
 
     public function update(Request $request)
@@ -116,7 +120,6 @@ class VideoController
         $grid = new Grid(new Video());
         $grid->column('id');
         $grid->column('title', '视频标题');
-//        $grid->column('category_id', '类别');
         $grid->column('url', '视频')->video(['videoWidth' => 600, 'videoHeight' => 340]);
 //        $grid->column('tag', '标签')->display(function ($tags){
 //            $item = [];
@@ -128,10 +131,7 @@ class VideoController
 //        })->label();
         $grid->column('views', '浏览量');
         $grid->disableRowSelector();
-//        $grid->disableCreateButton();
-//        $grid->actions(function (Actions $action){
-//            $action->disableEdit();
-//        });
+
         return $grid;
     }
     /**
@@ -161,22 +161,28 @@ class VideoController
         })->badge();
         return $show;
     }
+
     /**
-     * Make a form builder.
-     *视频新增编辑表单
+     * 视频新增编辑表单
+     * @param $id
      * @return Form
      */
-    protected function form()
+    protected function form($id)
     {
-        $cateModel = new Category();
+        $secModel = SectionModel::whereLessonId($id)->get();
+        $data = [];
+        foreach ($secModel as $item){
+            $data[$item->id] = $item->title;
+        }
         $form = new Form(new Video());
         $form->hidden('id', 'ID');
+        $form->hidden('lesson_id')->value($id);
         $form->text('title', '标题')->rules('required');
 //        $form->text('category_id', '分类')->rules('required');
-        $form->select('category_id', '分类')->options($cateModel::selectOptions(null,'顶级分类'));
+        $form->select('section_id', '所属章节')->options($data);
         $form->text('url', '视频地址')->rules('required');
 //        $form->text('tags','标签');
-        $form->multipleSelect('tag','标签')->options(Tags::all()->pluck('tag', 'id'));
+//        $form->multipleSelect('tag','标签')->options(Tags::all()->pluck('tag', 'id'));
         return $form;
     }
 

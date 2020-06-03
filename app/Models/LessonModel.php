@@ -32,6 +32,16 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Video[] $videos
  * @property-read int|null $videos_count
+ * @property int $degree 难度系数：初级，中级，高级
+ * @property string $views 观看学习人数
+ * @property int $is_free 是否免费
+ * @property int|null $price 价格
+ * @property int|null $discounts 优惠价格
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\LessonModel whereDegree($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\LessonModel whereDiscounts($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\LessonModel whereIsFree($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\LessonModel wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\LessonModel whereViews($value)
  */
 class LessonModel extends Model
 {
@@ -42,4 +52,7 @@ class LessonModel extends Model
     {
         return $this->hasMany(Video::class,'lesson_id','id');
     }
+
+
+
 }

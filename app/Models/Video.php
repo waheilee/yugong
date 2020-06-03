@@ -34,6 +34,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $lesson_id 视频所属课程
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Video whereLessonId($value)
  * @property-read \App\Models\LessonModel|null $Lesson
+ * @property int|null $sort 排序
+ * @property int|null $section_id 课件所属章节id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Video whereSectionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Video whereSort($value)
  */
 class Video extends Model
 {

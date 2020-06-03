@@ -23,5 +23,8 @@ Route::group([
     $router->resource('policy', 'PolicyController');
 
     $router->resource('lesson','LessonController');
+
     $router->resource('lesson/{id}/create','VideoController');
+
+    $router->resource('section','SectionController');
 });
