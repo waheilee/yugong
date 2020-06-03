@@ -23,8 +23,14 @@ Route::middleware('cors')->group(function () {
 //注册
     Route::post('register', 'Api\ServiceUserController@register');
 
+    //获取分类
     Route::post('getCategory','Api\CategoryController@treeView');
 
+    //获取课程列表
+    Route::post('getLessonList','Api\LessonController@lessonList');
+
+    //获取课程详情
+    Route::post('getLessonDetail','Api\LessonController@lessonDetail');
 
 
     /** jwt Auth Api  需要登录的接口*/
