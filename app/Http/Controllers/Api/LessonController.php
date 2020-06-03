@@ -11,16 +11,28 @@ class LessonController extends Controller
 {
     /**
      * 获取课程列表
+     * @param Request $request
      * @return array
      */
-    public function lessonList()
+    public function lessonList(Request $request)
     {
-        try{
-            $lessonModel = LessonModel::all(['id','title','image','intro']);
-            return $this->wrapSuccessReturn(compact('lessonModel'));
-        } catch (\Exception $exception){
-            return $this->wrapErrorReturn($exception);
+        $categoryId = $request->input('category_id');
+        if ($categoryId){
+            try{
+                $lessonModel = LessonModel::whereCategoryId($categoryId)->get(['id','title','image','intro']);
+                return $this->wrapSuccessReturn(compact('lessonModel'));
+            } catch (\Exception $exception){
+                return $this->wrapErrorReturn($exception);
+            }
+        }else{
+            try{
+                $lessonModel = LessonModel::all(['id','title','image','intro']);
+                return $this->wrapSuccessReturn(compact('lessonModel'));
+            } catch (\Exception $exception){
+                return $this->wrapErrorReturn($exception);
+            }
         }
+
     }
 
     /**
