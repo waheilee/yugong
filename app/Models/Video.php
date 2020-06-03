@@ -31,6 +31,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\Category $category
  * @property string $tag 标签
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Video whereTag($value)
+ * @property int|null $lesson_id 视频所属课程
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Video whereLessonId($value)
+ * @property-read \App\Models\LessonModel|null $Lesson
  */
 class Video extends Model
 {
@@ -44,5 +47,10 @@ class Video extends Model
     public function setTagAttribute($value)
     {
         $this->attributes['tag'] = implode(',', $value);
+    }
+
+    public function Lesson()
+    {
+        return $this->hasOne(LessonModel::class);
     }
 }

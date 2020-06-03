@@ -116,16 +116,16 @@ class VideoController
         $grid = new Grid(new Video());
         $grid->column('id');
         $grid->column('title', '视频标题');
-        $grid->column('category_id', '类别');
+//        $grid->column('category_id', '类别');
         $grid->column('url', '视频')->video(['videoWidth' => 600, 'videoHeight' => 340]);
-        $grid->column('tag', '标签')->display(function ($tags){
-            $item = [];
-            foreach ($tags as $value=>$k){
-                $tagModel = Tags::whereId($k)->first();
-                $item[] = $tagModel->tag;
-            }
-            return $item;
-        })->label();
+//        $grid->column('tag', '标签')->display(function ($tags){
+//            $item = [];
+//            foreach ($tags as $value=>$k){
+//                $tagModel = Tags::whereId($k)->first();
+//                $item[] = $tagModel->tag;
+//            }
+//            return $item;
+//        })->label();
         $grid->column('views', '浏览量');
         $grid->disableRowSelector();
 //        $grid->disableCreateButton();
