@@ -27,4 +27,9 @@ class SectionModel extends Model
 {
 
     protected $table = 'section';
+
+    public function Lesson()
+    {
+        return $this->hasOne(LessonModel::class);
+    }
 }

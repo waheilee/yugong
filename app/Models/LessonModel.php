@@ -53,6 +53,21 @@ class LessonModel extends Model
         return $this->hasMany(Video::class,'lesson_id','id');
     }
 
+    public function sections()
+    {
+        return $this->hasMany(SectionModel::class,'lesson_id','id');
+    }
 
+//    public static function boot()
+//    {
+//        parent::boot();
+//        static::deleting(function ($model){
+//            $lesson = static::whereId($model->id)->first();
+//            dd($lesson);
+//            $lesson->sections()->delete();
+//            $lesson->videos()->delete();
+//            $lesson->delete();
+//        });
+//    }
 
 }

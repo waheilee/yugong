@@ -8,7 +8,6 @@ use App\Admin\Actions\Video\CreateVideoAction;
 use App\Models\Category;
 use App\Models\LessonModel;
 use App\Models\SectionModel;
-use App\Models\Tags;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
@@ -180,8 +179,4 @@ class LessonController
         return $show;
     }
 
-    public function deleted($id)
-    {
-        dd($id);
-    }
 }
