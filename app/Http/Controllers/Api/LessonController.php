@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\LessonModel;
+use App\Models\Video;
 use Illuminate\Http\Request;
 
 class LessonController extends Controller
@@ -42,6 +43,7 @@ class LessonController extends Controller
      */
     public function lessonDetail(Request $request)
     {
+
         try {
             $validatorRules = [
                 'lesson_id' => 'required',
@@ -52,15 +54,40 @@ class LessonController extends Controller
             ];
             $this->requestValidator($request, $validatorRules, $validatorMessages);
             $id = $request->input('lesson_id');
-            $lessonModel = LessonModel::whereId($id)->first();
-            $lessonModel->videos;
-            $data['lesson'] = $lessonModel;
 
-            return $this->wrapSuccessReturn(compact('lessonModel'));
+            $lessonModel = LessonModel::whereId($id)->first();
+
+            $data = [
+                'lesson'=>[
+                    'id'=>$lessonModel->id,
+                    'lesson_title'=>$lessonModel->title,
+                    'image'=>$lessonModel->image,
+                    'intro'=>$lessonModel->intro,
+                    'content'=>$lessonModel->content,
+                    'degree'=>$lessonModel->degree,
+                    'is_free'=>$lessonModel->is_free,
+                    'price'=>$lessonModel->price,
+                    'discounts'=>$lessonModel->discounts,
+                    'sections'=>$this->getSectionList($lessonModel->sections()->get())
+                ],
+
+            ];
+            return $this->wrapSuccessReturn(compact('data'));
         } catch (\Exception $exception){
             return $this->wrapErrorReturn($exception);
         }
+    }
 
-
+    protected function getSectionList($sections)
+    {
+        $data = [];
+        foreach ($sections as $section){
+            $video = Video::whereSectionId($section->id)->get(['id','title','url']);
+            $item = [];
+            $item['section_title'] = $section->title;
+            $item['videos'] = $video;
+            $data[] = $item;
+        }
+        return $data;
     }
 }
