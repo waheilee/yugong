@@ -69,9 +69,14 @@ class ActivePolicyController extends Controller
      */
     public function policyList()
     {
-        $userId = getAppUserModel();
-        $policyModel = Policy::whereActiveUserId($userId->id)->get(['number','user_name','begin_time','end_time','type']);
-        return $policyModel;
+        try{
+            $userId = getAppUserModel();
+            $policyModel = Policy::whereActiveUserId($userId->id)->get(['number','user_name','begin_time','end_time','type']);
+            return $this->wrapSuccessReturn(compact('policyModel'));
+        }catch (\Exception $exception){
+            return $this->wrapErrorReturn($exception);
+        }
+
     }
 
 
