@@ -3,9 +3,12 @@
 namespace App\Admin\Forms;
 
 
+use App\Models\Question;
+use App\Models\Tags;
 use Encore\Admin\Widgets\Form;
-use Ichynul\RowTable\TableRow;
+//use Ichynul\RowTable\TableRow;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TorFQuestionForm extends Form
 {
@@ -25,11 +28,29 @@ class TorFQuestionForm extends Form
      */
     public function handle(Request $request)
     {
-        dd($request->all());
+//        dd($request->all());
+        $questionModel = new Question();
+        $question = $request->input('question');
+        $answer = $request->input('answer');
+        $analysis = $request->input('analysis');
+        $tag = $request->input('tags');
 
-        admin_success('Processed successfully.');
+        try {
+            DB::beginTransaction();
+            $questionModel->type = 2;//判断对错题
+            $questionModel->question = $question;
+            $questionModel->answer = $answer;
+            $questionModel->analysis = $analysis;
+            $questionModel->tags = json_encode(array_filter($tag));
+            $questionModel->save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withInput()->with('danger', $e->getMessage());
+        }
+        admin_toastr('添加成功','success');
 
-        return back();
+        return redirect('admin/question');
     }
 
     /**
@@ -38,31 +59,11 @@ class TorFQuestionForm extends Form
     public function form()
     {
 
-        $this->text('somerow', '题目')->rules('required');
-        $this->radio('gender', '答案')->options([ '1' => '对', '2' => '错'])->rules('required');
-        $this->textarea('gender', '解析')->rules('required');
-//        $this->show("<h3>************Demo 3 , use div build a user center ************</h3>")->textWidth('100%')->textAlign('center');
-//
-//        $userRow = new TableRow();
-//        $userRow->text('name', '',6);
-//        //$userRow->html('<span style="margin-top:10px;" class="label label-warning">没个性也签名~</span>', '个性签名', 6);
-//
-//        $userRow1 = new TableRow();
-//        $userRow1->text('name', '',6);
-//
-//        $userRow2 = new TableRow();
-////        $userRow2->number('age', '年龄', 6)->max(99)->min(18);
-//        $userRow2->radio('gender', '答案',6)->options([ '1' => '对', '2' => '错']);
-//
-//        //$userRow2->date('birthday', '生日', 6)->rules('required');
-//
-//        $userRow2->textarea('about', '题目解析', 12)->setWidth(10, 2); //独占一行，因为其他行有两列
-//
-//        $this->rowtable('', '11')
-//            ->setRows([$userRow, $userRow1, $userRow2])
-//            ->useDiv(true);
-//
-//        $this->divide();
+        $this->text('question', '题目')->rules('required');
+        $this->radio('answer', '答案')->options([ '1' => '对', '2' => '错'])->rules('required');
+        $this->textarea('analysis', '解析')->rules('required');
+        $this->multipleSelect('tags','标签')->options(Tags::all()->pluck('tag', 'id'));
+
     }
 
     /**

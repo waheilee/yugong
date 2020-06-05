@@ -83,23 +83,15 @@ class LessonController
         $grid->column('title','课程名称');
         $grid->column('image','缩略图');
         $grid->column('intro','课程简介');
-//        $grid->column('number','保单号');
-//        $grid->column('type','保单类型');
-//        $grid->column('begin_time','有效期起始时间');
-//        $grid->column('end_time','有效期结束时间');
-//        $grid->tools(function (Grid\Tools $tools) {
-//            $tools->append(new ImportAction());
-//        });
         $grid->column('views', '浏览量');
         //添加章节
         $grid->actions(function (Grid\Displayers\Actions  $actions) {
             $actions->disableEdit();
-
             $actions->add(new CreateSectionAction($actions->getKey()));
             $actions->add(new CreateVideoAction($actions->getKey()));
 
         });
-
+        $grid->disableExport();
 
 //        $grid->tools(function (Grid\Tools $tools) {
 //            $tools->append(new CreateVideoAction());

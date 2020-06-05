@@ -147,11 +147,11 @@ class QuestionController
         $show->field('question', '题目');
         $show->options('题干选项', function (Grid $grid) {
 
-            $grid->id();
+//            $grid->id();
             $grid->column('option', '选项');
             $grid->column('answer', '选项内容');
             $grid->column('created_at', '创建时间');
-
+            $grid->disableExport();
             $grid->disableActions();
             $grid->disableCreateButton();
             $grid->disableFilter();
@@ -160,7 +160,6 @@ class QuestionController
         });
         $show->field('answer', '答案');
         $show->field('analysis', '注释');
-        $show->divider();
         $show->field('tags', '标签')->as(function ($tags){
             $item = [];
             if(is_array(json_decode($tags,true))){
@@ -173,11 +172,11 @@ class QuestionController
                 return 2;
             }
         })->badge();
-
-
-
-
         return $show;
     }
 
+    public function form()
+    {
+
+    }
 }
