@@ -73,8 +73,8 @@ class ServiceUserController extends Controller
              * 验证短信验证码
              * @var VerificationCodeService $verificationCodeService
              */
-            $verificationCodeService = app(VerificationCodeService::class);
-            $verificationCodeService->checkVerificationCode($phone, $code);
+//            $verificationCodeService = app(VerificationCodeService::class);
+//            $verificationCodeService->checkVerificationCode($phone, $code);
 
             $data = $this->serUserService->register($password, $phone);
 

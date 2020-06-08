@@ -106,7 +106,7 @@ class SerUserService
             /**
              * 用户主表
              */
-            $this->createAppUser($password, $phone);
+            $appUser = $this->createAppUser($password, $phone);
 //            $this->createAppUserBalance($appUserUuid, $upPackages);
 
 //            if ($isLoginUserAndBuy) {
@@ -128,7 +128,7 @@ class SerUserService
             }
             throw new ServiceException(ErrorMsgConstants::DEFAULT_ERROR, "创建用户失败!");
         }
-        return ['name' => $phone, 'loginPage' => $goLoginPage];
+        return ['name' => $phone, 'token' => "Bearer " . $this->getToken($appUser)];
     }
 
     /**
@@ -176,10 +176,10 @@ class SerUserService
     }
 
     /**
-     * 创建账户
-
+     * 创建用户
      * @param $password
      * @param $phone
+     * @return ServiceUserModel
      */
     private function createAppUser( $password, $phone)
     {
@@ -188,8 +188,8 @@ class SerUserService
         $appUserModel->password = md5($password);
         $appUserModel->phone = $phone;
         $appUserModel->status = BaseConstants::USER_STATUS_INIT;
-
         $appUserModel->save();
+        return $appUserModel;
     }
 
     /**
