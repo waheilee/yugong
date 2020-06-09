@@ -93,8 +93,9 @@ class QuestionController
         $grid->column('id');
         $grid->column('type','类型')->display(function ($type){
             switch ($type){
-                case 1: $type = '选择题'; break;
-                case 2: $type = '判断题'; break;
+                case 1: $type = '<span class="label label-primary">单选题</span>'; break;
+                case 2: $type = '<span class="label label-warning">多选题</span>'; break;
+                case 3: $type = '<span class="label label-danger">判断题</span>'; break;
             }
             return $type;
         });

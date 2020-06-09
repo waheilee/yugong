@@ -37,7 +37,7 @@ class TorFQuestionForm extends Form
 
         try {
             DB::beginTransaction();
-            $questionModel->type = 2;//判断对错题
+            $questionModel->type = 3;//判断对错题
             $questionModel->question = $question;
             $questionModel->answer = $answer;
             $questionModel->analysis = $analysis;

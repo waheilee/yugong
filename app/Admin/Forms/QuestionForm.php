@@ -28,16 +28,25 @@ class QuestionForm extends Form
      */
     public function handle(Request $request)
     {
+//        dd($request->all());
         $questionModel = new Question();
         $question = $request->input('question');
         $option = $request->input('option.values');
         $answer = $request->input('answer');
         $analysis = $request->input('analysis');
         $tag = $request->input('tags');
+        $type = $request->input('type');
+        $arr = explode(",",$answer);
 
         try {
             DB::beginTransaction();
-            $questionModel->type = 1;//选择题
+            //判断单选题不能有多个答案选项
+            if ($type == "1"){
+                if (count($arr)>=2){
+                    throw new  \Exception(admin_toastr('单选题型答案选项不能为多个','warning'));
+                }
+            }
+            $questionModel->type = $type;//单选题、多选题
             $questionModel->question = $question;
             $questionModel->answer = $answer;
             $questionModel->analysis = $analysis;
@@ -72,6 +81,7 @@ class QuestionForm extends Form
 //        $this->table('option', '标题',function ($table) {
 //            $table->text('value','问题选项');
 //        });
+        $this->radio('type','类型')->options(["1" => '单选', "2"=> '多选'])->default("1");
         $this->list('option','选项')->placeholder('A，B，C，D选项。可添加多个选项');
         $this->text('answer', '答案')->rules('required')->placeholder('单选题输入一个答案，多选题输入多个并以英文逗号相隔。举例：A,B,C,D');
         $this->text('analysis', '解析')->rules('required')->placeholder('题目解析');
