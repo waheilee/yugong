@@ -5,7 +5,6 @@ namespace App\Admin\Controllers;
 
 use App\Models\LessonModel;
 use App\Models\SectionModel;
-use Encore\Admin\Actions\Action;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
@@ -14,8 +13,7 @@ use Illuminate\Http\Request;
 class SectionController
 {
     /**
-     * Index interface.
-     *
+     * @param Request $request
      * @param Content $content
      * @return Content
      */

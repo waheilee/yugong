@@ -42,6 +42,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\LessonModel whereIsFree($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\LessonModel wherePrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\LessonModel whereViews($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\SectionModel[] $sections
+ * @property-read int|null $sections_count
  */
 class LessonModel extends Model
 {

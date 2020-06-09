@@ -18,7 +18,7 @@ class CreateExamRoomTable extends Migration
             $table->string('title')->comment('考场标题');
             $table->integer('category_id')->comment('所属培训类别ID');
             $table->string('exam_book')->comment('考试大纲');
-            $table->integer('exam_status')->comment('考场状态，1为关闭，0为开启');
+            $table->integer('exam_status')->comment('考场状态，0为关闭，1为开启');
             $table->string('intro')->comment('考场简介');
             $table->timestamps();
         });

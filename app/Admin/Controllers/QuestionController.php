@@ -10,7 +10,7 @@ use App\Models\Tags;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Widgets\Tab;
-use Illuminate\Database\Eloquent\Collection;
+
 use Encore\Admin\Grid\Displayers\Actions;
 use Encore\Admin\Show;
 class QuestionController
@@ -26,7 +26,7 @@ class QuestionController
     {
 
         return $content
-            ->header('用户管理')
+            ->header('题库管理')
             ->description('')
             ->body($this->grid());
 //            ->row($shipForm->render());
@@ -99,18 +99,18 @@ class QuestionController
             return $type;
         });
         $grid->column('question', '题目');
-        $grid->model()->collection(function (Collection $collection) {
-            // 1. 可以给每一列加字段，类似上面display回调的作用
-            foreach($collection as $item) {
-                $item->full_name = $item->first_name . ' ' . $item->last_name;
-            }
-            // 2. 给表格加一个序号列
-            foreach($collection as $index => $item) {
-                $item->number = $index;
-            }
-            // 最后一定要返回集合对象
-            return $collection;
-        });
+//        $grid->model()->collection(function (Collection $collection) {
+//            // 1. 可以给每一列加字段，类似上面display回调的作用
+//            foreach($collection as $item) {
+//                $item->full_name = $item->first_name . ' ' . $item->last_name;
+//            }
+//            // 2. 给表格加一个序号列
+//            foreach($collection as $index => $item) {
+//                $item->number = $index;
+//            }
+//            // 最后一定要返回集合对象
+//            return $collection;
+//        });
         $grid->column('tags', '标签')->display(function ($tags){
             $item = [];
              if(is_array(json_decode($tags,true))){

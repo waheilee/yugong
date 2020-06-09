@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SectionModel whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SectionModel whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\LessonModel|null $Lesson
  */
 class SectionModel extends Model
 {
