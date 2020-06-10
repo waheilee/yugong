@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\ExamPaperModel;
 use App\Models\LessonModel;
 use App\Models\Video;
 use Illuminate\Http\Request;
@@ -56,7 +57,7 @@ class LessonController extends Controller
             $id = $request->input('lesson_id');
 
             $lessonModel = LessonModel::whereId($id)->first();
-
+            $examPaper = ExamPaperModel::whereLessonId($lessonModel->id)->first();
             $data = [
                 'lesson'=>[
                     'id'=>$lessonModel->id,
@@ -68,7 +69,8 @@ class LessonController extends Controller
                     'is_free'=>$lessonModel->is_free,
                     'price'=>$lessonModel->price,
                     'discounts'=>$lessonModel->discounts,
-                    'sections'=>$this->getSectionList($lessonModel->sections()->get())
+                    'sections'=>$this->getSectionList($lessonModel->sections()->get()),
+                    'paper_id' => $examPaper->id
                 ],
 
             ];

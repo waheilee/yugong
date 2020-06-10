@@ -25,4 +25,6 @@ Route::group([
     $router->resource('section','SectionController');
     //考场管理
     $router->resource('exam_room','ExamRoomController');
+    //试卷列表
+    $router->resource('exam_paper','ExamPaperController');
 });

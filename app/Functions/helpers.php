@@ -189,4 +189,18 @@ function getAppUserModel()
 
     return $appUser;
 }
+/**
+ * 获取题库信息  返回每种题型下的试题个数和每种题型中每道题的分数
+ * @param array data 题库
+ */
+function getDataInfo($data){
+    $count = [];            //保存某种题型的题目数量
+    $score = [];            //每道题的分值
 
+    foreach ($data as $k=>$v) {
+        $count[$k]=count($v['data']);
+        $score[$k]=round($v['score']/$count[$k]);
+    }
+
+    return [$count,$score];         //使用list()接收返回值：list($count,$score);顺序依次对应
+}

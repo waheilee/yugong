@@ -28,21 +28,19 @@ class QuestionForm extends Form
      */
     public function handle(Request $request)
     {
-//        dd($request->all());
+        $hello = explode(',',$request->input('answer'));
         $questionModel = new Question();
         $question = $request->input('question');
         $option = $request->input('option.values');
-        $answer = $request->input('answer');
+        $answer = explode(',',$request->input('answer'));
         $analysis = $request->input('analysis');
         $tag = $request->input('tags');
         $type = $request->input('type');
-        $arr = explode(",",$answer);
-
         try {
             DB::beginTransaction();
             //判断单选题不能有多个答案选项
             if ($type == "1"){
-                if (count($arr)>=2){
+                if (count($answer)>=2){
                     throw new  \Exception(admin_toastr('单选题型答案选项不能为多个','warning'));
                 }
             }

@@ -32,6 +32,10 @@ Route::middleware('cors')->group(function () {
     //获取课程详情
     Route::post('getLessonDetail','Api\LessonController@lessonDetail');
 
+    Route::post('getPaper','Api\ExamPaperController@paper');
+
+    Route::post('examPaperOver','Api\ExamPaperController@total');
+
 
     /** jwt Auth Api  需要登录的接口*/
     Route::group(['middleware' => ['jwtAuth']], function () {
