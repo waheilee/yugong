@@ -132,7 +132,7 @@ class ExamPaperController
             if ($questionModel){
                 $temp['question'] = $questionModel->question;
                 $temp['option'] = $questionModel->options()->get(['option','answer'])->toArray();
-                $temp['answer'] = $questionModel->answer;
+//                $temp['answer'] = $questionModel->answer;
             }
             $data[] = $temp;
 
@@ -150,7 +150,7 @@ class ExamPaperController
             $questionModel = Question::whereId($item)->first();
             if ($questionModel){
                 $temp['question'] = $questionModel->question;
-                $temp['answer'] = $questionModel->answer;
+//                $temp['answer'] = $questionModel->answer;
             }
             $data[] = $temp;
         }
