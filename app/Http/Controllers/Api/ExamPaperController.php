@@ -4,6 +4,8 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Constants\ErrorMsgConstants;
+use App\Exceptions\ServiceException;
 use App\Http\Controllers\Controller;
 use App\Models\ExamPaperModel;
 use Illuminate\Http\Request;
@@ -11,7 +13,11 @@ use Illuminate\Http\Request;
 
 class ExamPaperController extends Controller
 {
-
+    /**
+     * 获取试卷
+     * @param Request $request
+     * @return array
+     */
     public function paper(Request $request)
     {
 
@@ -30,7 +36,7 @@ class ExamPaperController extends Controller
                 'title' =>$examPaperModel->title,
                 'timeout'=>$examPaperModel->timeout,
                 'pass'=>$examPaperModel->pass,
-                'data'=>json_decode($examPaperModel->question,true)
+                'data'=>$this->answerNull(json_decode($examPaperModel->question,true))
             ];
             list($count,$score)=getDataInfo($data['data']);
 
@@ -53,19 +59,19 @@ class ExamPaperController extends Controller
      */
     public function total(Request $request)
     {
-//        $arr = $request->input('multiple');
-//        $arr = json_decode($request->input('binary'));
-//        dd($arr[0] );
-//        dd(explode(',',$arr) );
         try{
             $paper_id = $request->input('paper_id');
             $examPaperModel = ExamPaperModel::whereId($paper_id)->first();
+            if (!$examPaperModel){
+                throw new ServiceException(ErrorMsgConstants::DEFAULT_ERROR, "没有此试卷");
+            }
             $data = [
                 'title' =>$examPaperModel->title,
                 'timeout'=>$examPaperModel->timeout,
                 'pass'=>$examPaperModel->pass,
                 'data'=>json_decode($examPaperModel->question,true)
             ];
+
             list($count,$score)=getDataInfo($data['data']);
             //开始阅卷操作
             $sum = 0;               //保存总得分
@@ -83,13 +89,14 @@ class ExamPaperController extends Controller
                     }else{
                         $total[$type][$k]=false;
                     }
-
                 }
             }
+            $pass = $sum>=$data['pass']?true:false;
             $arr = [
                 'score' => $sum,
                 'total' =>$total,
-                'count' =>$count
+                'count' =>$count,
+                'pass' => $pass
             ];
             return $this->wrapSuccessReturn(compact('arr'));
         }catch (\Exception $exception){
@@ -112,5 +119,16 @@ class ExamPaperController extends Controller
         list($count,$score)=getDataInfo($data['data']);
 //        dd($data);
         return view('admin.test',compact('data','count','score'));
+    }
+
+    //将试卷答案设置为空返回给前端
+    protected function answerNull($data)
+    {
+        foreach ($data as $type=>$each){
+            foreach ($each['data'] as $k=>$v){
+                $data[$type]['data'][$k]['answer'] = '';
+            }
+        }
+        return $data;
     }
 }

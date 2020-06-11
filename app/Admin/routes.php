@@ -27,4 +27,6 @@ Route::group([
     $router->resource('exam_room','ExamRoomController');
     //试卷列表
     $router->resource('exam_paper','ExamPaperController');
+    //banner图
+    $router->resource('banner','BannerController');
 });
