@@ -61,7 +61,7 @@ class ExamPaperController extends Controller
             foreach ($data['data'] as $type=>$each){
                 foreach ($each['data'] as $k=>$v){
                     //取出提交的答案
-                    $check = $request->input("$type.$k");
+                    $check = stripslashes($request->input("$type.$k")) ;
                     $answer=isset($check)?$check : '';
                     //判断答案是否正确
                     if($v['answer'] === $answer){
