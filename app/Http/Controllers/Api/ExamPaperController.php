@@ -45,7 +45,6 @@ class ExamPaperController extends Controller
 //        $arr = $request->input('multiple.1');
 //        dd($request->all());
 //        dd(implode(',',$arr) );
-        dd($request->all());
         try{
             $paper_id = $request->input('paper_id');
             $examPaperModel = ExamPaperModel::whereId($paper_id)->first();
