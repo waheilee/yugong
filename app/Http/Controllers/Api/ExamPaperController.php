@@ -61,7 +61,10 @@ class ExamPaperController extends Controller
             foreach ($data['data'] as $type=>$each){
                 foreach ($each['data'] as $k=>$v){
                     //取出提交的答案
-                    $check = stripslashes($request->input("$type.$k")) ;
+                    if(get_magic_quotes_gpc())//如果get_magic_quotes_gpc()是打开的
+                    {
+                        $check = stripslashes($request->input("$type.$k")) ;//将字符串进行处理
+                    }
                     $answer=isset($check)?$check : '';
                     //判断答案是否正确
                     if($v['answer'] === $answer){
