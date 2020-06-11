@@ -42,9 +42,10 @@ class ExamPaperController extends Controller
 
     public function total(Request $request)
     {
-//        $arr = $request->input('multiple.1');
-//        dd($request->all());
-//        dd(implode(',',$arr) );
+//        $arr = $request->input('multiple');
+//        $arr = json_decode($request->input('binary'));
+//        dd($arr[0] );
+//        dd(explode(',',$arr) );
         try{
             $paper_id = $request->input('paper_id');
             $examPaperModel = ExamPaperModel::whereId($paper_id)->first();
@@ -61,10 +62,8 @@ class ExamPaperController extends Controller
             foreach ($data['data'] as $type=>$each){
                 foreach ($each['data'] as $k=>$v){
                     //取出提交的答案
-                    if(get_magic_quotes_gpc())//如果get_magic_quotes_gpc()是打开的
-                    {
-                        $check = stripslashes($request->input("$type.$k")) ;//将字符串进行处理
-                    }
+                        $arr = json_decode($request->input("$type"));
+                        $check = $arr[$k] ;
                     $answer=isset($check)?$check : '';
                     //判断答案是否正确
                     if($v['answer'] === $answer){
