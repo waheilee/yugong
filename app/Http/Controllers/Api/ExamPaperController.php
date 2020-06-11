@@ -74,6 +74,7 @@ class ExamPaperController extends Controller
 
                 }
             }
+            dd($sum,$total);
             $arr = [
                 'score' => $sum,
                 'total' =>$total
