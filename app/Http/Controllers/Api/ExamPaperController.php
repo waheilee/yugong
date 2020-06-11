@@ -30,16 +30,27 @@ class ExamPaperController extends Controller
                 'title' =>$examPaperModel->title,
                 'timeout'=>$examPaperModel->timeout,
                 'pass'=>$examPaperModel->pass,
-                'data'=>json_decode($examPaperModel->question)
+                'data'=>json_decode($examPaperModel->question,true)
             ];
+            list($count,$score)=getDataInfo($data['data']);
 
-            return $this->wrapSuccessReturn(compact('data'));
+            $arr = [
+                'data'=>$data,
+                'count' =>$count,
+                'score' =>$score
+            ];
+            return $this->wrapSuccessReturn(compact('arr'));
         } catch (\Exception $exception) {
             return $this->wrapErrorReturn($exception);
         }
 
     }
 
+    /**
+     * 提交试卷并返回成绩
+     * @param Request $request
+     * @return array
+     */
     public function total(Request $request)
     {
 //        $arr = $request->input('multiple');
@@ -77,7 +88,8 @@ class ExamPaperController extends Controller
             }
             $arr = [
                 'score' => $sum,
-                'total' =>$total
+                'total' =>$total,
+                'count' =>$count
             ];
             return $this->wrapSuccessReturn(compact('arr'));
         }catch (\Exception $exception){
