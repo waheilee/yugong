@@ -93,10 +93,10 @@ class ExamPaperController extends Controller
             }
             $pass = $sum>=$data['pass']?true:false;
             $arr = [
-                'score' => $sum,
-                'total' =>$total,
-                'count' =>$count,
-                'pass' => $pass
+                'score' => $sum,//考试成绩
+                'total' =>$total,//答题对错情况
+                'count' =>$count,//每大题题数
+                'pass' => $pass//是否通过
             ];
             return $this->wrapSuccessReturn(compact('arr'));
         }catch (\Exception $exception){
