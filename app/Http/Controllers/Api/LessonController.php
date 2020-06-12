@@ -69,7 +69,7 @@ class LessonController extends Controller
                     'is_free'=>$lessonModel->is_free,
                     'price'=>$lessonModel->price,
                     'discounts'=>$lessonModel->discounts,
-                    'sections'=>$this->getSectionList($lessonModel->sections()->get()),
+                    'sections'=>getSectionList($lessonModel->sections()->get()),
                     'paper_id' => $examPaper->id
                 ],
 
@@ -80,16 +80,5 @@ class LessonController extends Controller
         }
     }
 
-    protected function getSectionList($sections)
-    {
-        $data = [];
-        foreach ($sections as $section){
-            $video = Video::whereSectionId($section->id)->get(['id','title','url']);
-            $item = [];
-            $item['section_title'] = $section->title;
-            $item['videos'] = $video;
-            $data[] = $item;
-        }
-        return $data;
-    }
+
 }

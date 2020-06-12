@@ -7,6 +7,7 @@ use App\Exceptions\ServiceException;
 use App\Constants\BaseConstants;
 use App\Constants\ErrorMsgConstants;
 use App\Models\ServiceUserModel;
+use App\Models\Video;
 /**
  * 数组转json字符串(非json串)
  * @param $array
@@ -203,4 +204,17 @@ function getDataInfo($data){
     }
 
     return [$count,$score];         //使用list()接收返回值：list($count,$score);顺序依次对应
+}
+
+function getSectionList($sections)
+{
+    $data = [];
+    foreach ($sections as $section){
+        $video = Video::whereSectionId($section->id)->get(['id','title','url']);
+        $item = [];
+        $item['section_title'] = $section->title;
+        $item['videos'] = $video;
+        $data[] = $item;
+    }
+    return $data;
 }

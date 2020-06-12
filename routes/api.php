@@ -36,6 +36,8 @@ Route::middleware('cors')->group(function () {
 
     Route::post('examPaperOver','Api\ExamPaperController@total');
 
+    Route::post('homePage','Api\HomePageController@index');
+
 
     /** jwt Auth Api  需要登录的接口*/
     Route::group(['middleware' => ['jwtAuth']], function () {

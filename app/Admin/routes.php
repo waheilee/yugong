@@ -29,4 +29,6 @@ Route::group([
     $router->resource('exam_paper','ExamPaperController');
     //banner图
     $router->resource('banner','BannerController');
+    //定制计划课程
+    $router->resource('plan_lesson','PlanController');
 });
