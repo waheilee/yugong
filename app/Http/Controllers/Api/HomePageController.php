@@ -18,6 +18,9 @@ class HomePageController extends Controller
             foreach ($plan as $item){
                 $item->url = env('APP_URL').$item->url;
             }
+            foreach ($banner as $item){
+                $item->url = env('APP_URL').$item->url;
+            }
             $data = [
                 'indexData' =>[
                     'banner'=>$banner,
