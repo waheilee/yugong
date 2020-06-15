@@ -15,9 +15,9 @@ class HomePageController extends Controller
         try{
             $banner = BannerModel::whereStatus(1)->orderBy('created_at','desc')->get(['title','url','content','type']);
             $plan = PlanLessonModel::whereStatus(1)->get(['id','title','url']);
-            foreach ($plan as $item){
-                $item->url = env('APP_URL').$item->url;
-            }
+//            foreach ($plan as $item){
+//                $item->url = env('APP_URL').$item->url;
+//            }
             foreach ($banner as $item){
                 $item->url = env('APP_URL').$item->url;
             }
