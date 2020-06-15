@@ -39,6 +39,14 @@ class PlanController
             ->body($this->form());
     }
 
+    public function edit($id,Content $content)
+    {
+        return $content
+            ->header('创建新计划')
+            ->description('')
+            ->body($this->form()->edit($id));
+    }
+
     public function store(Request $request)
     {
         $title = $request->input('title');
@@ -57,7 +65,7 @@ class PlanController
             $FileName = 'banner/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
 
             Storage::disk('admin')->put($FileName, file_get_contents($FilePath)); //存储文件
-            $path = $path . '/' . $FileName;
+            $path =  env('APP_URL').$path . '/' . $FileName;
         }
         $planLesson = new PlanLessonModel();
         $planLesson->title = $title;
@@ -71,6 +79,38 @@ class PlanController
 //        dd($request->all());
     }
 
+    public function update($id,Request $request)
+    {
+        $title = $request->input('title');
+        $student = $request->input('student');
+        $time = $request->input('time');
+        $lesson = $request->input('lesson');
+        $content = $request->input('content');
+        $status = $request->input('status');
+        $tmp = $request->file('url');
+        $path = 'uploads';
+        if ($tmp->isValid()) { //判断文件上传是否有效
+            $FileType = $tmp->getClientOriginalExtension(); //获取文件后缀
+
+            $FilePath = $tmp->getRealPath(); //获取文件临时存放位置
+
+            $FileName = 'banner/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
+
+            Storage::disk('admin')->put($FileName, file_get_contents($FilePath)); //存储文件
+            $path =  env('APP_URL').$path . '/' . $FileName;
+        }
+        $planLesson =  PlanLessonModel::whereId($id)->first();
+        $planLesson->title = $title;
+        $planLesson->student = $student;
+        $planLesson->time = $time;
+        $planLesson->lesson = $lesson;
+        $planLesson->content = $content;
+        $planLesson->status = $status=='on'?1:0;;
+        $planLesson->url = $path;
+        $planLesson->update();
+//        dd($request->all());
+       return redirect('plan_lesson');
+    }
 
     protected function grid()
     {
@@ -80,7 +120,7 @@ class PlanController
 
 //        $grid->disableCreateButton();
         $grid->actions(function (Grid\Displayers\Actions $actions){
-            $actions->disableEdit();
+//            $actions->disableEdit();
             $actions->disableView();
         });
         return $grid;

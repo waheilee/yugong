@@ -32,10 +32,7 @@ Route::middleware('cors')->group(function () {
     //获取课程详情
     Route::post('getLessonDetail','Api\LessonController@lessonDetail');
 
-    Route::post('getPaper','Api\ExamPaperController@paper');
-
-    Route::post('examPaperOver','Api\ExamPaperController@total');
-
+    //首页
     Route::post('homePage','Api\HomePageController@index');
 
 
@@ -55,6 +52,17 @@ Route::middleware('cors')->group(function () {
 
         //邀请码查询保单信息
         Route::post('confirmPolicy','Api\ActivePolicyController@activePolicy');
+
+        //获取试卷
+        Route::post('getPaper','Api\ExamPaperController@paper');
+
+        //提交试卷
+        Route::post('examPaperOver','Api\ExamPaperController@total');
+
+        //定制课程详情
+        Route::post('planLessonDetail','Api\PlanLessonController@detail');
+
+
 
     });
 });

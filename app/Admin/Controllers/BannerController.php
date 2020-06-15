@@ -93,7 +93,7 @@ class BannerController
                 $FileName = 'banner/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
 
                 Storage::disk('admin')->put($FileName, file_get_contents($FilePath)); //存储文件
-                $path = $path . '/' . $FileName;
+                $path = env('APP_URL').$path . '/' . $FileName;
             }
             $bannerModel->title = $title;
             $bannerModel->type = $type;
@@ -107,7 +107,8 @@ class BannerController
             return response()->json(['message'=>'修改成功','status'=>'success'],200);
 //            admin_toastr('状态修改成功','success');
         }
-        return admin_toastr('修改成功','success');
+        admin_toastr('修改成功','success');
+        return redirect('banner');
     }
 
     /**

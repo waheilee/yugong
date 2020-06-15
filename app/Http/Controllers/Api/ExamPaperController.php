@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api;
 use App\Constants\ErrorMsgConstants;
 use App\Exceptions\ServiceException;
 use App\Http\Controllers\Controller;
+use App\Jobs\ExamRecordJob;
 use App\Models\ExamPaperModel;
 use Illuminate\Http\Request;
 
@@ -98,6 +99,9 @@ class ExamPaperController extends Controller
                 'count' =>$count,//每大题题数
                 'pass' => $pass//是否通过
             ];
+            $serUserId = getAppUserUuid();
+//            dd($serUserId,$examPaperModel->id,json_encode($total) ,$sum,$pass);
+            dispatch(new ExamRecordJob($serUserId,$paper_id,$total,$sum,$pass));
             return $this->wrapSuccessReturn(compact('arr'));
         }catch (\Exception $exception){
             return $this->wrapErrorReturn($exception);
