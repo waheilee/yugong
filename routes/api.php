@@ -61,8 +61,12 @@ Route::middleware('cors')->group(function () {
 
         //定制课程详情
         Route::post('planLessonDetail','Api\PlanLessonController@detail');
+
         //定制课程列表
         Route::post('planLessonList','Api\PlanLessonController@list');
+
+        //考试记录列表
+        Route::post('examRecordList','Api\ExamRecordController@list');
 
 
 
