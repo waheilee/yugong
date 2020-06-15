@@ -101,7 +101,7 @@ class ExamPaperController extends Controller
             ];
             $serUserId = getAppUserUuid();
 //            dd($serUserId,$examPaperModel->id,json_encode($total) ,$sum,$pass);
-            dispatch(new ExamRecordJob($serUserId,$paper_id,$total,$sum,$pass));
+            $this->dispatch(new ExamRecordJob($serUserId,$paper_id,$total,$sum,$pass));
             return $this->wrapSuccessReturn(compact('arr'));
         }catch (\Exception $exception){
             return $this->wrapErrorReturn($exception);
