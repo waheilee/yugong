@@ -28,14 +28,14 @@ class QuestionForm extends Form
      */
     public function handle(Request $request)
     {
-        $hello = explode(',',$request->input('answer'));
+//        $hello = explode(',',$request->input('answer'));
         $questionModel = new Question();
-        $question = $request->input('question');
-        $option = $request->input('option.values');
-        $answer = explode(',',$request->input('answer'));
-        $analysis = $request->input('analysis');
-        $tag = $request->input('tags');
-        $type = $request->input('type');
+        $question      = $request->input('question');
+        $option        = $request->input('option.values');
+        $answer        = explode(',',$request->input('answer'));
+        $analysis      = $request->input('analysis');
+        $tag           = $request->input('tags');
+        $type          = $request->input('type');
         try {
             DB::beginTransaction();
             //判断单选题不能有多个答案选项
@@ -44,11 +44,11 @@ class QuestionForm extends Form
                     throw new  \Exception(admin_toastr('单选题型答案选项不能为多个','warning'));
                 }
             }
-            $questionModel->type = $type;//单选题、多选题
+            $questionModel->type     = $type;//单选题、多选题
             $questionModel->question = $question;
-            $questionModel->answer = $answer;
+            $questionModel->answer   = $request->input('answer');
             $questionModel->analysis = $analysis;
-            $questionModel->tags = json_encode(array_filter($tag));
+            $questionModel->tags     = json_encode(array_filter($tag));
             $questionModel->save();
 
             foreach ($option as $item=>$k){
