@@ -49,7 +49,7 @@ class PlanController
 
     public function store(Request $request)
     {
-        dd($request->all());
+//        dd($request->all());
         $title = $request->input('title');
         $student = $request->input('student');
         $time = $request->input('time');
