@@ -61,7 +61,7 @@ class LessonController extends Controller
             if($examPaper){
                 $paperId = $examPaper->id;
             }else{
-                $paperId = '暂无试卷';
+                $paperId = null;
             }
             $data = [
                 'lesson'=>[
