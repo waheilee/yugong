@@ -154,7 +154,7 @@ return [
     'upload' => [
 
         // Disk in `config/filesystem.php`.
-        'disk' => 'admin',
+        'disk' => 'qiniu',
 
         // Image and file upload path under the disk above.
         'directory' => [
@@ -399,6 +399,16 @@ return [
     |
     */
     'extensions' => [
+        'wang-editor' => [
 
+            // 如果要关掉这个扩展，设置为false
+            'enable' => true,
+
+            // 编辑器的配置
+            'config' => [
+                'uploadImgServer' => '/uploads',
+                'uploadFileName' => 'upload_file'
+            ]
+        ]
     ],
 ];

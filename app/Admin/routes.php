@@ -34,4 +34,6 @@ Route::group([
     $router->resource('banner','BannerController');
     //定制计划课程
     $router->resource('plan_lesson','PlanController');
+
+    $router->post('up_image','UploadController@upload');
 });

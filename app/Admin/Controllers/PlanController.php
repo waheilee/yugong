@@ -49,6 +49,7 @@ class PlanController
 
     public function store(Request $request)
     {
+        dd($request->all());
         $title = $request->input('title');
         $student = $request->input('student');
         $time = $request->input('time');
@@ -62,10 +63,10 @@ class PlanController
 
             $FilePath = $tmp->getRealPath(); //获取文件临时存放位置
 
-            $FileName = 'banner/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
+            $FileName = 'plan/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
 
-            Storage::disk('admin')->put($FileName, file_get_contents($FilePath)); //存储文件
-            $path =  env('APP_URL').$path . '/' . $FileName;
+            Storage::disk('qiniu')->put($FileName, file_get_contents($FilePath)); //存储文件
+            $path =  env('QINIU_URL').$path . '/' . $FileName;
         }
         $planLesson = new PlanLessonModel();
         $planLesson->title = $title;
@@ -96,8 +97,8 @@ class PlanController
 
             $FileName = 'banner/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
 
-            Storage::disk('admin')->put($FileName, file_get_contents($FilePath)); //存储文件
-            $path =  env('APP_URL').$path . '/' . $FileName;
+            Storage::disk('qiniu')->put($FileName, file_get_contents($FilePath)); //存储文件
+            $path =  env('QINIU_URL').$path . '/' . $FileName;
         }
         $planLesson =  PlanLessonModel::whereId($id)->first();
         $planLesson->title = $title;
