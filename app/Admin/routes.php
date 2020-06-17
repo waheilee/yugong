@@ -13,6 +13,9 @@ Route::group([
     $router->get('/', 'HomeController@index')->name('admin.home');
     //题库管理
     $router->resource('question', 'QuestionController');
+
+    //标签管理
+    $router->resource('tags', 'TagsController');
     //视频课件管理
     $router->resource('video', 'VideoController');
     //分类管理
