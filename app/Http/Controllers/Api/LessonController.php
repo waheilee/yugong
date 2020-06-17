@@ -58,6 +58,11 @@ class LessonController extends Controller
 
             $lessonModel = LessonModel::whereId($id)->first();
             $examPaper = ExamPaperModel::whereLessonId($lessonModel->id)->first();
+            if($examPaper){
+                $paperId = $examPaper->id;
+            }else{
+                $paperId = '暂无试卷';
+            }
             $data = [
                 'lesson'=>[
                     'id'=>$lessonModel->id,
@@ -70,7 +75,7 @@ class LessonController extends Controller
                     'price'=>$lessonModel->price,
                     'discounts'=>$lessonModel->discounts,
                     'sections'=>getSectionList($lessonModel->sections()->get()),
-                    'paper_id' => $examPaper->id
+                    'paper_id' => $paperId
                 ],
 
             ];
