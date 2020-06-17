@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('cors')->group(function () {
+//Route::middleware('cors')->group(function () {
 //登录
     Route::post('login', 'Api\ServiceUserController@login');
 
@@ -71,7 +71,7 @@ Route::middleware('cors')->group(function () {
 
 
     });
-});
+//});
 
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
