@@ -59,7 +59,7 @@ class BannerController
             $FileName = 'banner/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
 
             Storage::disk('admin')->put($FileName, file_get_contents($FilePath)); //存储文件
-            $path = $path . '/' . $FileName;
+            $path = env('QINIU_URL'). $FileName;
         }
         $title = $request->input('title');
         $type = $request->input('type');
@@ -93,7 +93,7 @@ class BannerController
                 $FileName = 'banner/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
 
                 Storage::disk('admin')->put($FileName, file_get_contents($FilePath)); //存储文件
-                $path = env('APP_URL').$path . '/' . $FileName;
+                $path = env('QINIU_URL'). $FileName;
             }
             $bannerModel->title = $title;
             $bannerModel->type = $type;
