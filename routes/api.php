@@ -35,6 +35,8 @@ use Illuminate\Http\Request;
     //首页
     Route::post('homePage','Api\HomePageController@index');
 
+    //导航栏内容
+    Route::post('navDetail','Api\NavController@detail');
 
     /** jwt Auth Api  需要登录的接口*/
     Route::group(['middleware' => ['jwtAuth']], function () {
