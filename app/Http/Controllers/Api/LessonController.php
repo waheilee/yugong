@@ -60,9 +60,8 @@ class LessonController extends Controller
 
             $lessonModel = LessonModel::whereId($id)->first();
             if (empty($lessonModel)){
-
+                //无课程id返回值
                 throw new ServiceException(ErrorMsgConstants::API_ERROR_MESSAGE, "课程不存在");
-
             }
             $examPaper = ExamPaperModel::whereLessonId($lessonModel->id)->first();
             if($examPaper){
