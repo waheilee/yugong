@@ -19,7 +19,7 @@ class HomePageController extends Controller
             $plan   = PlanLessonModel::whereStatus(1)->limit(3)->get(['id','title','url']);
 
             $nav    = NavModel::whereStatus(1)->limit(5)->get(['id','title','url']);
-            dd($plan);
+            dd($nav);
 
             $lesson = LessonModel::orderByDesc('created_at')->limit(3)->get(['id','title','url']);
             $data = [
