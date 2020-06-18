@@ -73,7 +73,7 @@ class LessonController extends Controller
                 'lesson'=>[
                     'id'=>$lessonModel->id,
                     'lesson_title'=>$lessonModel->title,
-                    'image'=>$lessonModel->image,
+                    'url'=>$lessonModel->url,
                     'intro'=>$lessonModel->intro,
                     'content'=>$lessonModel->content,
                     'degree'=>$lessonModel->degree,
