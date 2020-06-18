@@ -23,14 +23,14 @@ class LessonController extends Controller
         $categoryId = $request->input('category_id');
         if ($categoryId){
             try{
-                $lessonModel = LessonModel::whereCategoryId($categoryId)->get(['id','title','image','intro']);
+                $lessonModel = LessonModel::whereCategoryId($categoryId)->get(['id','title','url','intro']);
                 return $this->wrapSuccessReturn(compact('lessonModel'));
             } catch (\Exception $exception){
                 return $this->wrapErrorReturn($exception);
             }
         }else{
             try{
-                $lessonModel = LessonModel::all(['id','title','image','intro']);
+                $lessonModel = LessonModel::all(['id','title','url','intro']);
                 return $this->wrapSuccessReturn(compact('lessonModel'));
             } catch (\Exception $exception){
                 return $this->wrapErrorReturn($exception);
