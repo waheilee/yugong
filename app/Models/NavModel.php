@@ -6,12 +6,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 
+
 /**
  * App\Models\NavModel
  *
  * @property int $id
  * @property string $title 标题
- * @property string $img_url 图标地址
+ * @property string $url 图标地址
  * @property int $status 状态
  * @property string $content 内容
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -22,10 +23,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\NavModel whereContent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\NavModel whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\NavModel whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\NavModel whereImgUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\NavModel whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\NavModel whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\NavModel whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\NavModel whereUrl($value)
  * @mixin \Eloquent
  */
 class NavModel extends Model
