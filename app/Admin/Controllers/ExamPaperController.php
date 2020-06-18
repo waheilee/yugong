@@ -39,22 +39,22 @@ class ExamPaperController
 
     public function store(Request $request)
     {
-        $title = $request->input('title');
-        $timeOut = $request->input('timeout')*600;
-        $lessonId = $request->input('lesson_id');
-        $pass = $request->input('pass');
-        $singlePoint = $request->input('single_point');
+        $title         = $request->input('title');
+        $timeOut       = $request->input('timeout')*600;
+        $lessonId      = $request->input('lesson_id');
+        $pass          = $request->input('pass');
+        $singlePoint   = $request->input('single_point');
         $multiplePoint = $request->input('multiple_point');
-        $binaryPoint = $request->input('binary_point');
-        $single = $this->choice(array_filter($request->input('single'))) ;
-        $multiple = $this->choice(array_filter($request->input('multiple')));
-        $binary = $this->binary(array_filter($request->input('binary')));
+        $binaryPoint   = $request->input('binary_point');
+        $single        = $this->choice(array_filter($request->input('single'))) ;
+        $multiple      = $this->choice(array_filter($request->input('multiple')));
+        $binary        = $this->binary(array_filter($request->input('binary')));
         $examPaperModel = new ExamPaperModel();
-        $examPaperModel->title = $title;
+        $examPaperModel->title     = $title;
         $examPaperModel->lesson_id = $lessonId;
-        $examPaperModel->timeout = $timeOut;
-        $examPaperModel->pass = $pass;
-        $examPaperModel->question = json_encode([
+        $examPaperModel->timeout   = $timeOut;
+        $examPaperModel->pass      = $pass;
+        $examPaperModel->question  = json_encode([
             'single'=>[
                 'name' =>'单选题',
                 'score'=>$singlePoint,

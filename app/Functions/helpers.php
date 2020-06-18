@@ -201,8 +201,10 @@ function getDataInfo($data){
     $score = [];            //每道题的分值
 
     foreach ($data as $k=>$v) {
-        $count[$k]=count($v['data']);
-        $score[$k]=round($v['score']/$count[$k]);
+        if (!empty($v['data'])){
+            $count[$k]=count($v['data']);
+            $score[$k]=round($v['score']/$count[$k]);
+        }
     }
 
     return [$count,$score];         //使用list()接收返回值：list($count,$score);顺序依次对应

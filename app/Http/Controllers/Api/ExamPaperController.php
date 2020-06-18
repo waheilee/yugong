@@ -40,7 +40,6 @@ class ExamPaperController extends Controller
                 'data'=>$this->answerNull(json_decode($examPaperModel->question,true))
             ];
             list($count,$score)=getDataInfo($data['data']);
-
             $arr = [
                 'data'=>$data,
                 'count' =>$count,
@@ -129,8 +128,13 @@ class ExamPaperController extends Controller
     protected function answerNull($data)
     {
         foreach ($data as $type=>$each){
-            foreach ($each['data'] as $k=>$v){
-                $data[$type]['data'][$k]['answer'] = '';
+            if (!empty($each['data'])){
+                foreach ($each['data'] as $k=>$v){
+                    $data[$type]['data'][$k]['answer'] = '';
+                }
+            }else{
+                //如果大题内容为空，则返回空值
+                $data[$type] = null;
             }
         }
         return $data;
