@@ -16,7 +16,7 @@ class CreateNavTable extends Migration
         Schema::create('exam_nav', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title',50)->comment('标题');
-            $table->string('img_url')->comment('图标地址');
+            $table->string('url')->comment('图标地址');
             $table->integer('status')->comment('状态');
             $table->text('content')->comment('内容');
             $table->timestamps();
