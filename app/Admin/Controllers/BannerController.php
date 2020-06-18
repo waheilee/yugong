@@ -50,7 +50,7 @@ class BannerController
     public function store(Request $request)
     {
         $tmp = $request->file('url');
-        $path = '/uploads'; //public下的article
+        $bannerModel = new BannerModel();
         if ($tmp->isValid()) { //判断文件上传是否有效
             $FileType = $tmp->getClientOriginalExtension(); //获取文件后缀
 
@@ -60,17 +60,16 @@ class BannerController
 
             Storage::disk('admin')->put($FileName, file_get_contents($FilePath)); //存储文件
             $path = env('QINIU_URL'). $FileName;
+            $bannerModel->url =$path;
         }
         $title = $request->input('title');
         $type = $request->input('type');
         $status = $request->input('status');
         $content = $request->input('content');
-        $bannerModel = new BannerModel();
         $bannerModel->title = $title;
         $bannerModel->type = $type;
         $bannerModel->status = $status=='on'?1:0;
         $bannerModel->content = $content;
-        $bannerModel->url =$path;
         $bannerModel->save();
     }
 
@@ -84,7 +83,6 @@ class BannerController
         $tmp = $request->file('url');
         $bannerModel =  BannerModel::whereId($id)->first();
         if (!empty($title) && !empty($type) && !empty($tmp)){
-            $path = 'uploads'; //public下的article
             if ($tmp->isValid()) { //判断文件上传是否有效
                 $FileType = $tmp->getClientOriginalExtension(); //获取文件后缀
 
@@ -94,12 +92,12 @@ class BannerController
 
                 Storage::disk('admin')->put($FileName, file_get_contents($FilePath)); //存储文件
                 $path = env('QINIU_URL'). $FileName;
+                $bannerModel->url =$path;
             }
             $bannerModel->title = $title;
             $bannerModel->type = $type;
             $bannerModel->status = $status=='on'?1:0;
             $bannerModel->content = $content;
-            $bannerModel->url =$path;
             $bannerModel->update();
         }else{
             $bannerModel->status = $status=='on'?1:0;
