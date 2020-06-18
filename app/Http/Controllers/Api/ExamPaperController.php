@@ -134,7 +134,7 @@ class ExamPaperController extends Controller
                 }
             }else{
                 //如果大题内容为空，则返回空值
-                $data[$type] = [];
+                $data[$type] = null;
             }
         }
         return $data;
