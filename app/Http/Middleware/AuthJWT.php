@@ -11,7 +11,7 @@ class AuthJWT
 {
 
     protected $result = [
-        "code"    => ErrorMsgConstants::TOKEN_ERROR,
+        "status_code"    => ErrorMsgConstants::TOKEN_ERROR,
         "message" => "登录过期!请尝试重新登录",
         "data"    => [],
     ];
