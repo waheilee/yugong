@@ -57,6 +57,10 @@ class LessonController extends Controller
             $id = $request->input('lesson_id');
 
             $lessonModel = LessonModel::whereId($id)->first();
+            if (empty($lessonModel)){
+                $data = null;
+                return $this->wrapSuccessReturn(compact('data'));
+            }
             $examPaper = ExamPaperModel::whereLessonId($lessonModel->id)->first();
             if($examPaper){
                 $paperId = $examPaper->id;
