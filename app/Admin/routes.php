@@ -35,5 +35,9 @@ Route::group([
     //定制计划课程
     $router->resource('plan_lesson','PlanController');
 
+    //导航栏图标管理
+    $router->resource('nav','NavController');
+
+    //编辑器图片上传
     $router->post('up_image','UploadController@upload');
 });
