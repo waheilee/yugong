@@ -71,6 +71,8 @@ class BannerController
         $bannerModel->status = $status=='on'?1:0;
         $bannerModel->content = $content;
         $bannerModel->save();
+        admin_toastr('添加成功','success');
+        return redirect('admin/banner');
     }
 
     public function update($id,Request $request)
@@ -106,7 +108,7 @@ class BannerController
 //            admin_toastr('状态修改成功','success');
         }
         admin_toastr('修改成功','success');
-        return redirect('banner');
+        return redirect('admin/banner');
     }
 
     /**
