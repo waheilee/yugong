@@ -51,7 +51,12 @@ class PlanLessonModel extends Model
     public function setLessonAttribute($value)
     {
 //        dd($this->getLessonDetail(array_values($value)));
-        $this->attributes['lesson'] = json_encode($this->getLessonDetail(array_values($value)));
+        if (empty($value)){
+            $this->attributes['lesson'] = json_encode([]);
+        }else{
+            $this->attributes['lesson'] = json_encode($this->getLessonDetail(array_values($value)));
+
+        }
     }
 
     public function getLessonDetail($value)

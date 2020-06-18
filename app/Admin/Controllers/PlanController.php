@@ -57,25 +57,28 @@ class PlanController
         $content = $request->input('content');
         $status = $request->input('status');
         $tmp = $request->file('url');
-        $path = 'uploads';
-        if ($tmp->isValid()) { //判断文件上传是否有效
-            $FileType = $tmp->getClientOriginalExtension(); //获取文件后缀
-
-            $FilePath = $tmp->getRealPath(); //获取文件临时存放位置
-
-            $FileName = 'plan/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
-
-            Storage::disk('qiniu')->put($FileName, file_get_contents($FilePath)); //存储文件
-            $path =  env('QINIU_URL').$path . '/' . $FileName;
-        }
+//        dd($request->all());
         $planLesson = new PlanLessonModel();
+        if (!empty($tmp)){
+            if ($tmp->isValid()) { //判断文件上传是否有效
+                $FileType = $tmp->getClientOriginalExtension(); //获取文件后缀
+
+                $FilePath = $tmp->getRealPath(); //获取文件临时存放位置
+
+                $FileName = 'plan/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
+
+                Storage::disk('qiniu')->put($FileName, file_get_contents($FilePath)); //存储文件
+                $path =  env('QINIU_URL'). $FileName;
+                $planLesson->url = $path;
+
+            }
+        }
         $planLesson->title = $title;
         $planLesson->student = $student;
         $planLesson->time = $time;
         $planLesson->lesson = $lesson;
         $planLesson->content = $content;
         $planLesson->status = $status=='on'?1:0;;
-        $planLesson->url = $path;
         $planLesson->save();
 //        dd($request->all());
     }
@@ -89,28 +92,30 @@ class PlanController
         $content = $request->input('content');
         $status = $request->input('status');
         $tmp = $request->file('url');
-        $path = 'uploads';
-        if ($tmp->isValid()) { //判断文件上传是否有效
-            $FileType = $tmp->getClientOriginalExtension(); //获取文件后缀
-
-            $FilePath = $tmp->getRealPath(); //获取文件临时存放位置
-
-            $FileName = 'banner/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
-
-            Storage::disk('qiniu')->put($FileName, file_get_contents($FilePath)); //存储文件
-            $path =  env('QINIU_URL'). $FileName;
-        }
         $planLesson =  PlanLessonModel::whereId($id)->first();
+        if (!empty($tmp)){
+            if ($tmp->isValid()) { //判断文件上传是否有效
+                $FileType = $tmp->getClientOriginalExtension(); //获取文件后缀
+
+                $FilePath = $tmp->getRealPath(); //获取文件临时存放位置
+
+                $FileName = 'banner/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
+
+                Storage::disk('qiniu')->put($FileName, file_get_contents($FilePath)); //存储文件
+                $path =  env('QINIU_URL'). $FileName;
+                $planLesson->url = $path;
+            }
+        }
         $planLesson->title = $title;
         $planLesson->student = $student;
         $planLesson->time = $time;
         $planLesson->lesson = $lesson;
         $planLesson->content = $content;
-        $planLesson->status = $status=='on'?1:0;;
-        $planLesson->url = $path;
+        $planLesson->status = $status=='on'?1:0;
         $planLesson->update();
 //        dd($request->all());
-       return redirect('plan_lesson');
+        admin_toastr('修改成功','success');
+       return redirect('admin/plan_lesson');
     }
 
     protected function grid()
