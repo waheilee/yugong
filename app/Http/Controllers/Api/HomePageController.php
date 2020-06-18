@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\BannerModel;
+use App\Models\NavModel;
 use App\Models\PlanLessonModel;
 
 class HomePageController extends Controller
@@ -15,10 +16,12 @@ class HomePageController extends Controller
         try{
             $banner = BannerModel::whereStatus(1)->orderBy('created_at','desc')->get(['title','url','content','type']);
             $plan = PlanLessonModel::whereStatus(1)->limit(3)->get(['id','title','url']);
+            $nav = NavModel::whereStatus(1)->limit(5)->get(['id','title','img_url']);
             $data = [
                 'indexData' =>[
                     'banner'=>$banner,
                     'recommend'=>$plan,
+                    'nav' =>$nav
                 ]
             ];
             return $this->wrapSuccessReturn(compact('data'));
