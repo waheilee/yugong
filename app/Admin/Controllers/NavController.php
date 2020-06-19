@@ -58,8 +58,8 @@ class NavController
 
                 $FileName = 'nav/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
 
-                Storage::disk('qiniu')->put($FileName, file_get_contents($FilePath)); //存储文件
-                $bannerModel->img_url =env('QINIU_URL') . $FileName;
+                Storage::disk('admin')->put($FileName, file_get_contents($FilePath)); //存储文件
+                $bannerModel->url =env('APP_URL') . $FileName;
             }
         }
         $title = $request->input('title');
@@ -90,8 +90,8 @@ class NavController
 
                     $FileName = 'nav/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
 
-                    Storage::disk('qiniu')->put($FileName, file_get_contents($FilePath)); //存储文件
-                    $bannerModel->img_url = env('QINIU_URL') . $FileName;
+                    Storage::disk('admin')->put($FileName, file_get_contents($FilePath)); //存储文件
+                    $bannerModel->url = env('APP_URL') . $FileName;
                 }
             }
             $bannerModel->title = $title;
