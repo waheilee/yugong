@@ -68,7 +68,7 @@ class PlanController
                 $FileName = 'plan/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
 
                 Storage::disk('qiniu')->put($FileName, file_get_contents($FilePath)); //存储文件
-                $path =  env('QINIU_URL'). $FileName;
+                $path =  env('APP_URL'). $FileName;
                 $planLesson->url = $path;
 
             }
@@ -102,7 +102,7 @@ class PlanController
                 $FileName = 'banner/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
 
                 Storage::disk('qiniu')->put($FileName, file_get_contents($FilePath)); //存储文件
-                $path =  env('QINIU_URL'). $FileName;
+                $path =  env('APP_URL'). $FileName;
                 $planLesson->url = $path;
             }
         }

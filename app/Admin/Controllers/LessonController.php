@@ -48,7 +48,7 @@ class LessonController
         $model = new LessonModel();
         $model->category_id = $request->input('category_id');
         $model->title = $request->input('title');
-        $model->image = $request->input('image');
+        $model->url = $request->input('url');
         $model->intro = $request->input('intro');
         $model->content = $request->input('content');
         $model->degree = $request->input('degree');
@@ -81,7 +81,7 @@ class LessonController
         $grid = new Grid(new LessonModel());
         $grid->column('category_id','所属分类');
         $grid->column('title','课程名称');
-        $grid->column('image','缩略图');
+        $grid->column('url','缩略图');
         $grid->column('intro','课程简介');
         $grid->column('views', '浏览量');
         //添加章节
@@ -107,7 +107,7 @@ class LessonController
 //        $form->hidden('id', 'ID');
         $form->select('category_id', '分类')->options($cateModel::selectOptions(null,'顶级分类'));
         $form->text('title', '标题')->rules('required');
-        $form->image('image', '缩略图');
+        $form->image('url', '缩略图');
         $form->select('degree','难度')->options([1 => '初级', 2 => '中级', 3 => '高级']);
         $form->radio('is_free', '是否免费')->options([ 0 => '免费', 1=> '收费'])->default(0);
         $form->text('price','价格')->placeholder('如果课程免费可不填价格');
@@ -124,7 +124,7 @@ class LessonController
 
         $show->field('id');
         $show->field('title', '课程名称');
-        $show->field('image', '缩略图')->image();
+        $show->field('url', '缩略图')->image();
         $show->field('degree', '难度')->using([1 => '初级', 2 => '中级', 3 => '高级']);
         $show->field('is_free', '是否免费')->using([0 => '免费', 1 => '付费']);
         $show->field('price', '价格');
