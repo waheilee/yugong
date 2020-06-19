@@ -47,7 +47,7 @@ class NavController
 
     public function store(Request $request)
     {
-        $tmp = $request->file('img_url');
+        $tmp = $request->file('url');
 
         $bannerModel = new NavModel();
         if (!empty($tmp)){
@@ -79,7 +79,7 @@ class NavController
         $title = $request->input('title');
         $status = $request->input('status');
         $content = $request->input('content');
-        $tmp = $request->file('img_url');
+        $tmp = $request->file('url');
         $bannerModel =  NavModel::whereId($id)->first();
         if (!empty($title)){
             if (!empty($tmp)){
@@ -117,12 +117,15 @@ class NavController
     {
         $grid = new Grid(new NavModel());
         $grid->column('title','轮播图标题');
-        $grid->column('img_url','图片')->image(50,50);
+        $grid->column('url','图片')->image(50,50);
         $state = [
             'on'  => ['value' => 1, 'text' => '打开', 'color' => 'success'],
             'off' => ['value' => 0, 'text' => '关闭', 'color' => 'default'],
         ];
         $grid->column('status','是否开启')->switch($state);
+        $grid->actions(function (Grid\Displayers\Actions $action){
+            $action->disableView();
+        });
         return $grid;
     }
 
@@ -130,7 +133,7 @@ class NavController
     {
         $form = new Form(new NavModel());
         $form->text('title','标题');
-        $form->image('img_url', '图标');
+        $form->image('url', '图标');
         $states = [
             'on'  => ['value' => 1, 'text' => '打开', 'color' => 'success'],
             'off' => ['value' => 0, 'text' => '关闭', 'color' => 'default'],
