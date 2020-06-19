@@ -59,7 +59,7 @@ class BannerController
             $FileName = 'banner/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
 
             Storage::disk('admin')->put($FileName, file_get_contents($FilePath)); //存储文件
-            $path = env('APP_URL'). $FileName;
+            $path = env('APP_URL').'uploads/'. $FileName;
             $bannerModel->url =$path;
         }
         $title = $request->input('title');
@@ -93,7 +93,7 @@ class BannerController
                 $FileName = 'banner/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
 
                 Storage::disk('admin')->put($FileName, file_get_contents($FilePath)); //存储文件
-                $path = env('APP_URL'). $FileName;
+                $path = env('APP_URL').'uploads/'. $FileName;
                 $bannerModel->url =$path;
             }
             $bannerModel->title = $title;
@@ -120,7 +120,7 @@ class BannerController
     {
         $grid = new Grid(new BannerModel());
         $grid->column('title','轮播图标题');
-        $grid->column('url','图片')->image(env('APP_URL'),50,50);
+        $grid->column('url','图片')->image(50,50);
         $state = [
             'on'  => ['value' => 1, 'text' => '打开', 'color' => 'success'],
             'off' => ['value' => 0, 'text' => '关闭', 'color' => 'default'],
