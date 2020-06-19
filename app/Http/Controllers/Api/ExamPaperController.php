@@ -9,6 +9,7 @@ use App\Exceptions\ServiceException;
 use App\Http\Controllers\Controller;
 use App\Jobs\ExamRecordJob;
 use App\Models\ExamPaperModel;
+use App\Models\ExamRecordModel;
 use Illuminate\Http\Request;
 
 
@@ -138,5 +139,24 @@ class ExamPaperController extends Controller
             }
         }
         return $data;
+    }
+
+    public function examPaperPass(Request $request)
+    {
+        try{
+            $paperId = $request->input('paper_id');
+            $record = ExamRecordModel::whereSerUserId(getAppUserModel()->id)->wherePaperId($paperId)->wherePass(1)->first(['pass']);
+            if ($record){
+                $data = true;
+                return $this->wrapSuccessReturn(compact('data'));
+            }else{
+                $data = false;
+                return $this->wrapSuccessReturn(compact('data'));
+            }
+        }catch (\Exception $exception){
+            return $this->wrapErrorReturn($exception);
+        }
+
+
     }
 }

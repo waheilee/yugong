@@ -70,7 +70,8 @@ Route::middleware('cors')->group(function () {
         //考试记录列表
         Route::post('examRecordList','Api\ExamRecordController@list');
 
-
+        //查看考试是否通过
+        Route::post('examPass','Api\ExamPaperController@examPaperPass');
 
     });
 });
