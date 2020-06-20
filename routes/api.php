@@ -77,6 +77,7 @@ Route::middleware('cors')->group(function () {
         Route::post('cerList','Api\CertificateController@cerList');
         //换取证书
         Route::post('getCertificate','Api\CertificateController@getCertificate');
+
         Route::post('getMyCertificateList','Api\CertificateController@myCertificateList');
 
     });

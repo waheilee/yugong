@@ -100,11 +100,14 @@ class CertificateController extends Controller
             $userId = getAppUserModel()->id;
             $serCer = SerUserCertificateModel::whereSerUserId($userId)->get();
             if (!$serCer){
-                throw new ServiceException( ErrorMsgConstants::VALIDATION_DATA_ERROR,'证书不存在');
+                throw new ServiceException( ErrorMsgConstants::VALIDATION_DATA_ERROR,'我的证书不存在');
             }
             $data = [];
             foreach ($serCer as $item){
                 $certificate = CertificateModel::whereId($item->certificate_id)->first(['id','url','created_at']);
+                if (!$certificate){
+                    throw new ServiceException( ErrorMsgConstants::VALIDATION_DATA_ERROR,'证书不存在');
+                }
                 $data[] = $certificate;
             }
 
