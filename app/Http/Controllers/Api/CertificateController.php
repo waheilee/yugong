@@ -99,8 +99,7 @@ class CertificateController extends Controller
         try{
             $userId = getAppUserModel()->id;
             $serCer = SerUserCertificateModel::whereSerUserId($userId)->get();
-            dd($serCer);
-            if (!$serCer){
+            if (empty($serCer)){
                 throw new ServiceException( ErrorMsgConstants::VALIDATION_DATA_ERROR,'我的证书不存在');
             }
             $data = [];
