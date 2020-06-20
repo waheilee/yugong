@@ -107,6 +107,7 @@ class CertificateController extends Controller
                 $certificate = CertificateModel::whereId($item->certificate_id)->first(['id','url','created_at']);
                 if (!$certificate){
                     throw new ServiceException( ErrorMsgConstants::VALIDATION_DATA_ERROR,'证书不存在');
+                    break;
                 }
                 $data[] = $certificate;
             }
