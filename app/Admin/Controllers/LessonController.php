@@ -13,6 +13,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 
 class LessonController
@@ -56,6 +57,40 @@ class LessonController
         $model->price = $request->input('price');
         $model->discounts = $request->input('discounts');
         $model->save();
+    }
+
+    public function update(Request $request)
+    {
+        $model = LessonModel::whereId($request->input('id'))->first();
+        if (!empty($tmp)){
+            if ($tmp->isValid()) { //判断文件上传是否有效
+                $FileType = $tmp->getClientOriginalExtension(); //获取文件后缀
+
+                $FilePath = $tmp->getRealPath(); //获取文件临时存放位置
+
+                $FileName = 'lesson/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
+
+                Storage::disk('admin')->put($FileName, file_get_contents($FilePath)); //存储文件
+                $model->url = env('APP_URL') .'uploads/'. $FileName;
+            }
+        }
+        $model->category_id = $request->input('category_id');
+        $model->title       = $request->input('title');
+        $model->intro       = $request->input('intro');
+        $model->content     = $request->input('content');
+        $model->degree      = $request->input('degree');
+        $model->is_free     = $request->input('is_free');
+        $model->price       = $request->input('price');
+        $model->discounts   = $request->input('discounts');
+        $model->update();
+    }
+
+    public function edit($id,Content $content)
+    {
+        return $content
+            ->header('新建')
+            ->description('')
+            ->body($this->form()->edit($id));
     }
 
     /**
@@ -104,7 +139,7 @@ class LessonController
     {
         $cateModel = new Category();
         $form = new Form(new LessonModel());
-//        $form->hidden('id', 'ID');
+        $form->hidden('id', 'ID');
         $form->select('category_id', '分类')->options($cateModel::selectOptions(null,'顶级分类'));
         $form->text('title', '标题')->rules('required');
         $form->image('url', '缩略图');
