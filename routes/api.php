@@ -73,6 +73,11 @@ Route::middleware('cors')->group(function () {
         //查看考试是否通过
         Route::post('examPass','Api\ExamPaperController@examPaperPass');
 
+        //证书列表
+        Route::post('cerList','Api\CertificateController@cerList');
+        //换取证书
+        Route::post('getCertificate','Api\CertificateController@getCertificate');
+
     });
 });
 
