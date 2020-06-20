@@ -13,7 +13,10 @@ use Illuminate\Http\Request;
 
 class CertificateController extends Controller
 {
-
+    /**
+     * 所有证书列表
+     * @return array
+     */
     public function cerList()
     {
         try{
@@ -24,6 +27,11 @@ class CertificateController extends Controller
         }
     }
 
+    /**
+     * 换取证书
+     * @param Request $request
+     * @return array
+     */
     public function getCertificate(Request $request)
     {
         try{
@@ -31,9 +39,9 @@ class CertificateController extends Controller
             $serUserId = getAppUserModel()->id;
             $cerModel = CertificateModel::whereId($cerId)->first();
             $cerRecord = SerUserCertificateModel::whereSerUserId($serUserId)->whereCertificateId($cerModel->id)->first();
-            if ($cerRecord){
-                throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'您已领取过该证书');
-            }
+//            if ($cerRecord){
+//                throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'您已领取过该证书');
+//            }
             if (!$cerModel){
                 throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'没有证书');
             }
@@ -80,5 +88,29 @@ class CertificateController extends Controller
         }
 
 
+    }
+
+    /**
+     * 我的证书列表
+     * @return array
+     */
+    public function myCertificateList()
+    {
+        try{
+            $userId = getAppUserModel()->id;
+            $serCer = SerUserCertificateModel::whereSerUserId($userId)->get();
+            if (!$serCer){
+                throw new ServiceException( ErrorMsgConstants::VALIDATION_DATA_ERROR,'证书不存在');
+            }
+            $data = [];
+            foreach ($serCer as $item){
+                $certificate = CertificateModel::whereId($item->certificate_id)->first(['id','url','created_at']);
+                $data[] = $certificate;
+            }
+
+            return $this->wrapSuccessReturn(compact('data'));
+        }catch (\Exception $exception){
+            return $this->wrapErrorReturn($exception);
+        }
     }
 }
