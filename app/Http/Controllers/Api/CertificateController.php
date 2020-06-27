@@ -21,6 +21,9 @@ class CertificateController extends Controller
     {
         try{
             $data = CertificateModel::all(['title','id','url']);
+            if (!$data){
+                throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'暂无证书');
+            }
             return $this->wrapSuccessReturn(compact('data'));
         }catch (\Exception $exception){
             return $this->wrapErrorReturn($exception);
@@ -39,9 +42,9 @@ class CertificateController extends Controller
             $serUserId = getAppUserModel()->id;
             $cerModel = CertificateModel::whereId($cerId)->first();
             $cerRecord = SerUserCertificateModel::whereSerUserId($serUserId)->whereCertificateId($cerModel->id)->first();
-//            if ($cerRecord){
-//                throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'您已领取过该证书');
-//            }
+            if ($cerRecord){
+                throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'您已领取过该证书');
+            }
             if (!$cerModel){
                 throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'没有证书');
             }
@@ -98,7 +101,7 @@ class CertificateController extends Controller
     {
         try{
             $userId = getAppUserModel()->id;
-            $serCer = SerUserCertificateModel::whereSerUserId($userId)->get()->toArray();
+            $serCer = SerUserCertificateModel::whereSerUserId($userId)->get();
             if (empty($serCer)){
                 throw new ServiceException( ErrorMsgConstants::VALIDATION_DATA_ERROR,'我的证书不存在');
             }
