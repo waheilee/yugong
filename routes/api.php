@@ -77,9 +77,18 @@ Route::middleware('cors')->group(function () {
         Route::post('cerList','Api\CertificateController@cerList');
         //换取证书
         Route::post('getCertificate','Api\CertificateController@getCertificate');
-
+        //获取我的证书列表
         Route::post('getMyCertificateList','Api\CertificateController@myCertificateList');
-
+        //获取地址列表
+        Route::get('getAddressList','Api\SerAddressController@list');
+        //添加地址
+        Route::post('addAddress','Api\SerAddressController@store');
+        //编辑地址
+        Route::post('editAddress','Api\SerAddressController@edit');
+        //更新地址
+        Route::post('updateAddress','Api\SerAddressController@update');
+        //删除地址
+        Route::post('delAddress','Api\SerAddressController@delete');
     });
 });
 
