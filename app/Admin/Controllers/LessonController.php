@@ -121,7 +121,7 @@ class LessonController
         $grid->column('views', '浏览量');
         //添加章节
         $grid->actions(function (Grid\Displayers\Actions  $actions) {
-            $actions->disableEdit();
+//            $actions->disableEdit();
             $actions->add(new CreateSectionAction($actions->getKey()));
             $actions->add(new CreateVideoAction($actions->getKey()));
 
