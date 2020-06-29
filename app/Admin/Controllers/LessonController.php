@@ -47,9 +47,21 @@ class LessonController
     {
 
         $model = new LessonModel();
+        $tmp = $request->file('url');
+
+        if ($tmp->isValid()) { //判断文件上传是否有效
+            $FileType = $tmp->getClientOriginalExtension(); //获取文件后缀
+
+            $FilePath = $tmp->getRealPath(); //获取文件临时存放位置
+
+            $FileName = 'lesson/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
+
+            Storage::disk('admin')->put($FileName, file_get_contents($FilePath)); //存储文件
+            $path = env('APP_URL').'uploads/'. $FileName;
+            $model->url =$path;
+        }
         $model->category_id = $request->input('category_id');
         $model->title = $request->input('title');
-        $model->url = $request->input('url');
         $model->intro = $request->input('intro');
         $model->content = $request->input('content');
         $model->degree = $request->input('degree');
@@ -62,6 +74,7 @@ class LessonController
     public function update(Request $request)
     {
         $model = LessonModel::whereId($request->input('id'))->first();
+        $tmp = $request->file('url');
         if (!empty($tmp)){
             if ($tmp->isValid()) { //判断文件上传是否有效
                 $FileType = $tmp->getClientOriginalExtension(); //获取文件后缀
