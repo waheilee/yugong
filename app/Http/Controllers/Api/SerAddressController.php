@@ -45,7 +45,7 @@ class SerAddressController extends Controller
 
     public function edit(Request $request)
     {
-        $id = $request->input('id');
+        $id = $request->input('address_id');
         try{
             $data = SerAddressModel::whereId($id)->first();
             if (!$data){
@@ -59,7 +59,7 @@ class SerAddressController extends Controller
 
     public function update(Request $request)
     {
-        $id       = $request->input('id');
+        $id       = $request->input('address_id');
         $name     = $request->input('name');
         $phone    = $request->input('phone');
         $province = $request->input('province');
@@ -80,7 +80,7 @@ class SerAddressController extends Controller
 
     public function delete(Request $request)
     {
-        $id = $request->input('id');
+        $id = $request->input('address_id');
         try{
             $serAddressModel = SerAddressModel::whereId($id)->first();
             if (!$serAddressModel){
@@ -91,5 +91,21 @@ class SerAddressController extends Controller
         }catch (\Exception $exception){
             return $this->wrapErrorReturn($exception);
         }
+    }
+
+    public function default(Request $request)
+    {
+        try{
+            $addressId = $request->input('address_id');
+            $serId = getAppUserModel()->id;
+            SerAddressModel::whereSerId($serId)->update(['default'=>0]);
+            $serAddress = SerAddressModel::whereId($addressId)->first();
+            $serAddress->default = 1;
+            $data = $serAddress->update();
+            return $this->wrapSuccessReturn(compact('data'));
+        }catch (\Exception $exception){
+            return $this->wrapErrorReturn($exception);
+        }
+
     }
 }

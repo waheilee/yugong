@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $address 详细地址
  * @property string|null $phone 联系电话
  * @property string|null $name 收件人姓名
+ * @property int $default 默认地址
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SerAddressModel newModelQuery()
@@ -31,6 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SerAddressModel whereProvince($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SerAddressModel whereSerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SerAddressModel whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SerAddressModel whereDefault($value)
  * @mixin \Eloquent
  */
 class SerAddressModel extends Model

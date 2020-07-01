@@ -89,6 +89,10 @@ Route::middleware('cors')->group(function () {
         Route::post('updateAddress','Api\SerAddressController@update');
         //删除地址
         Route::post('delAddress','Api\SerAddressController@delete');
+        //设置默认地址
+        Route::post('defaultAddress','Api\SerAddressController@default');
+
+//        Route::post('exchangePaperCertificate','Api\CertificateController@');
     });
 });
 
