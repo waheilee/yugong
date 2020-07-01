@@ -31,6 +31,7 @@ class SerAddressController extends Controller
         $city     = $request->input('city');
         $county   = $request->input('county');
         $address  = $request->input('address');
+        $default  = $request->input('default');
         $serAddressModel = new SerAddressModel();
         $serAddressModel->name     = $name;
         $serAddressModel->ser_id   = getAppUserModel()->id;
@@ -39,6 +40,7 @@ class SerAddressController extends Controller
         $serAddressModel->city     = $city;
         $serAddressModel->county   = $county;
         $serAddressModel->address  = $address;
+        $serAddressModel->default  = $default;
         $data = $serAddressModel->save();
         return $this->wrapSuccessReturn(compact('data'));
     }
@@ -66,6 +68,7 @@ class SerAddressController extends Controller
         $city     = $request->input('city');
         $county   = $request->input('county');
         $address  = $request->input('address');
+        $default  = $request->input('default');
         $serAddressModel = SerAddressModel::whereId($id)->first();
         $serAddressModel->name     = $name;
         $serAddressModel->ser_id   = getAppUserModel()->id;
@@ -74,6 +77,7 @@ class SerAddressController extends Controller
         $serAddressModel->city     = $city;
         $serAddressModel->county   = $county;
         $serAddressModel->address  = $address;
+        $serAddressModel->default  = $default;
         $data = $serAddressModel->update();
         return $this->wrapSuccessReturn(compact('data'));
     }
