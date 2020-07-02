@@ -129,7 +129,7 @@ class LessonController
         $grid = new Grid(new LessonModel());
         $grid->column('category_id','所属分类');
         $grid->column('title','课程名称');
-        $grid->column('url','缩略图');
+        $grid->column('url','缩略图')->image('',50,50);
         $grid->column('intro','课程简介');
         $grid->column('views', '浏览量');
         //添加章节
