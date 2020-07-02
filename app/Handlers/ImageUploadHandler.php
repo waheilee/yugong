@@ -33,14 +33,14 @@ class ImageUploadHandler
             return false;
         }
 
-        Storage::disk('admin')->put($folder_name.$filename, file_get_contents($filePath)); //存储文件
+        Storage::disk('qiniu')->put($folder_name.$filename, file_get_contents($filePath)); //存储文件
 //        dd($qiniu);
         // 将图片移动到我们的目标存储路径中
 //        $file->move($upload_path, $filename);
 
         return [
 //            'path' => config('app.url') . "/$folder_name/$filename"
-            'path' => env('APP_URL').'uploads/'.$folder_name.$filename
+            'path' => env('QINIU_URL').'uploads/'.$folder_name.$filename
         ];
     }
 }
