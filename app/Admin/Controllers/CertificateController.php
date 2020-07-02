@@ -44,6 +44,7 @@ class CertificateController
         $title = $request->input('title');
         $require = array_filter($request->input('require'));
         $url = $request->file('url');
+        $iconUrl = $request->file('icon_url');
         $cer = new CertificateModel();
         if (!empty($url)){
             if ($url->isValid()) { //判断文件上传是否有效
@@ -55,6 +56,18 @@ class CertificateController
 
                 Storage::disk('admin')->put($FileName, file_get_contents($FilePath)); //存储文件
                 $cer->url = env('APP_URL') .'uploads/'. $FileName;
+            }
+        }
+        if (!empty($iconUrl)){
+            if ($iconUrl->isValid()) { //判断文件上传是否有效
+                $FileType = $iconUrl->getClientOriginalExtension(); //获取文件后缀
+
+                $FilePath = $iconUrl->getRealPath(); //获取文件临时存放位置
+
+                $FileName = 'nav/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
+
+                Storage::disk('admin')->put($FileName, file_get_contents($FilePath)); //存储文件
+                $cer->icon_url = env('APP_URL') .'uploads/'. $FileName;
             }
         }
         $cer->title = $title;
@@ -74,7 +87,8 @@ class CertificateController
     {
         $grid = new Grid(new CertificateModel());
         $grid->column('title','证书名称');
-        $grid->column('url','证书');
+        $grid->column('url','证书')->image('',50,50);
+        $grid->column('icon_url','底色图片')->image('',50,50);
         $grid->actions(function (Grid\Displayers\Actions $actions){
             $actions->disableView();
             $actions->disableEdit();
@@ -87,6 +101,7 @@ class CertificateController
         $form = new Form(new CertificateModel());
         $form->text('title','轮播图标题');
         $form->image('url', '证书');
+        $form->image('icon_url', '底图');
         $form->listbox('require','所需通过的测试')->options(ExamPaperModel::all()->pluck('title','id'));
         $form->disableViewCheck();
         $form->disableCreatingCheck();
