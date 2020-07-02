@@ -57,7 +57,7 @@ class LessonController
             $FileName = 'lesson/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
 
             Storage::disk('qiniu')->put($FileName, file_get_contents($FilePath)); //存储文件
-            $path = env('QINIU_URL').'uploads/'. $FileName;
+            $path = env('QINIU_URL'). $FileName;
             $model->url =$path;
         }
         $model->category_id = $request->input('category_id');
@@ -84,7 +84,7 @@ class LessonController
                 $FileName = 'lesson/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
 
                 Storage::disk('qiniu')->put($FileName, file_get_contents($FilePath)); //存储文件
-                $model->url = env('QINIU_URL') .'uploads/'. $FileName;
+                $model->url = env('QINIU_URL') . $FileName;
             }
         }
         $model->category_id = $request->input('category_id');

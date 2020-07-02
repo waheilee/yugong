@@ -40,7 +40,7 @@ class ImageUploadHandler
 
         return [
 //            'path' => config('app.url') . "/$folder_name/$filename"
-            'path' => env('QINIU_URL').'uploads/'.$folder_name.$filename
+            'path' => env('QINIU_URL').$folder_name.$filename
         ];
     }
 }
