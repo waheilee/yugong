@@ -20,7 +20,7 @@ class CertificateController extends Controller
     public function cerList()
     {
         try{
-            $data = CertificateModel::all(['title','id','url']);
+            $data = CertificateModel::all(['title','id','url','icon_url']);
             if (!$data){
                 throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'暂无证书');
             }
@@ -118,5 +118,17 @@ class CertificateController extends Controller
         }catch (\Exception $exception){
             return $this->wrapErrorReturn($exception);
         }
+    }
+
+    /**
+     * 换取纸质证书
+     * @param Request $request
+     */
+
+    public function exchangePaperCertificate(Request $request)
+    {
+        $cerId = $request->input('cer_id');
+        $certificateModel = CertificateModel::whereId($cerId)->first();
+
     }
 }
