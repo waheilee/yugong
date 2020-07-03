@@ -184,6 +184,7 @@ class VideoController
      */
     protected function form($id)
     {
+        phpinfo();
         $secModel = SectionModel::whereLessonId($id)->get();
         $data = [];
         foreach ($secModel as $item){
