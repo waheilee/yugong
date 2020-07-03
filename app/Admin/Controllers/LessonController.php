@@ -207,6 +207,7 @@ class LessonController
 //            $grid->disableActions();
             $grid->actions(function (Grid\Displayers\Actions $actions){
                 $actions->disableView();
+                $actions->disableEdit();
             });
             $grid->disableCreateButton();
             $grid->disableFilter();

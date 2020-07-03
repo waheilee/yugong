@@ -13,6 +13,7 @@ use Encore\Admin\Layout\Content;
 use Encore\Admin\Grid\Displayers\Actions;
 use Encore\Admin\Show;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 
 class VideoController
@@ -82,15 +83,29 @@ class VideoController
     {
 //        dd($request->all());
         $title = $request->input('title');
-        $url = $request->input('url');
+        $url = $request->file('url');
         $categoryId = $request->input('section_id');
         $lessonId = $request->input('lesson_id');
-            $videoModel = new Video();
-            $videoModel->title = $title;
-            $videoModel->section_id = $categoryId;
-            $videoModel->lesson_id = $lessonId;
-            $videoModel->url = $url;
-            $videoModel->save();
+        $videoModel = new Video();
+        if (!empty($url)){
+            if ($url->isValid()) { //判断文件上传是否有效
+                $FileType = $url->getClientOriginalExtension(); //获取文件后缀
+
+                $FilePath = $url->getRealPath(); //获取文件临时存放位置
+//                dd($FilePath);
+                $FileName = 'video/'.date('Y-m-d') . uniqid() . '.' . $FileType; //定义文件名
+
+                $disk = Storage::disk('qiniu'); //存储文件
+                $disk->put($FileName, $url);
+                $returnUrl = $disk->getDriver()->lastReturn();
+                $videoModel->url =env('QINIU_URL'). $returnUrl['key'];
+            }
+        }
+        $videoModel->title = $title;
+        $videoModel->section_id = $categoryId;
+        $videoModel->lesson_id = $lessonId;
+//        $videoModel->url = $url;
+        $videoModel->save();
         admin_toastr('添加课件成功','success');
         return redirect('admin/lesson/'.$lessonId);
     }
@@ -106,7 +121,7 @@ class VideoController
         $videoModel = Video::whereId($id)->first();
         $videoModel->title = $title;
         $videoModel->category_id = $categoryId;
-        $videoModel->url = $url;
+//        $videoModel->url = $url;
         $videoModel->tags = json_encode(array_filter($tags));
         $videoModel->update();
     }
@@ -180,7 +195,8 @@ class VideoController
         $form->text('title', '标题')->rules('required');
 //        $form->text('category_id', '分类')->rules('required');
         $form->select('section_id', '所属章节')->options($data);
-        $form->text('url', '视频地址')->rules('required');
+//        $form->text('url', '视频地址')->rules('required');
+        $form->file('url', '视频地址');
 //        $form->text('tags','标签');
 //        $form->multipleSelect('tag','标签')->options(Tags::all()->pluck('tag', 'id'));
         return $form;
