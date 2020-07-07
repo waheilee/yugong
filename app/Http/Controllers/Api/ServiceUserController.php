@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Constants\ErrorMsgConstants;
+use App\Exceptions\ServiceException;
 use App\Http\Controllers\Controller;
 use App\Services\Api\SerUserService;
 use App\Services\VerificationCodeService;
@@ -140,6 +142,37 @@ class ServiceUserController extends Controller
             $data = $this->serUserService->userInfo();
             return $this->wrapSuccessReturn(compact('data'));
         } catch (\Exception $exception) {
+            return $this->wrapErrorReturn($exception);
+        }
+    }
+
+    /**
+     * 修改密码
+     * @param Request $request
+     * @return array
+     */
+    public function changePass(Request $request)
+    {
+        try{
+            $validatorRules = [
+                'password'      => 'required',  //密码
+                'new_pass'   => 'required',//新摩玛
+
+            ];
+            $validatorMessages = [
+                'password.required'      => "密码不能为空!",
+                'new_pass.required'   => "新密码不能为空",
+            ];
+            $this->requestValidator($request, $validatorRules, $validatorMessages);
+            $oldPass = $request->input('password');
+            $newPass = $request->input('new_pass');
+            $serUserPass = getAppUserModel()->password;
+            if (md5($oldPass) !=$serUserPass){
+                throw new ServiceException(ErrorMsgConstants::DEFAULT_ERROR, "密码不正确");
+            }
+            $data = $this->serUserService->userPassChange($newPass);
+            return $this->wrapSuccessReturn(compact('data'));
+        }catch (\Exception $exception){
             return $this->wrapErrorReturn($exception);
         }
     }

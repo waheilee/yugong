@@ -239,4 +239,11 @@ class SerUserService
             throw new ServiceException(ErrorMsgConstants::DEFAULT_ERROR, "用户信息不存在!");
         }
     }
+
+    public function userPassChange($newPass)
+    {
+        $user = getAppUserModel();
+        $user->password = md5($newPass);
+        return $user->update();
+    }
 }

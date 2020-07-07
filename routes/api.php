@@ -46,6 +46,10 @@ Route::middleware('cors')->group(function () {
         //用户详情接口
         Route::post('userInfo', 'Api\ServiceUserController@userInfo');
 
+        //修改密码
+        Route::post('changePass','Api\ServiceUserController@changePass');
+
+
         //保单列表
         Route::post('policyList','Api\ActivePolicyController@policyList');
 
@@ -92,7 +96,6 @@ Route::middleware('cors')->group(function () {
         //设置默认地址
         Route::post('defaultAddress','Api\SerAddressController@default');
 
-//        Route::post('exchangePaperCertificate','Api\CertificateController@');
     });
 });
 
