@@ -7,6 +7,7 @@ use App\Constants\ErrorMsgConstants;
 use App\Exceptions\ServiceException;
 use App\Http\Controllers\Controller;
 use App\Models\CertificateModel;
+use App\Models\ExamPaperModel;
 use App\Models\ExamRecordModel;
 use App\Models\SerUserCertificateModel;
 use Illuminate\Http\Request;
@@ -67,9 +68,9 @@ class CertificateController extends Controller
             $serUserId = getAppUserModel()->id;
             $cerModel = CertificateModel::whereId($cerId)->first();
             $cerRecord = SerUserCertificateModel::whereSerUserId($serUserId)->whereCertificateId($cerModel->id)->first();
-            if ($cerRecord){
-                throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'您已领取过该证书');
-            }
+//            if ($cerRecord){
+//                throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'您已领取过该证书');
+//            }
             if (!$cerModel){
                 throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'没有证书');
             }
@@ -102,7 +103,14 @@ class CertificateController extends Controller
                 }
             }
             if ($flag) {
-                $data =  $array;
+                $data = [];
+                foreach ($array as $k=>$v){
+                    if ($v ==false){
+                        $exam = ExamPaperModel::whereId($k)->first(['id','title']);
+                        $data[] = $exam;
+                    }
+                }
+                throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'还有科目未考过');
             }else{
             $serUserCer = new SerUserCertificateModel();
             $serUserCer->ser_user_id = getAppUserModel()->id;
@@ -112,7 +120,7 @@ class CertificateController extends Controller
             }
             return $this->wrapSuccessReturn(compact('data'));
         }catch (\Exception $exception){
-            return $this->wrapErrorReturn($exception);
+            return $this->wrapErrorReturn($exception,compact('data'));
         }
 
 

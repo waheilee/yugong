@@ -31,19 +31,24 @@ class Controller extends BaseController
         return $this->result;
     }
 
-    protected function wrapErrorReturn($exception)
+    protected function wrapErrorReturn($exception,$responseData = null)
     {
         $logger = customerLoggerHandle("ErrorReturn");
         $logger->debug("接口异常", getExceptionMainInfo($exception));
         $this->result['status_code'] = BaseConstants::RETURN_ERROR;
         $this->result['message'] = ErrorMsgConstants::$errorMsg[ErrorMsgConstants::API_ERROR_MESSAGE];
-        $this->result['data'] = [];
-
         if ($exception instanceof ServiceException) {
             $this->result['message'] = $exception->getMessage();
         } elseif ($exception instanceof CustomException) {
             $this->result['status_code'] = $exception->getCode();
             $this->result['message'] = $exception->getMessage();
+        }
+        if (!empty($responseData)){
+            foreach ($responseData as $key => $value) {
+                $this->result[$key] = $value;
+            }
+        }else{
+            $this->result['data'] = [];
         }
 
         return $this->result;
