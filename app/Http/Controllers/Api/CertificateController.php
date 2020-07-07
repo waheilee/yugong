@@ -20,10 +20,33 @@ class CertificateController extends Controller
     public function cerList()
     {
         try{
-            $data = CertificateModel::all(['title','id','url','icon_url']);
-            if (!$data){
+            $cer = CertificateModel::all(['id','title','url','icon_url']);
+            if (!$cer){
                 throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'暂无证书');
             }
+            $userId = getAppUserModel()->id;
+            $serCer = SerUserCertificateModel::whereSerUserId($userId)->get();
+            if (empty($serCer)){
+                throw new ServiceException( ErrorMsgConstants::VALIDATION_DATA_ERROR,'我的证书不存在');
+            }
+            $data = [];
+            foreach ($serCer as $item){
+                $certificate = CertificateModel::whereId($item->certificate_id)->first(['id','url','created_at','icon_url']);
+                if (!$certificate){
+                    throw new ServiceException( ErrorMsgConstants::VALIDATION_DATA_ERROR,'证书不存在');
+                }
+                $data['my_certificate'][] = $certificate;
+
+
+            }
+            foreach ($cer as $k=>$v){
+                foreach ($serCer as $item=>$i){
+                    if ($v->id == $i->certificate_id){
+                        unset($cer[$k]);
+                    }
+                }
+            }
+            $data['cer'] = $cer;
             return $this->wrapSuccessReturn(compact('data'));
         }catch (\Exception $exception){
             return $this->wrapErrorReturn($exception);
@@ -96,6 +119,7 @@ class CertificateController extends Controller
     /**
      * 我的证书列表
      * @return array
+     * 该功能作废
      */
     public function myCertificateList()
     {
