@@ -31,7 +31,7 @@ class CertificateController extends Controller
             }
             $data = [];
             foreach ($serCer as $item){
-                $certificate = CertificateModel::whereId($item->certificate_id)->first(['id','url','created_at','icon_url']);
+                $certificate = CertificateModel::whereId($item->certificate_id)->first(['id','title','url','icon_url','created_at']);
                 if (!$certificate){
                     throw new ServiceException( ErrorMsgConstants::VALIDATION_DATA_ERROR,'证书不存在');
                 }
@@ -46,7 +46,9 @@ class CertificateController extends Controller
                     }
                 }
             }
-            $data['cer'] = $cer;
+            foreach ($cer as  $k=>$v){
+                $data['cer'][] = $v;
+            }
             return $this->wrapSuccessReturn(compact('data'));
         }catch (\Exception $exception){
             return $this->wrapErrorReturn($exception);
