@@ -68,9 +68,9 @@ class CertificateController extends Controller
             $serUserId = getAppUserModel()->id;
             $cerModel = CertificateModel::whereId($cerId)->first();
             $cerRecord = SerUserCertificateModel::whereSerUserId($serUserId)->whereCertificateId($cerModel->id)->first();
-//            if ($cerRecord){
-//                throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'您已领取过该证书');
-//            }
+            if ($cerRecord){
+                throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'您已领取过该证书');
+            }
             if (!$cerModel){
                 throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'没有证书');
             }
