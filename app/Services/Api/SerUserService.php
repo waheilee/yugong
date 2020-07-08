@@ -57,7 +57,7 @@ class SerUserService
      * @param $phone
      * @return array
      */
-    public function register($password, $phone)
+    public function register($name,$idNum,$password, $phone)
     {
         $goLoginPage = true;
         /**
@@ -106,7 +106,7 @@ class SerUserService
             /**
              * 用户主表
              */
-            $appUser = $this->createAppUser($password, $phone);
+            $appUser = $this->createAppUser($name,$idNum,$password, $phone);
 //            $this->createAppUserBalance($appUserUuid, $upPackages);
 
 //            if ($isLoginUserAndBuy) {
@@ -179,15 +179,18 @@ class SerUserService
      * 创建用户
      * @param $password
      * @param $phone
+     * @param $name
+     * @param $idNum
      * @return ServiceUserModel
      */
-    private function createAppUser( $password, $phone)
+    private function createAppUser($name,$idNum, $password, $phone)
     {
         $appUserModel = new ServiceUserModel();
-        $appUserModel->name = $phone;
+        $appUserModel->name     = $name;
+        $appUserModel->id_card  = $idNum;
         $appUserModel->password = md5($password);
-        $appUserModel->phone = $phone;
-        $appUserModel->status = BaseConstants::USER_STATUS_INIT;
+        $appUserModel->phone    = $phone;
+        $appUserModel->status   = BaseConstants::USER_STATUS_INIT;
         $appUserModel->save();
         return $appUserModel;
     }
