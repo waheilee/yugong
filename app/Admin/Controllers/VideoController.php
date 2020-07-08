@@ -107,7 +107,7 @@ class VideoController
 //        $videoModel->url = $url;
         $videoModel->save();
         admin_toastr('添加课件成功','success');
-        return redirect('admin/lesson/'.$lessonId);
+        return redirect('admin/lesson');
     }
 
     public function update(Request $request)
