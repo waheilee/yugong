@@ -37,6 +37,8 @@ Route::middleware('cors')->group(function () {
 
     //导航栏内容
     Route::post('navDetail','Api\NavController@detail');
+    //验证身份证
+    Route::post('idValidator','Api\ServiceUserController@idValidator');
 
     /** jwt Auth Api  需要登录的接口*/
     Route::group(['middleware' => ['jwtAuth']], function () {
@@ -49,8 +51,7 @@ Route::middleware('cors')->group(function () {
         //修改密码
         Route::post('changePass','Api\ServiceUserController@changePass');
 
-        //验证身份证
-        Route::post('idValidator','Api\ServiceUserController@idValidator');
+
 
         //保单列表
         Route::post('policyList','Api\ActivePolicyController@policyList');
