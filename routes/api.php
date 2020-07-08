@@ -51,6 +51,9 @@ Route::middleware('cors')->group(function () {
         //修改密码
         Route::post('changePass','Api\ServiceUserController@changePass');
 
+        //头像设置
+        Route::post('setAvatar','Api\ServiceUserController@setAvatar');
+
 
 
         //保单列表

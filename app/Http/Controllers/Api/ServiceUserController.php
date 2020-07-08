@@ -6,9 +6,11 @@ namespace App\Http\Controllers\Api;
 use App\Constants\ErrorMsgConstants;
 use App\Exceptions\ServiceException;
 use App\Http\Controllers\Controller;
+use App\Models\ServiceUserModel;
 use App\Services\Api\SerUserService;
 use App\Services\VerificationCodeService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Jxlwqq\IdValidator\IdValidator;
 
 class ServiceUserController extends Controller
@@ -201,6 +203,35 @@ class ServiceUserController extends Controller
         }catch (\Exception $exception){
             return $this->wrapErrorReturn($exception);
         }
+
+    }
+
+    /**
+     * 头像上传修改
+     * @param Request $request
+     * @return array
+     */
+    public function setAvatar(Request $request)
+    {
+        try{
+            $image = $request->input('avatar'); // image base64 encoded
+            $base =  preg_match("/data:image\/(.*?);/",$image,$image_extension); // extract the image extension
+            $image = preg_replace('/data:image\/(.*?);base64,/','',$image); // remove the type part
+            $image = str_replace(' ', '+', $image);
+            if (!$base){
+                throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'上传的base64图片格式有误');
+            }
+            $imageName = 'avatar/'.date('Y-m-d') . uniqid() . '.' . $image_extension[1]; //generating unique file name;
+            Storage::disk('qiniu')->put($imageName,base64_decode($image));
+            $serId = getAppUserUuid();
+            $serModel = ServiceUserModel::whereId($serId)->first();
+            $serModel->avatar = env('QINIU_URL').$imageName;
+            $data = $serModel->update();
+            return $this->wrapSuccessReturn(compact('data'));
+        }catch (\Exception $exception){
+            return $this->wrapErrorReturn($exception);
+        }
+
 
     }
 }
