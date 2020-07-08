@@ -130,7 +130,7 @@ class LessonController
         $grid->column('category_id','所属分类');
         $grid->column('title','课程名称');
         $grid->column('url','缩略图')->image('',50,50);
-        $grid->column('intro','课程简介');
+        $grid->column('intro','课程简介')->width(800);
         $grid->column('views', '浏览量');
         //添加章节
         $grid->actions(function (Grid\Displayers\Actions  $actions) {
@@ -156,7 +156,7 @@ class LessonController
         $form->select('category_id', '分类')->options($cateModel::selectOptions(null,'顶级分类'));
         $form->text('title', '标题')->rules('required');
         $form->image('url', '缩略图');
-        $form->select('degree','难度')->options([1 => '初级', 2 => '中级', 3 => '高级']);
+        $form->select('degree','难度')->options([1 => '初级', 2 => '中级', 3 => '高级'])->required();
         $form->radio('is_free', '是否免费')->options([ 0 => '免费', 1=> '收费'])->default(0);
         $form->text('price','价格')->placeholder('如果课程免费可不填价格');
         $form->text('discounts','优惠价格')->placeholder('如果课程免费可不填价格');
