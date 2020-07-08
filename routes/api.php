@@ -49,6 +49,8 @@ Route::middleware('cors')->group(function () {
         //修改密码
         Route::post('changePass','Api\ServiceUserController@changePass');
 
+        //验证身份证
+        Route::post('idValidator','Api\ServiceUserController@idValidator');
 
         //保单列表
         Route::post('policyList','Api\ActivePolicyController@policyList');

@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Api\SerUserService;
 use App\Services\VerificationCodeService;
 use Illuminate\Http\Request;
+use Jxlwqq\IdValidator\IdValidator;
 
 class ServiceUserController extends Controller
 {
@@ -175,5 +176,31 @@ class ServiceUserController extends Controller
         }catch (\Exception $exception){
             return $this->wrapErrorReturn($exception);
         }
+    }
+
+    /**
+     * 验证身份证号码
+     * @param Request $request
+     * @return array
+     */
+    public function idValidator(Request $request)
+    {
+        try{
+            $validatorRules = [
+                'id_num'      => 'required',  //密码
+            ];
+            $validatorMessages = [
+                'id_num.required'      => "身份证号码不能为空",
+            ];
+            $this->requestValidator($request, $validatorRules, $validatorMessages);
+            $idNum = $request->input('id_num');
+            $idValidator = new IdValidator();
+            $data = $idValidator->isValid($idNum);
+//            dd($data);
+            return $this->wrapSuccessReturn(compact('data'));
+        }catch (\Exception $exception){
+            return $this->wrapErrorReturn($exception);
+        }
+
     }
 }
