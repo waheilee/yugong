@@ -76,6 +76,7 @@ class CertificateController extends Controller
             }
             $require =  json_decode($cerModel->require);
             $record = ExamRecordModel::whereSerUserId($serUserId)->wherePass(1)->get();
+            dd($record);
             $arr = [];//查找出用户通过考试的所有试卷id
             foreach ($record as $item=>$v){
                 $arr[$item] = $v->paper_id;
