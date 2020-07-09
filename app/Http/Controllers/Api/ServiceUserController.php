@@ -61,25 +61,27 @@ class ServiceUserController extends Controller
     {
         try {
             $validatorRules = [
-                'name'          =>'require',
+                'name'          => 'required',
                 'password'      => 'required',  //登录密码
                 'phone'         => 'required',//手机号
-                'id_num'        =>'required',//身份证号码
-                'code'         => 'required',//验证码
+                'id_num'        => 'required',//身份证号码
+                'code'          => 'required',//验证码
             ];
             $validatorMessages = [
                 'name.required'          =>"真实姓名不能为空" ,
                 'password.required'      => "密码不能为空!",
                 'phone.required'         => "手机号不能为空!",
-                'id_num.required'         => "身份证号码不能空!",
-                'code.required'         => "验证码不能为空!",
+                'id_num.required'        => "身份证号码不能空!",
+                'code.required'          => "验证码不能为空!",
             ];
             $this->requestValidator($request, $validatorRules, $validatorMessages);
+
             $password = $request->input('password');
             $phone = $request->input('phone');
             $idNum = $request->input('id_num');
             $name = $request->input('name');
             $code = $request->input('code');
+
             /**
              * 验证短信验证码
              * @var VerificationCodeService $verificationCodeService

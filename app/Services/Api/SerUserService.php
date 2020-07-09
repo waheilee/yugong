@@ -53,7 +53,9 @@ class SerUserService
 
     /**
      * 手艺人注册
+     * @param $name
      * @param $password
+     * @param $idNum
      * @param $phone
      * @return array
      */
