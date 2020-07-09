@@ -237,16 +237,32 @@ class SerUserService
             $data['bank_num'] = $appUser->bank_num;
             $data['level'] = $appUser->level;
             $data['policy'] = $policyModel;
+            $data['id_card'] = $this->ycIdCard($appUser->id_card);
             return $data;
         }else{
             throw new ServiceException(ErrorMsgConstants::DEFAULT_ERROR, "用户信息不存在!");
         }
     }
 
+    /**
+     * 修改密码
+     * @param $newPass
+     * @return bool|int
+     */
     public function userPassChange($newPass)
     {
         $user = getAppUserModel();
         $user->password = md5($newPass);
         return $user->update();
+    }
+
+    /**
+     * 隐藏身份证出身年月日信息
+     * @param $idCard
+     * @return mixed|string
+     */
+    function ycIdCard($idCard){
+        $data = strlen($idCard)==15?substr_replace($idCard,"****",8,4):(strlen($idCard)==18?substr_replace($idCard,"********",6,8):"身份证位数不正常！");
+        return $data;
     }
 }

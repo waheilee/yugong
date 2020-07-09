@@ -237,7 +237,5 @@ class ServiceUserController extends Controller
         }catch (\Exception $exception){
             return $this->wrapErrorReturn($exception);
         }
-
-
     }
 }
