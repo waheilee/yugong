@@ -22,13 +22,13 @@ class SerUserService
     }
     /**
      * 手艺人登录
-     * @param $name
+     * @param $phone
      * @param $password
      * @return array
      */
-    public function login($name, $password)
+    public function login($phone, $password)
     {
-        $appUser = ServiceUserModel::wherePassword(md5($password))->whereName($name)->first();
+        $appUser = ServiceUserModel::wherePassword(md5($password))->wherePhone($phone)->first();
         if ($appUser) {
 //            if ($appUser->status == BaseConstants::USER_STATUS_INIT) {
 //                throw new ServiceException(ErrorMsgConstants::API_ERROR_MESSAGE, "账号未激活!");
