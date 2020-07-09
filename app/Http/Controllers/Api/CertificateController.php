@@ -67,17 +67,25 @@ class CertificateController extends Controller
             $cerId = $request->input('cer_id');
             $serUserId = getAppUserModel()->id;
             $cerModel = CertificateModel::whereId($cerId)->first();
-            $cerRecord = SerUserCertificateModel::whereSerUserId($serUserId)->whereCertificateId($cerModel->id)->first();
-            if ($cerRecord){
-                throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'您已领取过该证书');
-            }
             if (!$cerModel){
+                $data =[];
                 throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'没有证书');
             }
+            $cerRecord = SerUserCertificateModel::whereSerUserId($serUserId)->whereCertificateId($cerModel->id)->first();
+            if ($cerRecord){
+                $data =[];
+                throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'您已领取过该证书');
+            }
+
             $require =  json_decode($cerModel->require);
             $record = ExamRecordModel::whereSerUserId($serUserId)->wherePass(1)->get();
-            if (!$record){
-                dd('未通过该课程所有考试');
+            if ($record->isEmpty()){
+                $data = [];
+                foreach (json_decode($cerModel->require) as $k=>$v){
+                    $exam = ExamPaperModel::whereId($v)->first(['id','title']);
+                    $data[] = $exam;
+                }
+                throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'还有科目未考过');
             }
             $arr = [];//查找出用户通过考试的所有试卷id
             foreach ($record as $item=>$v){
@@ -113,10 +121,8 @@ class CertificateController extends Controller
                         $data[] = $exam;
                     }
                 }
-                dd($data);
                 throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'还有科目未考过');
             }else{
-                dd(123);
             $serUserCer = new SerUserCertificateModel();
             $serUserCer->ser_user_id = getAppUserModel()->id;
             $serUserCer->certificate_id = $cerModel->id;
