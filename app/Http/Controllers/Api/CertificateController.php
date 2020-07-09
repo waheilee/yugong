@@ -93,6 +93,7 @@ class CertificateController extends Controller
                     }
                 }
             }
+            dd($array);
 
             $flag = false;
             //循环判断是否全部通过好事科目，通过则兑换证书，未通过则返回试卷id对应通过情况
@@ -102,7 +103,6 @@ class CertificateController extends Controller
                     break;
                 }
             }
-            dd($flag);
             if ($flag) {
                 $data = [];
                 foreach ($array as $k=>$v){
