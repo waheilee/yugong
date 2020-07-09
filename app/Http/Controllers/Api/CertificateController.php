@@ -93,7 +93,6 @@ class CertificateController extends Controller
                     }
                 }
             }
-            dd($array);
 
             $flag = false;
             //循环判断是否全部通过好事科目，通过则兑换证书，未通过则返回试卷id对应通过情况
@@ -111,8 +110,10 @@ class CertificateController extends Controller
                         $data[] = $exam;
                     }
                 }
+                dd($data);
                 throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'还有科目未考过');
             }else{
+                dd(123);
             $serUserCer = new SerUserCertificateModel();
             $serUserCer->ser_user_id = getAppUserModel()->id;
             $serUserCer->certificate_id = $cerModel->id;
