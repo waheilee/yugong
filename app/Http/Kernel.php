@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\ApiMiddleware;
 use App\Http\Middleware\AuthJWT;
+use App\Http\Middleware\AuthUserJWT;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -66,6 +67,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'jwtAuth'    => AuthJWT::class,
+        'jwtUserAuth'    => AuthUserJWT::class,
         'cors' => \Fruitcake\Cors\HandleCors::class,
     ];
 

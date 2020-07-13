@@ -37,7 +37,7 @@ class ServiceUserController extends Controller
             ];
 
             $validatorMessages = [
-                'name.required'       => "账户不能为空!",
+                'phone.required'       => "账户不能为空!",
                 'password.required'   => "密码不能为空!",
             ];
 

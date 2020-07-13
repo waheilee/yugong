@@ -40,6 +40,8 @@ Route::middleware('cors')->group(function () {
     //验证身份证
     Route::post('idValidator','Api\ServiceUserController@idValidator');
 
+
+
     /** jwt Auth Api  需要登录的接口*/
     Route::group(['middleware' => ['jwtAuth']], function () {
         //安全登出接口
@@ -102,6 +104,24 @@ Route::middleware('cors')->group(function () {
         //设置默认地址
         Route::post('defaultAddress','Api\SerAddressController@default');
 
+
+
+    });
+
+    /**
+     * 消费端API
+     */
+    Route::post('userRegister','Api\UserController@register');
+
+    //登录
+    Route::post('userLogin', 'Api\UserController@login');
+
+    Route::group(['middleware' => ['jwtUserAuth']],function(){
+        /**
+         * 消费端接口
+         */
+        //安全登出接口
+        Route::post('userLogout', 'Api\UserController@logout');
     });
 });
 

@@ -50,6 +50,7 @@ class UserModel extends Authenticatable implements JWTSubject
     public function getJWTIdentifier()
     {
         // TODO: Implement getJWTIdentifier() method.
+        return $this->getKey();
     }
 
     /**
@@ -60,5 +61,6 @@ class UserModel extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         // TODO: Implement getJWTCustomClaims() method.
+        return [];
     }
 }

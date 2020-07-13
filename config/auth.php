@@ -46,6 +46,11 @@ return [
             'provider' => 'ser_users',
 //            'hash' => false,
         ],
+        'user_api' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+//            'hash' => false,
+        ],
     ],
 
     /*
