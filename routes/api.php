@@ -105,7 +105,7 @@ Route::middleware('cors')->group(function () {
         Route::post('defaultAddress','Api\SerAddressController@default');
 
         //获取服务
-        Route::post('serverList','Api\SerTplController@serverList');
+        Route::get('serverList','Api\SerTplController@serverList');
         //换取服务
         Route::post('getServer','Api\SerTplController@getServer');
         //我的服务
