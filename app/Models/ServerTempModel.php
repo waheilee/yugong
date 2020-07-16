@@ -65,10 +65,6 @@ class ServerTempModel extends Model
     use SoftDeletes;
     protected $table = 'servers_template';
     public static $addToSearch = true;
-    public function getThumbAttribute($thumb)
-    {
-        return assertUrl($thumb);
-    }
 
     public function category()
     {

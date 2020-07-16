@@ -104,7 +104,12 @@ Route::middleware('cors')->group(function () {
         //设置默认地址
         Route::post('defaultAddress','Api\SerAddressController@default');
 
-
+        //获取服务
+        Route::post('serverList','Api\SerTplController@serverList');
+        //换取服务
+        Route::post('getServer','Api\SerTplController@getServer');
+        //我的服务
+        Route::post('myServer','Api\SerTplController@myServer');
 
     });
 
