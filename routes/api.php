@@ -111,17 +111,17 @@ Route::middleware('cors')->group(function () {
     /**
      * 消费端API
      */
-    Route::post('userRegister','Api\UserController@register');
+    Route::post('userRegister','User\UserController@register');
 
     //登录
-    Route::post('userLogin', 'Api\UserController@login');
+    Route::post('userLogin', 'User\UserController@login');
 
     Route::group(['middleware' => ['jwtUserAuth']],function(){
         /**
          * 消费端接口
          */
         //安全登出接口
-        Route::post('userLogout', 'Api\UserController@logout');
+        Route::post('userLogout', 'User\UserController@logout');
     });
 });
 

@@ -38,6 +38,8 @@ Route::group([
     $router->resource('nav','NavController');
     //证书管理
     $router->resource('certificate','CertificateController');
+    //服务项目添加
+    $router->resource('addServer','ServerTemplateController');
 
     //编辑器图片上传
     $router->post('up_image','UploadController@upload');
