@@ -49,17 +49,19 @@ class SerTplController extends Controller
                 $paperModel = ExamPaperModel::whereId($examId)->first();
                 throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'您还未通过'.$paperModel->title.'测试！');
             }
+//            dd($serTplModel->category_id);
 
             $serverTempModel = new ServerTempModel();
             $serverTempModel->uuid             = generateNewUuid();
             $serverTempModel->category_id      = $serTplModel->category_id;
-            $serverTempModel->exam_id          = $serTplModel->exam_id;
             $serverTempModel->name             = $serTplModel->name;
             $serverTempModel->title            = $serTplModel->title;
             $serverTempModel->price            = $serTplModel->price;
             $serverTempModel->original_price   = $serTplModel->original_price;
+            $serverTempModel->thumb            = $serTplModel->thumb;
             $serverTempModel->count            = $serTplModel->count;
             $serverTempModel->content          = $serTplModel->content;
+            $serverTempModel->exam_id          = $serTplModel->exam_id;
             $serverTempModel->ser_user_id      = $serUserId;
             $serverTempModel->save();
             $data = '成功获取服务';
