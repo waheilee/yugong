@@ -18,7 +18,7 @@ class CreateServersTable extends Migration
 
             $table->unsignedInteger('category_id')->comment('商品所属分类');
             $table->string('uuid')->comment('商品的uuid号');
-            $table->string('name')->unique();
+            $table->string('name')->comment('服务名称');
             $table->string('title')->comment('简短的描述');
             $table->decimal('price', 12, 2)->comment('商品的价格');
             $table->decimal('original_price', 12, 2)->comment('商品原本的价格');
