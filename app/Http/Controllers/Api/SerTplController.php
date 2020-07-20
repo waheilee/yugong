@@ -18,7 +18,7 @@ class SerTplController extends Controller
     public function serverList()
     {
         try{
-            $data = ServerTempModel::all();
+            $data = ServerTempModel::whereSerUserId(null)->get();
             if (!$data){
                 throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'暂无服务');
             }
@@ -64,8 +64,8 @@ class SerTplController extends Controller
             $serverTempModel->exam_id          = $serTplModel->exam_id;
             $serverTempModel->ser_user_id      = $serUserId;
             $serverTempModel->save();
-            $data = '成功获取服务';
-            return $this->wrapSuccessReturn(compact('data'));
+//            $data = '成功获取服务';
+            return $this->wrapSuccessReturn(['message'=>'成功获取服务']);
         }catch (\Exception $exception){
             return $this->wrapErrorReturn($exception);
         }
