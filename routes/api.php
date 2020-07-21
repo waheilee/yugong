@@ -127,6 +127,10 @@ Route::middleware('cors')->group(function () {
          */
         //安全登出接口
         Route::post('userLogout', 'User\UserController@logout');
+
+        Route::post('serversList', 'User\ServersController@serversList');
+
+
     });
 });
 
