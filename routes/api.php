@@ -129,6 +129,7 @@ Route::middleware('cors')->group(function () {
         Route::post('userLogout', 'User\UserController@logout');
 
         Route::post('serversList', 'User\ServersController@serversList');
+        Route::post('serversDetail', 'User\ServersController@serversDetail');
 
 
     });
