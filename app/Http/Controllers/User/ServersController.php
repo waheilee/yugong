@@ -5,7 +5,6 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\ServiceUserModel;
-use function Couchbase\defaultDecoder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -48,12 +47,13 @@ class ServersController extends Controller
             foreach ($serUserModel as $value){
 //                dd($value->id);
                 $item = [];
-                $item['goods_id'] = $value->goods_id;
-                $item['goods_name'] = $value->goods_name;
-                $item['goods_price'] = $value->price;
+                $item['goods_id']      = $value->goods_id;
+                $item['goods_name']    = $value->goods_name;
+                $item['goods_price']   = $value->price;
                 $item['server_avatar'] = $value->avatar;
-                $item['server_name'] = $value->name;
-                $item['server_start'] = 5;
+                $item['server_name']   = $value->name;
+                $item['server_start']  = 5;
+                $item['work_age']      = '十年';
                 $data[] = $item;
             }
             return $this->wrapSuccessReturn(compact('data'));
