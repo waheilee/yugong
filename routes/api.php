@@ -121,6 +121,10 @@ Route::middleware('cors')->group(function () {
     //登录
     Route::post('userLogin', 'User\UserController@login');
 
+    Route::post('serversList', 'User\ServersController@serversList');
+    Route::post('serversDetail', 'User\ServersController@serversDetail');
+    Route::get('wechat/{id}','User\ServersController@weChatPay');
+
     Route::group(['middleware' => ['jwtUserAuth']],function(){
         /**
          * 消费端接口
@@ -128,12 +132,10 @@ Route::middleware('cors')->group(function () {
         //安全登出接口
         Route::post('userLogout', 'User\UserController@logout');
 
-        Route::post('serversList', 'User\ServersController@serversList');
-        Route::post('serversDetail', 'User\ServersController@serversDetail');
+
 
         Route::post('createOrder','User\ServersController@createdOrder');
 
-        Route::get('wechat/{id}','User\ServersController@weChatPay');
 
 
     });
