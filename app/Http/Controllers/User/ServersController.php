@@ -4,11 +4,12 @@ namespace App\Http\Controllers\User;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\OrderModel;
 use App\Models\ServerTempModel;
 use App\Models\ServiceUserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Yansongda\Pay\Pay;
 class ServersController extends Controller
 {
 
@@ -89,6 +90,66 @@ class ServersController extends Controller
         }
 
 //        dd($data);
+    }
+
+    public function createdOrder(Request $request)
+    {
+        try{
+            $serTplId = $request->input('ser_id');
+            $amount = $request->input('amount');//数量
+            $name  = $request->input('name');
+            $phone  = $request->input('phone');
+            $address  = $request->input('address');
+            $remake  = $request->input('remark');
+            $serverTime = $request->input('time');//上门服务时间
+            $serTplModel = ServerTempModel::whereId($serTplId)->first();
+            $order = new OrderModel();
+            $order->name = $name;
+            $order->phone = $phone;
+            $order->order_address = $address;
+            $order->order_time = $serverTime;
+            $order->area = $amount;
+            $order->remark = $remake;
+            $order->title = $serTplModel->name;
+            $order->order_num       = date('YmdHis') . rand(100000, 999999);//订单流水号
+            $order->user_id       = getAppUserId();
+            $order->service_id       = $serTplModel->ser_user_id;
+            $order->pay_money = exchangeToFen($amount*$serTplModel->price);
+            $order->pay_time = date('Y-m-d h:i:s',time());
+            $order->save();
+            $data['order_id'] = $order->id;
+            $data['order_price'] = exchangeToYuan($order->pay_money).'元';
+            return $this->wrapSuccessReturn(compact('data'));
+        }catch (\Exception $exception){
+            return $this->wrapErrorReturn($exception);
+        }
+
+
+
+//        $subject = null;
+//
+//        $aliPayOrder = [
+//            'out_trade_no' => $order->order_num,
+//            'total_amount' => exchangeToYuan($order->total_amount), // 支付金额
+//            'subject'      =>  $subject, // 备注
+//            'http_method'  => 'GET'
+//        ];
+//
+//        $config = config('pay.wechat');
+//
+//        return  Pay::wechat($config)->wap($aliPayOrder);
+    }
+
+    public function weChatPay($id)
+    {
+//        $orderId = $request->input('order_id');
+        $orderModel = OrderModel::whereId($id)->first();
+        $order = [
+            'out_trade_no' => time(),
+            'body' => 'subject-测试',
+            'total_fee' => $orderModel->pay_money,
+        ];
+        return Pay::wechat(config('pay.wechat'))->wap($order);
     }
 
 }

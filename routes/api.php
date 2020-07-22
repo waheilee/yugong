@@ -131,6 +131,10 @@ Route::middleware('cors')->group(function () {
         Route::post('serversList', 'User\ServersController@serversList');
         Route::post('serversDetail', 'User\ServersController@serversDetail');
 
+        Route::post('createOrder','User\ServersController@createdOrder');
+
+        Route::get('wechat/{id}','User\ServersController@weChatPay');
+
 
     });
 });

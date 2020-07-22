@@ -135,6 +135,11 @@ function getAppUserUuid()
     return $userUuid;
 }
 
+function getAppUserId(){
+    $userId = auth('user_api')->id();
+    return $userId;
+}
+
 function getPhotoUrl($photoName)
 {
     if (!empty($photoName)) {

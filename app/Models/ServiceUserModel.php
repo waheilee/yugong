@@ -47,6 +47,18 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ServiceUserModel whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ServiceUserModel whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string|null $province 省份
+ * @property string|null $city 市
+ * @property string|null $county 县
+ * @property string|null $address 详细地址
+ * @property string|null $lng 经度
+ * @property string|null $lat 纬度
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ServiceUserModel whereAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ServiceUserModel whereCity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ServiceUserModel whereCounty($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ServiceUserModel whereLat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ServiceUserModel whereLng($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ServiceUserModel whereProvince($value)
  */
 class ServiceUserModel extends Authenticatable implements JWTSubject
 {
