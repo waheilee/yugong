@@ -155,13 +155,13 @@ class ServersController extends Controller
         ];
         $app = Factory::officialAccount($config);
         // 获取微信的 openid 和 session_key
-        $miniProgram = EasyWeChat::miniProgram();
-        $data = $miniProgram->auth->session($request->code);
-        dd($data);
-        $user = $app->user->get();
+//        $miniProgram = EasyWeChat::miniProgram();
+//        $data = $miniProgram->auth->session($request->code);
+//        dd($data);
+        $user = $app->user;
+        dd($user);
 
         $original = session('wechat.oauth_user.default.original');
-        dd($original);
 //        $orderId = $request->input('order_id');
         $orderModel = OrderModel::whereId($id)->first();
         $order = [
