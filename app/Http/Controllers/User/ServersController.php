@@ -7,9 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Models\OrderModel;
 use App\Models\ServerTempModel;
 use App\Models\ServiceUserModel;
+use EasyWeChatComposer\EasyWeChat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yansongda\Pay\Pay;
+use EasyWeChat\Factory;
 class ServersController extends Controller
 {
 
@@ -140,8 +142,24 @@ class ServersController extends Controller
 //        return  Pay::wechat($config)->wap($aliPayOrder);
     }
 
-    public function weChatPay($id)
+    public function weChatPay($id, Request $request)
     {
+        $config = [
+            'app_id' => 'wx2e08b0303bde9168',
+            'secret' => '93bc89a7b99b5a872733fa52b8ac5b6c',
+
+            // 指定 API 调用返回结果的类型：array(default)/collection/object/raw/自定义类名
+            'response_type' => 'array',
+
+            //...
+        ];
+        $app = Factory::officialAccount($config);
+        // 获取微信的 openid 和 session_key
+        $miniProgram = EasyWeChat::miniProgram();
+        $data = $miniProgram->auth->session($request->code);
+        dd($data);
+        $user = $app->user->get();
+
         $original = session('wechat.oauth_user.default.original');
         dd($original);
 //        $orderId = $request->input('order_id');
