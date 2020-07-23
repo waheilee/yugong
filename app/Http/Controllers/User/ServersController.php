@@ -154,11 +154,12 @@ class ServersController extends Controller
             //...
         ];
         $app = Factory::officialAccount($config);
+        "https://api.weixin.qq.com/sns/jscode2session?appid=' + appid + '&secret=' + secret + '&js_code=' + code + '&grant_type=authorization_code";
         // 获取微信的 openid 和 session_key
 //        $miniProgram = EasyWeChat::miniProgram();
 //        $data = $miniProgram->auth->session($request->code);
 //        dd($data);
-        $user = $app->user;
+        $user = $app->oauth->user();
         dd($user);
 
         $original = session('wechat.oauth_user.default.original');
