@@ -142,6 +142,8 @@ class ServersController extends Controller
 
     public function weChatPay($id)
     {
+        $original = session('wechat.oauth_user.default.original');
+        dd($original);
 //        $orderId = $request->input('order_id');
         $orderModel = OrderModel::whereId($id)->first();
         $order = [
