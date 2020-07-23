@@ -69,6 +69,7 @@ class Kernel extends HttpKernel
         'jwtAuth'    => AuthJWT::class,
         'jwtUserAuth'    => AuthUserJWT::class,
         'cors' => \Fruitcake\Cors\HandleCors::class,
+        'wechat.oauth' => \Overtrue\LaravelWeChat\Middleware\OAuthAuthenticate::class,
     ];
 
     /**
