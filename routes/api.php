@@ -141,7 +141,7 @@ Route::middleware('cors')->group(function () {
     });
 });
 Route::post('wechat/notify','User\ServersController@notify');
-Route::group(['middleware' => ['web', 'wechat.oauth']], function () {
+Route::group(['middleware' => ['wechat.oauth']], function () {
     Route::get('/user', function () {
         $user = session('wechat.oauth_user.default'); // 拿到授权用户资料
 
