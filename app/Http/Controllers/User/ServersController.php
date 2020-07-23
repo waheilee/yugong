@@ -152,4 +152,16 @@ class ServersController extends Controller
         return Pay::wechat(config('pay.wechat'))->scan($order);
     }
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Yansongda\Pay\Exceptions\InvalidArgumentException
+     * @throws \Yansongda\Pay\Exceptions\InvalidSignException
+     */
+    public function notify(Request $request)
+    {
+        $result = Pay::wechat(config('pay.wechat'))->verify();
+        return Pay::wechat(config('pay.wechat'))->success();
+    }
+
 }
