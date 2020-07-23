@@ -136,6 +136,8 @@ Route::middleware('cors')->group(function () {
 
         Route::post('createOrder','User\ServersController@createdOrder');
 
+        Route::post('wechatOauthCallback','User\ServersController@wechatOauthCallback');
+
     });
 });
 Route::post('wechat/notify','User\ServersController@notify');

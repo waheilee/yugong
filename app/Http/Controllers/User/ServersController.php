@@ -144,16 +144,39 @@ class ServersController extends Controller
 
     public function weChatPay($id, Request $request)
     {
+//        $config = [
+//            'app_id' => 'wx2e08b0303bde9168',
+//            'secret' => '93bc89a7b99b5a872733fa52b8ac5b6c',
+//
+//            // 指定 API 调用返回结果的类型：array(default)/collection/object/raw/自定义类名
+//            'response_type' => 'array',
+//
+//            //...
+//        ];
         $config = [
-            'app_id' => 'wx2e08b0303bde9168',
-            'secret' => '93bc89a7b99b5a872733fa52b8ac5b6c',
-
-            // 指定 API 调用返回结果的类型：array(default)/collection/object/raw/自定义类名
-            'response_type' => 'array',
-
-            //...
+            // ...
+            'oauth' => [
+                'scopes'   => ['snsapi_userinfo'],
+                'callback' => '/oauth_callback',
+            ],
+            // ..
         ];
         $app = Factory::officialAccount($config);
+        $oauth = $app->oauth;
+        dd($oauth);
+// 未登录
+        if (empty($_SESSION['wechat_user'])) {
+
+            $_SESSION['target_url'] = 'user/profile';
+
+            return $oauth->redirect();
+            // 这里不一定是return，如果你的框架action不是返回内容的话你就得使用
+            // $oauth->redirect()->send();
+        }
+
+// 已经登录过
+        $user = $_SESSION['wechat_user'];
+        dd($user);
         $response = $app->oauth->scopes(['snsapi_userinfo'])
             ->redirect();
         dd($response);
@@ -174,6 +197,30 @@ class ServersController extends Controller
             'total_fee' => $orderModel->pay_money,
         ];
         return Pay::wechat(config('pay.wechat'))->scan($order);
+    }
+
+
+    public function wechatOauthCallback()
+    {
+        $config = [
+            'app_id' => 'wx2e08b0303bde9168',
+            'secret' => '93bc89a7b99b5a872733fa52b8ac5b6c',
+
+            // 指定 API 调用返回结果的类型：array(default)/collection/object/raw/自定义类名
+            'response_type' => 'array',
+
+            //...
+        ];
+        $app = Factory::officialAccount($config);
+        $oauth = $app->oauth;
+
+// 获取 OAuth 授权结果用户信息
+        $user = $oauth->user();
+        dd($user);
+        $_SESSION['wechat_user'] = $user->toArray();
+
+        $targetUrl = empty($_SESSION['target_url']) ? '/' : $_SESSION['target_url'];
+
     }
 
     /**
