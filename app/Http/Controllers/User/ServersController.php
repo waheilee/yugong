@@ -149,7 +149,7 @@ class ServersController extends Controller
             'body' => 'subject-测试',
             'total_fee' => $orderModel->pay_money,
         ];
-        return Pay::wechat(config('pay.wechat'))->wap($order);
+        return Pay::wechat(config('pay.wechat'))->scan($order);
     }
 
 }
