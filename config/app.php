@@ -168,7 +168,7 @@ return [
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Fruitcake\Cors\CorsServiceProvider::class,
         zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class,
-        SocialiteProviders\Manager\SocialiteWasCalled::class,
+
         /*
          * Application Service Providers...
          */

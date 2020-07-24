@@ -22,7 +22,6 @@
         "maatwebsite/excel": "^3.1",
         "overtrue/laravel-wechat": "~5.0",
         "predis/predis": "^1.1",
-        "socialiteproviders/weixin": "^4.0",
         "tymon/jwt-auth": "dev-develop",
         "yansongda/laravel-pay": "^2.2",
         "zgldh/qiniu-laravel-storage": "^0.10.3"

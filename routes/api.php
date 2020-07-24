@@ -141,14 +141,7 @@ Route::middleware('cors')->group(function () {
     });
 });
 Route::post('wechat/notify','User\ServersController@notify');
-Route::get('test', function () {
-    $code = '081euRI705A3iF1MmoF70TNQI70euRIt';
-    $driver = \SocialiteProviders\Weixin\WeixinExtendSocialite::driver('weixin');
-    $response = $driver->getAccessTokenResponse($code);
-    $driver->setOpenId($response['openid']);
-    $oauthUser = $driver->userFromToken($response['access_token']);
-    dd($oauthUser);
-});
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
