@@ -168,6 +168,10 @@ return [
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Fruitcake\Cors\CorsServiceProvider::class,
         zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class,
+        SocialiteProviders\Manager\SocialiteWasCalled::class => [
+            // add your listeners (aka providers) here
+            'SocialiteProviders\Weixin\WeixinExtendSocialite@handle'
+        ],
         /*
          * Application Service Providers...
          */
