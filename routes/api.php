@@ -151,7 +151,7 @@ Route::group(['middleware' => ['bindings','wechat.oauth']], function () {
 Route::get('buy','User\WeChatOauthController@buy')->name('buy'); //要访问的
 Route::get('profit','User\WeChatOauthController@profit')->name('profit'); //要跳转的
 Route::post('wechat/notify','User\ServersController@notify');
-
+Route::any('/wechat', 'User\WeChatOauthController@serve');
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

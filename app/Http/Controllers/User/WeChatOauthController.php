@@ -3,26 +3,28 @@
 namespace App\Http\Controllers\User;
 
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
-class WeChatOauthController
+class WeChatOauthController extends  Controller
 {
-    private $app;
-    public function __construct()
-    {
-        $config = [
-            'app_id' => 'wx2e08b0303bde9168',
-            'secret' => '93bc89a7b99b5a872733fa52b8ac5b6c',
-            'token' => 'hangzhouydhb',
-            'response_type' => 'array',
-            'oauth' => [
-                'scopes'   => ['snsapi_userinfo'],
-                'callback' => 'https://store.yd-hb.com/api/profit', //这个就是告诉授权要跳转到这个页面
-            ],
-        ];
-
-        $this->app = \EasyWeChat\Factory::officialAccount($config);
-    }
+//    private $app;
+//    public function __construct()
+//    {
+//        $config = [
+//            'app_id' => 'wx2e08b0303bde9168',
+//            'secret' => '93bc89a7b99b5a872733fa52b8ac5b6c',
+//            'token' => 'hangzhouydhb',
+//            'response_type' => 'array',
+//            'oauth' => [
+//                'scopes'   => ['snsapi_userinfo'],
+//                'callback' => 'https://store.yd-hb.com/api/profit', //这个就是告诉授权要跳转到这个页面
+//            ],
+//        ];
+//
+//        $this->app = \EasyWeChat\Factory::officialAccount($config);
+//    }
 
 
     public function buy(Request $request){
@@ -50,4 +52,23 @@ dd($response);
         $target_url = empty(session('target_url'))?'/':session('target_url');
         header('Location:'.$target_url);
     }
+
+    /**
+     * 处理微信的请求消息
+     *
+     * @return string
+     */
+    public function serve()
+    {
+        Log::info('request arrived.'); # 注意：Log 为 Laravel 组件，所以它记的日志去 Laravel 日志看，而不是 EasyWeChat 日志
+
+        $app = app('wechat.official_account');
+        $app->server->push(function($message){
+            return "欢迎关注 overtrue！";
+        });
+
+        return $app->server->serve();
+    }
+
+
 }
