@@ -66,7 +66,7 @@ dd($response);
         $app->server->push(function($message){
             return "欢迎关注 overtrue！";
         });
-        dd($app->aouth);
+        dd($app->oauth);
 
         return $app->server->serve();
     }
