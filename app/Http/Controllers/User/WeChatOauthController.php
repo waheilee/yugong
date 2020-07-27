@@ -26,7 +26,7 @@ class WeChatOauthController
 
 
     public function buy(Request $request){
-        $response = $this->app->oauth;
+        $response = app()->getBindings();
 dd($response);
         if(empty(session('wechat_user'))){
             $oauth = $this->app->oauth;
