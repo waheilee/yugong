@@ -36,6 +36,7 @@ class WeChatController extends  Controller
 //            session(['target_url'=>'/buy']);
 //            return $oauth->redirect();
 //        }
+        dd(123);
         // 未登录
         if (empty($_SESSION['wechat_user'])) {
 
