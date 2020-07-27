@@ -140,7 +140,7 @@ Route::middleware('cors')->group(function () {
 
     });
 });
-Route::group(['middleware' => ['api','wechat.oauth']], function () {
+Route::group(['middleware' => ['bindings','wechat.oauth']], function () {
     Route::get('/userOpen', function () {
         $user = session('wechat.oauth_user.default'); // 拿到授权用户资料
 
