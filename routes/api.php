@@ -140,6 +140,13 @@ Route::middleware('cors')->group(function () {
 
     });
 });
+Route::group(['middleware' => ['api','wechat.oauth']], function () {
+    Route::get('/userOpen', function () {
+        $user = session('wechat.oauth_user.default'); // 拿到授权用户资料
+
+        dd($user);
+    });
+});
 
 Route::get('buy','User\WeChatOauthController@buy')->name('buy'); //要访问的
 Route::get('profit','User\WeChatOauthController@profit')->name('profit'); //要跳转的
