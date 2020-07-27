@@ -23,3 +23,7 @@ Route::group(['middleware' => ['web','wechat.oauth']], function () {
         dd($user);
     });
 });
+Route::get('user', function(){
+    $user = session('wechat.oauth_user.default'); //一句话， 拿到授权用户资料
+    dd($user);
+})->middleware('wechat.oauth');
