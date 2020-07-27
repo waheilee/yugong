@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class WeChatOauthController extends  Controller
+class WeChatController extends  Controller
 {
     private $app;
     public function __construct()
@@ -60,14 +60,9 @@ class WeChatOauthController extends  Controller
      */
     public function serve()
     {
-        Log::info('request arrived.'); # 注意：Log 为 Laravel 组件，所以它记的日志去 Laravel 日志看，而不是 EasyWeChat 日志
-
-
         $this->app->server->push(function($message){
-            return "欢迎关注 overtrue！";
+            return "欢迎关注愚公帮帮";
         });
-        dd($this->app->oauth);
-
         return $this->app->server->serve();
     }
 
