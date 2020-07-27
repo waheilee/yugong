@@ -26,7 +26,7 @@ class WeChatOauthController
 
 
     public function buy(Request $request){
-        dd($this->app->oauth);
+        dd($this->app->oauth->scopes(['snsapi_userinfo'])->redirect());
         if(empty(session('wechat_user'))){
             $oauth = $this->app->oauth;
             dd($oauth);
