@@ -11,10 +11,10 @@ class WeChatOauthController
     public function __construct()
     {
         $config = [
-            'app_id' => 'wx2e08b0303bde9168',
-            'secret' => '93bc89a7b99b5a872733fa52b8ac5b6c',
-            'token' => 'hangzhouydhb',
-            'response_type' => 'array',
+//            'app_id' => 'wx2e08b0303bde9168',
+//            'secret' => '93bc89a7b99b5a872733fa52b8ac5b6c',
+//            'token' => 'hangzhouydhb',
+//            'response_type' => 'array',
             'oauth' => [
                 'scopes'   => ['snsapi_userinfo'],
                 'callback' => '/api/profit', //这个就是告诉授权要跳转到这个页面
