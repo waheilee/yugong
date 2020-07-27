@@ -15,15 +15,3 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('test','Api\ExamPaperController@test');
-Route::group(['middleware' => ['web','wechat.oauth']], function () {
-    Route::get('/userOpen', function () {
-        $user = session('wechat.oauth_user.default'); // 拿到授权用户资料
-
-        dd($user);
-    });
-});
-Route::get('user', function(){
-    $user = session('wechat.oauth_user.default'); //一句话， 拿到授权用户资料
-    dd($user);
-})->middleware('wechat.oauth');
