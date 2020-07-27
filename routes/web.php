@@ -23,3 +23,5 @@ Route::group(['middleware' => ['web','wechat.oauth']], function () {
         dd($user);
     });
 });
+Route::get('buy','User\WeChatController@buy')->name('buy'); //要访问的
+Route::get('profit','User\WeChatController@profit')->name('profit'); //要跳转的

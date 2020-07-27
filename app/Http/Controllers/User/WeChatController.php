@@ -19,7 +19,7 @@ class WeChatController extends  Controller
             'response_type' => 'array',
             'oauth' => [
                 'scopes'   => ['snsapi_userinfo'],
-                'callback' => 'https://store.yd-hb.com/api/profit', //这个就是告诉授权要跳转到这个页面
+                'callback' => 'https://store.yd-hb.com/profit', //这个就是告诉授权要跳转到这个页面
             ],
         ];
 
