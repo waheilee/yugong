@@ -28,26 +28,36 @@ class WeChatController extends  Controller
 
 
     public function buy(Request $request){
-        if(empty(session('wechat_user'))){
-            $oauth = $this->app->oauth;
-            session(['target_url'=>'/buy']);
-            return $oauth->redirect();
-        }
-        $user = session('wechat_user');
-        dd($user);
-        $skd = $this->app->jssdk->buildConfig(['updateAppMessageShareData', 'updateTimelineShareData'],$debug = false, $beta = false, $json = true);
-        $url = "https://store.yd-hb.com/api/buy";
-        $this->app->jssdk->setUrl($url);
+//        if(empty(session('wechat_user'))){
+//            $oauth = $this->app->oauth;
+////            dd($oauth);
+//            session(['target_url'=>'/buy']);
+//            return $oauth->redirect();
+//        }
+        // 未登录
+        if (empty($_SESSION['wechat_user'])) {
 
-        return view('share',compact('skd','user'));
+            $_SESSION['target_url'] = '/profile';
+
+            return $this->app->oauth->redirect();
+            // 这里不一定是return，如果你的框架action不是返回内容的话你就得使用
+            // $oauth->redirect()->send();
+        }
+        $user = $_SESSION['wechat_user'];
+//        dd($user);
+//        $skd = $this->app->jssdk->buildConfig(['updateAppMessageShareData', 'updateTimelineShareData'],$debug = false, $beta = false, $json = true);
+//        $url = "https://store.yd-hb.com/api/buy";
+//        $this->app->jssdk->setUrl($url);
+//
+//        return view('share',compact('skd','user'));
     }
 
     public function  profit(){
         $oauth = $this->app->oauth;
         $user = $oauth->user();
-        session(['wechat_user'=>$user->toArray()]);
-        $target_url = empty(session('target_url'))?'/':session('target_url');
-        header('Location:'.$target_url);
+        $_SESSION['wechat_user'] = $user->toArray();
+        $targetUrl = empty($_SESSION['target_url']) ? '/' : $_SESSION['target_url'];
+        header('Location:'.$targetUrl);
     }
 
     /**
