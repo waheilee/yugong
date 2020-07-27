@@ -106,7 +106,7 @@ class VerificationCodeService
             if ($code != $smsSendModel->code) {
                 throw new ServiceException(ErrorMsgConstants::DEFAULT_ERROR, "验证码错误");
             }
-            Cache::put($cacheKey, 0, 60);
+            Cache::put($cacheKey, 0, 2);
 
             $smsSendModel->delete();
             return true;
