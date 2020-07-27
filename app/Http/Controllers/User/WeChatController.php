@@ -23,7 +23,7 @@ class WeChatController extends  Controller
             ],
         ];
 
-        $this->app = \EasyWeChat\Factory::officialAccount(config('wechat.official_account'));
+        $this->app = \EasyWeChat\Factory::officialAccount(config('wechat.official_account.default'));
     }
 
 
