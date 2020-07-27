@@ -22,7 +22,6 @@ class WeChatOauthController
         ];
 
         $this->app = \EasyWeChat\Factory::officialAccount(config('wechat.official_account'));
-dd($this->app);
     }
 
     /**
@@ -34,7 +33,7 @@ dd($this->app);
      */
     public function buy(Request $request){
 
-
+    dd(session('wechat_user'));
         if(empty(session('wechat_user'))){
             $oauth = $this->app->oauth;
             session(['target_url'=>'/buy']);
