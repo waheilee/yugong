@@ -17,7 +17,7 @@ class WeChatOauthController
             'response_type' => 'array',
             'oauth' => [
                 'scopes'   => ['snsapi_userinfo'],
-                'callback' => '/api/profit', //这个就是告诉授权要跳转到这个页面
+                'callback' => 'https://store.yd-hb.com/api/profit', //这个就是告诉授权要跳转到这个页面
             ],
         ];
 
