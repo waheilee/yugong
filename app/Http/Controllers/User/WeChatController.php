@@ -28,7 +28,7 @@ class WeChatController extends  Controller
 
 
     public function buy(Request $request){
-        dd($this->app);
+//        dd($this->app);
         // https://open.weixin.qq.com/connect/oauth2/authorize?appid=你的公众appId号&redirect_uri=你的回调路由&response_type=code&scope=你选择的方式&state=STATE#wechat_redirect
 
 //        if(empty(session('wechat_user'))){
@@ -38,11 +38,12 @@ class WeChatController extends  Controller
 //            return $oauth->redirect();
 //        }
         // 未登录
+        $oauth = $this->app->oauth;
         if (empty($_SESSION['wechat_user'])) {
 
             $_SESSION['target_url'] = '/profile';
 
-            return $this->app->oauth->redirect();
+            return $oauth->redirect();
             // 这里不一定是return，如果你的框架action不是返回内容的话你就得使用
             // $oauth->redirect()->send();
         }
