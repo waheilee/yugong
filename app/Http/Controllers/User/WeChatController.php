@@ -30,7 +30,6 @@ class WeChatController extends  Controller
     public function buy(Request $request){
         if(empty(session('wechat_user'))){
             $oauth = $this->app->oauth;
-            dd($oauth);
             session(['target_url'=>'/buy']);
             return $oauth->redirect();
         }
