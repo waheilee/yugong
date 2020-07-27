@@ -38,7 +38,7 @@ class WeChatController extends  Controller
 //            return $oauth->redirect();
 //        }
         // 未登录
-        $oauth = $this->app->oauth;
+        $oauth = $this->app;
         dd($oauth);
         if (empty($_SESSION['wechat_user'])) {
 
