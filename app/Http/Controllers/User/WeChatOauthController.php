@@ -22,7 +22,7 @@ class WeChatOauthController
         ];
 
         $this->app = \EasyWeChat\Factory::officialAccount(config('wechat.official_account'));
-
+dd($this->app);
     }
 
     /**
