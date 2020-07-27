@@ -28,6 +28,8 @@ class WeChatController extends  Controller
 
 
     public function buy(Request $request){
+        // https://open.weixin.qq.com/connect/oauth2/authorize?appid=你的公众appId号&redirect_uri=你的回调路由&response_type=code&scope=你选择的方式&state=STATE#wechat_redirect
+
 //        if(empty(session('wechat_user'))){
 //            $oauth = $this->app->oauth;
 ////            dd($oauth);
