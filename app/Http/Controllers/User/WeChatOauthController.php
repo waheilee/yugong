@@ -21,18 +21,12 @@ class WeChatOauthController
             ],
         ];
 
-        $this->app = \EasyWeChat\Factory::officialAccount(config('wechat.official_account'));
+        $this->app = \EasyWeChat\Factory::officialAccount($config);
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
-     * @throws \EasyWeChat\Kernel\Exceptions\RuntimeException
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     */
-    public function buy(Request $request){
 
+    public function buy(Request $request){
+        dd($this->app->server->serve());
         if(empty(session('wechat_user'))){
             $oauth = $this->app->oauth;
             dd($oauth);
