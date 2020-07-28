@@ -139,12 +139,13 @@ Route::middleware('cors')->group(function () {
         Route::post('wechatOauthCallback','User\ServersController@wechatOauthCallback');
 
     });
+    Route::post('wechat/pay','User\ServersController@weChatPay');
 });
 
 Route::get('profit','User\WeChatController@profit')->name('profit'); //要跳转的
 
 Route::post('wechat/notify','User\ServersController@notify');
-Route::post('wechat/pay','User\ServersController@weChatPay');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
