@@ -27,36 +27,61 @@ class WeChatController extends  Controller
 
     }
 
-
-    public function buy()
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \EasyWeChat\Kernel\Exceptions\RuntimeException
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    public function buy(Request $request)
     {
-        if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) {
-            $url = "https://store.yd-hb.com/profit";
-            $url2 = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2e08b0303bde9168&redirect_uri=".$url."&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
-            header('Location:'.$url2);
-//            return '这是微信流浪器';
-        } else {
-            return '这是网页';
+//        if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) {
+//            $url = "https://store.yd-hb.com/profit";
+//            $url2 = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2e08b0303bde9168&redirect_uri=".$url."&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+//            header('Location:'.$url2);
+////            return '这是微信流浪器';
+//        } else {
+//            return '这是网页';
+//        }
+
+        if(empty(session('wechat_user'))){
+            $oauth = $this->app->oauth;
+            session(['target_url'=>'/buy']);
+            return $oauth->redirect();
         }
+        $user = session('wechat_user');
+        //dd($user);
+        $skd = $this->app->jssdk->buildConfig(['updateAppMessageShareData', 'updateTimelineShareData'],$debug = false, $beta = false, $json = true);
+        $url = "store.yd-hb.com/buy";
+        $this->app->jssdk->setUrl($url);
+
+        return view('share',compact('skd','user'));
     }
 
     public function  profit(){
-        $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx2e08b0303bde9168&secret=93bc89a7b99b5a872733fa52b8ac5b6c&code=".$_GET['code']."&grant_type=authorization_code";
+        //$url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx2e08b0303bde9168&secret=93bc89a7b99b5a872733fa52b8ac5b6c&code=".$_GET['code']."&grant_type=authorization_code";
 
         //$json=file_get_contents($url);//获取ACCESS_TOKEN
 
-        $ch = curl_init();
-        @curl_setopt($ch, CURLOPT_URL, $url);
-        @curl_setopt($ch, CURLOPT_HEADER, 0);
-        @curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        @curl_setopt($ch, CURL_SSLVERSION_SSL, 2);
-        @curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-        @curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-        $json = curl_exec($ch);
+//        $ch = curl_init();
+//        @curl_setopt($ch, CURLOPT_URL, $url);
+//        @curl_setopt($ch, CURLOPT_HEADER, 0);
+//        @curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//        @curl_setopt($ch, CURL_SSLVERSION_SSL, 2);
+//        @curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+//        @curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+//        $json = curl_exec($ch);
+//
+//        $json = json_decode($json,true);
+//        dd($json);
 
-        $json = json_decode($json,true);
-        $user = $this->app->oauth->user();
+        $oauth = $this->app->oauth;
+        $user = $oauth->user();
         dd($user);
+        session(['wechat_user'=>$user->toArray()]);
+        $target_url = empty(session('target_url'))?'/':session('target_url');
+        header('Location:'.$target_url);
     }
 
     /**
