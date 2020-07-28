@@ -151,7 +151,7 @@ class ServersController extends Controller
             'total_fee' => $orderModel->pay_money,
         ];
 //        $wechat = Pay::wechat(config('pay.wechat'));
-//        dd($wechat);
+        dd($order);
 
         return Pay::wechat(config('pay.wechat'))->wap($order)->send(); // laravel 框架中请直接 return $wechat->wap($order)
 
