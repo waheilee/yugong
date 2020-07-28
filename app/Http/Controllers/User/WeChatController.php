@@ -99,5 +99,9 @@ class WeChatController extends  Controller
         return $this->app->server->serve();
     }
 
+    public function weChatPay()
+    {
+        
+    }
 
 }
