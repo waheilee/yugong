@@ -1,16 +1,100 @@
-<script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript" charset="utf-8">
-    wx.config(<?php echo $skd; ?>);// 不用ECHO就会报APPID不合法
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+    <title>Laravel</title>
 
-        wx.updateAppMessageShareData({
-            title: "{{$user['name']}}"+'正在分享', // 分享标题
-            desc: '这是分享的描述', // 分享描述
-            link: 'http://box.3wh.com/buy', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: "{{$user['avatar']}}", // 分享图标
-            success: function (res) {
-            }
-        })
-    });
-</script>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+
+    <!-- Styles -->
+    <style>
+        html, body {
+            background-color: #fff;
+            color: #636b6f;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 200;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .full-height {
+            height: 100vh;
+        }
+
+        .flex-center {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        .position-ref {
+            position: relative;
+        }
+
+        .top-right {
+            position: absolute;
+            right: 10px;
+            top: 18px;
+        }
+
+        .content {
+            text-align: center;
+        }
+
+        .title {
+            font-size: 84px;
+        }
+
+        .links > a {
+            color: #636b6f;
+            padding: 0 25px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: .1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .m-b-md {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="flex-center position-ref full-height">
+    @if (Route::has('login'))
+        <div class="top-right links">
+            @auth
+                <a href="{{ url('/home') }}">Home</a>
+            @else
+                <a href="{{ route('login') }}">Login</a>
+
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}">Register</a>
+                @endif
+            @endauth
+        </div>
+    @endif
+
+    <div class="content">
+        <div class="title m-b-md">
+            Laravel
+        </div>
+
+        <div class="links">
+            <a href="{{url('/api/wechat/1')}}">Docs</a>
+            <a href="https://laracasts.com">Laracasts</a>
+            <a href="https://laravel-news.com">News</a>
+            <a href="https://blog.laravel.com">Blog</a>
+            <a href="https://nova.laravel.com">Nova</a>
+            <a href="https://forge.laravel.com">Forge</a>
+            <a href="https://vapor.laravel.com">Vapor</a>
+            <a href="https://github.com/laravel/laravel">GitHub</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

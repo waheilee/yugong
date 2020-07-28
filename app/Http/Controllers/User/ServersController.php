@@ -157,6 +157,10 @@ class ServersController extends Controller
 
     }
 
+    public function share()
+    {
+        return view('share');
+    }
 
     public function wechatOauthCallback()
     {
