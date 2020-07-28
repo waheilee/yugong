@@ -27,15 +27,17 @@ class WeChatController extends  Controller
 
     }
 
-    /**
-     * @param Request $request
 
-     */
-    public function buy(Request $request)
+    public function buy()
     {
-        $url = "https://store.yd-hb.com/profit";
-        $url2 = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2e08b0303bde9168&redirect_uri=".$url."&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
-        header('Location:'.$url2);
+        if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) {
+            $url = "https://store.yd-hb.com/profit";
+            $url2 = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2e08b0303bde9168&redirect_uri=".$url."&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+            header('Location:'.$url2);
+//            return '这是微信流浪器';
+        } else {
+            return '这是网页';
+        }
     }
 
     public function  profit(){
@@ -53,7 +55,8 @@ class WeChatController extends  Controller
         $json = curl_exec($ch);
 
         $json = json_decode($json,true);
-        dd($json);
+        $user = $this->app->oauth->user();
+        dd($user);
     }
 
     /**
