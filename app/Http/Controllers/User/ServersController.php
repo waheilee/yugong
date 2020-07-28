@@ -143,12 +143,14 @@ class ServersController extends Controller
 
     public function weChatPay($id, Request $request)
     {
-
+//dd(123);
+        $orderModel = OrderModel::whereId($id)->first();
         $order = [
             'out_trade_no' => time(),
-            'body' => 'subject-测试',
-            'total_fee' => '1',
+            'body' => $orderModel->title,
+            'total_fee' => $orderModel->pay_money,
         ];
+//        dd($order);
 
         return Pay::wechat(config('pay.wechat'))->wap($order); // laravel 框架中请直接 return $wechat->wap($order)
 
