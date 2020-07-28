@@ -24,31 +24,29 @@ class WeChatController extends  Controller
         ];
 
         $this->app = \EasyWeChat\Factory::officialAccount(config('wechat.official_account.default'));
-        dd($this->app->oauth);
 
     }
 
-
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \EasyWeChat\Kernel\Exceptions\RuntimeException
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
     public function buy(Request $request){
-//        dd($this->app);
-        // https://open.weixin.qq.com/connect/oauth2/authorize?appid=你的公众appId号&redirect_uri=你的回调路由&response_type=code&scope=你选择的方式&state=STATE#wechat_redirect
-        // 未登录
-        $oauth = $this->app->oauth;
-        if (empty($_SESSION['wechat_user'])) {
-
-            $_SESSION['target_url'] = '/profile';
-
+        if(empty(session('wechat_user'))){
+            $oauth = $this->app->oauth;
+            session(['target_url'=>'/buy']);
             return $oauth->redirect();
-            // 这里不一定是return，如果你的框架action不是返回内容的话你就得使用
-            // $oauth->redirect()->send();
         }
-        $user = $_SESSION['wechat_user'];
-//        dd($user);
-//        $skd = $this->app->jssdk->buildConfig(['updateAppMessageShareData', 'updateTimelineShareData'],$debug = false, $beta = false, $json = true);
-//        $url = "https://store.yd-hb.com/api/buy";
-//        $this->app->jssdk->setUrl($url);
-//
-//        return view('share',compact('skd','user'));
+        $user = session('wechat_user');
+        //dd($user);
+        $skd = $this->app->jssdk->buildConfig(['updateAppMessageShareData', 'updateTimelineShareData'],$debug = false, $beta = false, $json = true);
+        $url = "store.yd-hb.com/buy";
+        $this->app->jssdk->setUrl($url);
+
+        return view('share',compact('skd','user'));
     }
 
     public function  profit(){
