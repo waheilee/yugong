@@ -24,22 +24,16 @@ class WeChatController extends  Controller
         ];
 
         $this->app = \EasyWeChat\Factory::officialAccount(config('wechat.official_account.default'));
+        dd($this->app->oauth);
+
     }
 
 
     public function buy(Request $request){
 //        dd($this->app);
         // https://open.weixin.qq.com/connect/oauth2/authorize?appid=你的公众appId号&redirect_uri=你的回调路由&response_type=code&scope=你选择的方式&state=STATE#wechat_redirect
-
-//        if(empty(session('wechat_user'))){
-//            $oauth = $this->app->oauth;
-////            dd($oauth);
-//            session(['target_url'=>'/buy']);
-//            return $oauth->redirect();
-//        }
         // 未登录
         $oauth = $this->app->oauth;
-        dd($oauth);
         if (empty($_SESSION['wechat_user'])) {
 
             $_SESSION['target_url'] = '/profile';
