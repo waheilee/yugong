@@ -57,6 +57,7 @@ class ServersController extends Controller
                 $item['server_name']   = $value->name;
                 $item['server_start']  = 5;
                 $item['work_age']      = '十年';
+                $item['unit']          = '小时';
                 $data[] = $item;
             }
             return $this->wrapSuccessReturn(compact('data'));
