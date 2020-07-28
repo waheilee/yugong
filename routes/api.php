@@ -140,7 +140,7 @@ Route::middleware('cors')->group(function () {
 
     });
     Route::post('wechat/pay','User\ServersController@weChatPay');
-    Route::post('wechat/notify','User\ServersController@notify');
+    Route::get('wechat/pay/notify','User\ServersController@notify');
 
 });
 
