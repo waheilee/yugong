@@ -38,8 +38,8 @@ class WeChatController extends  Controller
         header('Location:'.$url2);
     }
 
-    public function  profit($code){
-        $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx2e08b0303bde9168&secret=93bc89a7b99b5a872733fa52b8ac5b6c&code=".$code."&grant_type=authorization_code";
+    public function  profit(){
+        $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx2e08b0303bde9168&secret=93bc89a7b99b5a872733fa52b8ac5b6c&code=".$_GET['code']."&grant_type=authorization_code";
 
         //$json=file_get_contents($url);//获取ACCESS_TOKEN
 
