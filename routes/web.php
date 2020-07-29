@@ -16,13 +16,7 @@ Route::get('/', function () {
 });
 
 Route::any('/wechat', 'User\WeChatController@serve');
-Route::group(['middleware' => ['web','wechat.oauth']], function () {
-    Route::get('/user', function () {
-        $user = session('wechat.oauth_user.default'); // 拿到授权用户资料
 
-        dd($user);
-    });
-});
 Route::get('buy','User\WeChatController@buy')->name('buy'); //要访问的
 Route::get('profit','User\WeChatController@profit')->name('profit'); //要跳转的
 Route::get('share','User\ServersController@share')->name('share'); //要跳转的

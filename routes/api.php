@@ -117,13 +117,18 @@ Route::middleware('cors')->group(function () {
      * 消费端API
      */
     Route::post('userRegister','User\UserController@register');
-
     //登录
     Route::post('userLogin', 'User\UserController@login');
-
+    //服务产品列表
     Route::post('serversList', 'User\ServersController@serversList');
+    //服务产品详情
     Route::post('serversDetail', 'User\ServersController@serversDetail');
-    Route::get('wechat/{id}','User\ServersController@weChatPay');
+    //确认订单
+    Route::post('confirmOrder','User\ServersController@createdOrder');
+    //确认支付
+    Route::post('wechat/pay','User\ServersController@weChatPay');
+    //微信回调接口
+    Route::get('wechat/pay/notify','User\ServersController@notify');
 
     Route::group(['middleware' => ['jwtUserAuth']],function(){
         /**
@@ -139,8 +144,8 @@ Route::middleware('cors')->group(function () {
         Route::post('wechatOauthCallback','User\ServersController@wechatOauthCallback');
 
     });
-    Route::post('wechat/pay','User\ServersController@weChatPay');
-    Route::get('wechat/pay/notify','User\ServersController@notify');
+
+
 
 });
 

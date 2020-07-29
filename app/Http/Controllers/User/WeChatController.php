@@ -6,8 +6,10 @@ namespace App\Http\Controllers\User;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\OrderModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Yansongda\Pay\Pay;
 
 class WeChatController extends  Controller
 {
@@ -101,9 +103,35 @@ class WeChatController extends  Controller
         return $this->app->server->serve();
     }
 
-    public function weChatPay()
+    /**
+     * 微信支付
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function weChatPay(Request $request)
     {
-        
+        $serverOrderId = $request->input('order_id');
+        $orderModel = OrderModel::whereId($serverOrderId)->first();
+        $order = [
+            'out_trade_no' => time(),
+            'body' => $orderModel->title,
+            'total_fee' => $orderModel->pay_money,
+        ];
+
+        return Pay::wechat(config('pay.wechat'))->wap($order)->send(); // laravel 框架中请直接 return $wechat->wap($order)
+    }
+
+    /**
+     * 回调通知
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Yansongda\Pay\Exceptions\InvalidArgumentException
+     * @throws \Yansongda\Pay\Exceptions\InvalidSignException
+     */
+    public function notify(Request $request)
+    {
+        $result = Pay::wechat(config('pay.wechat'))->verify();
+        return Pay::wechat(config('pay.wechat'))->success();
     }
 
 }
