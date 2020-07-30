@@ -96,7 +96,7 @@ class ServersController extends Controller
 
     public function createdOrder(Request $request)
     {
-        try{
+//        try{
             $serTplId    = $request->input('server_id');//服务产品Id
             $amount      = $request->input('amount');//数量
             $name        = $request->input('name');//联系人
@@ -122,9 +122,9 @@ class ServersController extends Controller
             $data['order_id'] = $order->id;
             $data['order_price'] = exchangeToYuan($order->pay_money).'元';
             return $this->wrapSuccessReturn(compact('data'));
-        }catch (\Exception $exception){
-            return $this->wrapErrorReturn($exception);
-        }
+//        }catch (\Exception $exception){
+//            return $this->wrapErrorReturn($exception);
+//        }
 
     }
 
