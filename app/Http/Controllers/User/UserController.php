@@ -101,4 +101,19 @@ class UserController extends Controller
             return $this->wrapErrorReturn($exception);
         }
     }
+
+    /**
+     * 服务人员用户详情接口
+     * @return array
+     */
+    public function userInfo()
+    {
+        try {
+
+            $data = $this->userService->userInfo();
+            return $this->wrapSuccessReturn(compact('data'));
+        } catch (\Exception $exception) {
+            return $this->wrapErrorReturn($exception);
+        }
+    }
 }

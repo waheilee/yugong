@@ -131,6 +131,8 @@ Route::middleware('cors')->group(function () {
     Route::get('wechat/pay/notify','User\ServersController@notify');
 
     Route::group(['middleware' => ['jwtUserAuth']],function(){
+        //用户详情接口
+        Route::post('info', 'Api\UserController@userInfo');
         /**
          * 消费端接口
          */

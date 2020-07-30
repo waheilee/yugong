@@ -149,4 +149,18 @@ class UserService
     {
         return UserModel::wherePhone($phone)->first();
     }
+
+    public function userInfo()
+    {
+        $userModel = UserModel::whereId(getAppUserId())->first();
+        if ($userModel){
+            $data['name'] = $userModel->name;
+            $data['phone'] = $userModel->phone;
+            $data['avatar'] = $userModel->avatar;
+            $data['level'] = $userModel->level;
+            return $data;
+        }else{
+            throw new ServiceException(ErrorMsgConstants::DEFAULT_ERROR, "用户信息不存在!");
+        }
+    }
 }
