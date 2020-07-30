@@ -125,7 +125,7 @@ Route::middleware('cors')->group(function () {
     Route::post('serversDetail', 'User\ServersController@serversDetail');
 
     //确认支付
-    Route::post('wechat/pay','User\WeChatController@weChatPay');
+    Route::post('wechat/pay/{id}','User\WeChatController@weChatPay');
     //微信回调接口
     Route::get('wechat/pay/notify','User\WeChatController@notify');
 

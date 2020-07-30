@@ -105,13 +105,12 @@ class WeChatController extends  Controller
 
     /**
      * 微信支付
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function weChatPay(Request $request)
+    public function weChatPay($id)
     {
-        $serverOrderId = $request->input('order_id');
-        $orderModel = OrderModel::whereId($serverOrderId)->first();
+//        $serverOrderId = $request->input('order_id');
+        $orderModel = OrderModel::whereId($id)->first();
         $order = [
             'out_trade_no' => time(),
             'body' => $orderModel->title,
