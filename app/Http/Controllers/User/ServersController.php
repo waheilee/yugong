@@ -109,7 +109,7 @@ class ServersController extends Controller
             $order->name          = $name;
             $order->phone         = $phone;
             $order->order_address = $address;
-            $order->order_time    = $serverTime;
+            $order->order_time    = date('Y-m-d h:i',$serverTime);
             $order->area          = $amount;
             $order->remark        = $remake;
             $order->title         = $serTplModel->name;
