@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use \Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -133,12 +133,10 @@ Route::middleware('cors')->group(function () {
     Route::group(['middleware' => ['jwtUserAuth']],function(){
         //用户详情接口
         Route::post('info', 'User\UserController@userInfo');
-        /**
-         * 消费端接口
-         */
         //安全登出接口
         Route::post('userLogout', 'User\UserController@logout');
-
+        //订单详情接口
+        Route::post('orderDetail','User\ServersController@orderDetail');
 
 
         Route::post('createOrder','User\ServersController@createdOrder');

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\User;
 
 
+use App\Constants\ErrorMsgConstants;
+use App\Exceptions\ServiceException;
 use App\Http\Controllers\Controller;
 use App\Models\OrderModel;
 use App\Models\ServerTempModel;
@@ -96,7 +98,7 @@ class ServersController extends Controller
 
     public function createdOrder(Request $request)
     {
-//        try{
+        try{
             $serTplId    = $request->input('server_id');//服务产品Id
             $amount      = $request->input('amount');//数量
             $name        = $request->input('name');//联系人
@@ -109,7 +111,7 @@ class ServersController extends Controller
             $order->name          = $name;
             $order->phone         = $phone;
             $order->order_address = $address;
-            $order->order_time    = date('Y-m-d h:i',$serverTime);
+            $order->order_time    = date('Y-m-d h:i:s',$serverTime);
             $order->area          = $amount;
             $order->remark        = $remake;
             $order->title         = $serTplModel->name;
@@ -122,9 +124,33 @@ class ServersController extends Controller
             $data['order_id'] = $order->id;
             $data['order_price'] = exchangeToYuan($order->pay_money).'元';
             return $this->wrapSuccessReturn(compact('data'));
-//        }catch (\Exception $exception){
-//            return $this->wrapErrorReturn($exception);
-//        }
+        }catch (\Exception $exception){
+            return $this->wrapErrorReturn($exception);
+        }
+    }
+
+    public function orderDetail(Request $request)
+    {
+        try{
+            $orderId = $request->input('order_id');
+            $orderModel = OrderModel::whereId($orderId)->first();
+            if (empty($orderModel)){
+                throw new ServiceException(ErrorMsgConstants::DEFAULT_ERROR,"无订单");
+            }
+            $data['order_id']      = $orderModel->id;
+            $data['order_title']   = $orderModel->title;
+            $data['pay_money']     = exchangeToYuan($orderModel->pay_money);
+            $data['order_num']     = $orderModel->order_num;
+            $data['order_time']    = $orderModel->order_time;
+            $data['name']          = $orderModel->name;
+            $data['phone']         = $orderModel->phone;
+            $data['order_address'] = $orderModel->order_address;
+            $data['area']          = $orderModel->area;
+            $data['created_at']    = date('Y-m-d H:i:s',strtotime($orderModel->created_at)) ;
+            return $this->wrapSuccessReturn(compact('data'));
+        }catch (\Exception $exception){
+            return $this->wrapErrorReturn($exception);
+        }
 
     }
 
