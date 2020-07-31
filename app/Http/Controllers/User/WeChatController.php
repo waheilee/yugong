@@ -130,7 +130,8 @@ class WeChatController extends  Controller
     {
         try{
             $result = Pay::wechat(config('pay.wechat'))->verify();
-            Log::debug('wechat notify',$result->all());
+            customerLoggerHandle("WeChatNotify")->debug('微信回调通知',$result->all());
+//            Log::debug('wechat notify',$result->all());
         }catch (\Exception $exception){
             return Pay::wechat(config('pay.wechat'))->success();
 
