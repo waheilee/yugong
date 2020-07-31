@@ -119,7 +119,7 @@ class WeChatController extends  Controller
                 'total_fee' => $orderModel->pay_money,
             ];
             $result = Pay::wechat(config('pay.wechat'))->wap($order);
-            $data =  $result->getTargetUrl()."&redirect_url=https%3A%2F%2Fuser.yd-hb.com%2F%23%2Forderpay%3Fpay%3D1";
+            $data =  $result->getTargetUrl()."&redirect_url=https://user.yd-hb.com/#/orderpay?pay=1";
             return $this->wrapSuccessReturn(compact('data'));
         }catch (\Exception $exception){
             return $this->wrapErrorReturn($exception);
