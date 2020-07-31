@@ -127,7 +127,7 @@ Route::middleware('cors')->group(function () {
     //确认支付
     Route::get('wechat/pay/{id}','User\WeChatController@weChatPay');
     //微信回调接口
-    Route::get('wechat/pay/notify','User\WeChatController@notify');
+    Route::post('wechat/pay/notify','User\WeChatController@notify');
 
     Route::group(['middleware' => ['jwtUserAuth']],function(){
         //用户详情接口
