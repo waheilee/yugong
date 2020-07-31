@@ -115,6 +115,7 @@ class WeChatController extends  Controller
             'out_trade_no' => time(),
             'body' => $orderModel->title,
             'total_fee' => $orderModel->pay_money,
+            'redirect_url' => "https://user.yd-hb.com/#/my"
         ];
 
         return Pay::wechat(config('pay.wechat'))->wap($order)->send(); // laravel 框架中请直接 return $wechat->wap($order)
