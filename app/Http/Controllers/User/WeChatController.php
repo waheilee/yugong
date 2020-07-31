@@ -117,12 +117,12 @@ class WeChatController extends  Controller
             'body' => $orderModel->title,
             'total_fee' => $orderModel->pay_money,
         ];
-        $result = Pay::wechat(config('pay.wechat'))->wap($order);
-        $json =  $result->getContent();
-        dd($result);
-        $res = json_decode($json);
-        return $res;//返回支付参数
-        //return Pay::wechat(config('pay.wechat'))->wap($order)->send(); // laravel 框架中请直接 return $wechat->wap($order)
+//        $result = Pay::wechat(config('pay.wechat'))->wap($order);
+//        $json =  $result->getTargetUrl()."";
+//        dd($json);
+//        $res = json_decode($json);
+//        return $res;//返回支付参数
+        return Pay::wechat(config('pay.wechat'))->wap($order)->send(); // laravel 框架中请直接 return $wechat->wap($order)
     }
 
     /**
