@@ -105,24 +105,26 @@ class WeChatController extends  Controller
 
     /**
      * 微信支付
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @param Request $request
+     * @return array
      */
-    public function weChatPay($id)
+    public function weChatPay(Request $request)
     {
-//        dd(123);
-//        $serverOrderId = $request->input('order_id');
-        $orderModel = OrderModel::whereId($id)->first();
-        $order = [
-            'out_trade_no' => time(),
-            'body' => $orderModel->title,
-            'total_fee' => $orderModel->pay_money,
-        ];
-        $result = Pay::wechat(config('pay.wechat'))->wap($order);
-        $json =  $result->getTargetUrl()."&redirect_url=https%3A%2F%2Fuser.yd-hb.com/#/orderpay?pay=1";
-        dd($json);
-        $res = json_decode($json);
-//        return $res;//返回支付参数
-        return Pay::wechat(config('pay.wechat'))->wap($order)->send(); // laravel 框架中请直接 return $wechat->wap($order)
+        try{
+            $id = $request->input('order_id');
+            $orderModel = OrderModel::whereId($id)->first();
+            $order = [
+                'out_trade_no' => time(),
+                'body' => $orderModel->title,
+                'total_fee' => $orderModel->pay_money,
+            ];
+            $result = Pay::wechat(config('pay.wechat'))->wap($order);
+            $data =  $result->getTargetUrl()."&redirect_url=https%3A%2F%2Fuser.yd-hb.com%2F%23%2Forderpay%3Fpay%3D1";
+            return $this->wrapSuccessReturn(compact('data'));
+        }catch (\Exception $exception){
+            return $this->wrapErrorReturn($exception);
+        }
+        //return Pay::wechat(config('pay.wechat'))->wap($order)->send(); // laravel 框架中请直接 return $wechat->wap($order)
     }
 
     /**
