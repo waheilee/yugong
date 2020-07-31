@@ -121,16 +121,20 @@ class WeChatController extends  Controller
     }
 
     /**
-     * 回调通知
+     * 微信回调
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Yansongda\Pay\Exceptions\InvalidArgumentException
-     * @throws \Yansongda\Pay\Exceptions\InvalidSignException
      */
     public function notify(Request $request)
     {
-        $result = Pay::wechat(config('pay.wechat'))->verify();
-        return Pay::wechat(config('pay.wechat'))->success();
+        try{
+            $result = Pay::wechat(config('pay.wechat'))->verify();
+            Log::debug('wechat notify',$result->all());
+        }catch (\Exception $exception){
+            return Pay::wechat(config('pay.wechat'))->success();
+
+        }
     }
 
 }
