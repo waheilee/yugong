@@ -69,6 +69,7 @@ class LessonController extends Controller
             }else{
                 $paperId = null;
             }
+            $lessonModel->increment('views');//浏览数
             $data = [
                 'lesson'=>[
                     'id'=>$lessonModel->id,
@@ -81,7 +82,8 @@ class LessonController extends Controller
                     'price'=>$lessonModel->price,
                     'discounts'=>$lessonModel->discounts,
                     'sections'=>getSectionList($lessonModel->sections()->get()),
-                    'paper_id' => $paperId
+                    'paper_id' => $paperId,
+                    'views' => $lessonModel->views
                 ],
 
             ];
