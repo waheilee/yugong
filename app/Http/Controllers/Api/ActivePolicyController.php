@@ -79,6 +79,38 @@ class ActivePolicyController extends Controller
 
     }
 
+    public function createPolicy(Request $request)
+    {
+        try{
+            $validatorRules = [
+                'name'       => 'required',
+                'phone'      => 'required',
+                'id_card'    => 'required',
+                'email'      => 'required|email',
+
+            ];
+            $validatorMessages = [
+                'name.required'       => "姓名不能为空!",
+                'phone.required'      => "电话不能为空!",
+                'id_card.required'    => "身份证号不能为空!",
+                'email.required'      => "邮箱不能为空!",
+            ];
+            $this->requestValidator($request, $validatorRules, $validatorMessages);
+            $name   = $request->input('name');
+            $phone  = $request->input('phone');
+            $idCard = $request->input('id_card');
+            $email  = $request->input('email');
+            $policyModel = new Policy();
+            $policyModel->user_name    = $name;
+            $policyModel->user_phone   = $phone;
+            $policyModel->user_card_id = $idCard;
+            $policyModel->email        = $email;
+            $data = $policyModel->save();
+            return $this->wrapSuccessReturn(compact('data'));
+        } catch(\Exception $exception){
+            return $this->wrapErrorReturn($exception);
+        }
+    }
 
 
 }

@@ -39,6 +39,8 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property string|null $active_user_id 激活用户ID
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Policy whereActiveUserId($value)
+ * @property string|null $email 邮箱
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Policy whereEmail($value)
  */
 class Policy extends Model
 {
