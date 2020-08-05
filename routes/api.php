@@ -14,6 +14,11 @@ use \Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('cors')->group(function () {
+
+    //保单填写
+    Route::post('createPolicy','Api\ActivePolicyController@createPolicy');
+
+
 //登录
     Route::post('login', 'Api\ServiceUserController@login');
 
