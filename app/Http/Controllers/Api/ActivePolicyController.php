@@ -81,7 +81,7 @@ class ActivePolicyController extends Controller
 
     public function createPolicy(Request $request)
     {
-        try{
+//        try{
             $validatorRules = [
                 'name'       => 'required',
                 'phone'      => 'required',
@@ -107,9 +107,9 @@ class ActivePolicyController extends Controller
             $policyModel->email        = $email;
             $data = $policyModel->save();
             return $this->wrapSuccessReturn(compact('data'));
-        } catch(\Exception $exception){
-            return $this->wrapErrorReturn($exception);
-        }
+//        } catch(\Exception $exception){
+//            return $this->wrapErrorReturn($exception);
+//        }
     }
 
 
