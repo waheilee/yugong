@@ -29,7 +29,7 @@ class GoodsController extends Controller
     {
         $id = $request->input('id');
         try{
-            $data = GoodsModel::whereId($id)->first(['thumb','name','title','price','original_price','content']);
+            $data = GoodsModel::whereId($id)->first(['thumb','name','title','price','original_price','sale_count','content']);
             if (empty($data)){
                 throw new ServiceException(ErrorMsgConstants::VALIDATION_DATA_ERROR,'没有商品');
             }
