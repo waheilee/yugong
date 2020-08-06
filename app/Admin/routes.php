@@ -41,6 +41,9 @@ Route::group([
     //服务项目添加
     $router->resource('addServer','ServerTemplateController');
 
+    //商品列表
+    $router->resource('add_goods','GoodsController');
+
     //编辑器图片上传
     $router->post('up_image','UploadController@upload');
 });
