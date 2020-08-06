@@ -108,6 +108,6 @@ Route::group(['middleware' => ['jwtAuth']], function () {
     //商品列表
     Route::get('getGoodsList','Api\GoodsController@goodsList');
     //
-    Route::get('getGoodsDetail/{id}','Api\GoodsController@goodsDetail');
+    Route::post('getGoodsDetail','Api\GoodsController@goodsDetail');
 
 });

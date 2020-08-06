@@ -7,6 +7,7 @@ use App\Constants\ErrorMsgConstants;
 use App\Exceptions\ServiceException;
 use App\Http\Controllers\Controller;
 use App\Models\GoodsModel;
+use Illuminate\Http\Request;
 
 class GoodsController extends Controller
 {
@@ -24,8 +25,9 @@ class GoodsController extends Controller
         }
     }
 
-    public function goodsDetail($id)
+    public function goodsDetail(Request $request)
     {
+        $id = $request->input('id');
         try{
             $data = GoodsModel::whereId($id)->first(['thumb','name','title','price','original_price','content']);
             if ($data->isEmpty()){
