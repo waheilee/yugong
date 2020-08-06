@@ -51,7 +51,9 @@ class Policy extends Model
     {
         parent::boot();
         static::creating(function ($model) {
-            dispatch(new SendPolicyCode($model->user_name,$model->user_phone,$model->code,$model->type));
+            if (!empty($model->code)){
+                dispatch(new SendPolicyCode($model->user_name,$model->user_phone,$model->code,$model->type));
+            }
         });
     }
 
