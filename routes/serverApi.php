@@ -109,5 +109,7 @@ Route::group(['middleware' => ['jwtAuth']], function () {
     Route::get('getGoodsList','Api\GoodsController@goodsList');
     //
     Route::post('getGoodsDetail','Api\GoodsController@goodsDetail');
+    //订单
+    Route::post('createGoodsOrder','Api\GoodsController@createdGoodsOrder');
 
 });
