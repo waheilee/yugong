@@ -31,6 +31,7 @@ Route::post('navDetail','Api\NavController@detail');
 //验证身份证
 Route::post('idValidator','Api\ServiceUserController@idValidator');
 
+Route::post('serverWeChatPay','Api\WeChatController@weChatPay');
 
 
 /** jwt Auth Api  需要登录的接口*/
