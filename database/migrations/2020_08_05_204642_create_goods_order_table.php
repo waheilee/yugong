@@ -36,7 +36,7 @@ class CreateGoodsOrderTable extends Migration
             $table->dateTime('pay_time')->comment('支付时间');//支付时间
             $table->dateTime('refund_time')->nullable()->comment('退款时间');
             $table->text('remark')->nullable()->comment('订单备注');
-            $table->integer('sale_code')->comment('消费码(4位)');
+            $table->integer('sale_code')->nullable()->comment('消费码(4位)');
             $table->timestamp('lose_time')->nullable()->comment('过期时间');
             $table->timestamps();
         });
