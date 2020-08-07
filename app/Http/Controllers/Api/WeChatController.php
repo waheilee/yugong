@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Constants\ErrorMsgConstants;
+use App\Exceptions\ServiceException;
 use App\Http\Controllers\Controller;
 use App\Models\GoodsOrderModel;
 use Illuminate\Http\Request;
@@ -18,9 +20,14 @@ class WeChatController extends Controller
      */
     public function weChatPay(Request $request)
     {
-        try{
+//        try{
             $id = $request->input('order_id');
+
             $orderModel = GoodsOrderModel::whereId($id)->first();
+            if (!$orderModel){
+                throw new ServiceException(ErrorMsgConstants::DEFAULT_ERROR,"无订单");
+            }
+//            dd($orderModel);
             $order = [
                 'out_trade_no' => time(),
                 'body' => $orderModel->title,
@@ -30,9 +37,9 @@ class WeChatController extends Controller
             dd($result);
             $data =  $result->getTargetUrl();
             return $this->wrapSuccessReturn(compact('data'));
-        }catch (\Exception $exception){
-            return $this->wrapErrorReturn($exception);
-        }
+//        }catch (\Exception $exception){
+//            return $this->wrapErrorReturn($exception);
+//        }
         //return Pay::wechat(config('pay.wechat'))->wap($order)->send(); // laravel 框架中请直接 return $wechat->wap($order)
     }
 
