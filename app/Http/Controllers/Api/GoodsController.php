@@ -55,7 +55,7 @@ class GoodsController extends Controller
      */
     public function createdGoodsOrder(Request $request)
     {
-        try{
+//        try{
             $amount     = $request->input('amount');//数量
             $id         = $request->input('id');
             $name       = $request->input('name');//联系人
@@ -77,9 +77,9 @@ class GoodsController extends Controller
             $goodsOrderModel->save();
             $data = $goodsOrderModel;
             return $this->wrapSuccessReturn(compact('data'));
-        }catch (\Exception $exception){
-            return $this->wrapErrorReturn($exception);
-        }
+//        }catch (\Exception $exception){
+//            return $this->wrapErrorReturn($exception);
+//        }
 
     }
 }
