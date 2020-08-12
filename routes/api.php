@@ -23,6 +23,7 @@ Route::middleware('cors')->group(function () {
 });
 
 Route::get('profit','User\WeChatController@profit')->name('profit'); //要跳转的
+Route::get('buy','User\WeChatController@buy')->name('buy'); //要跳转的
 
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
