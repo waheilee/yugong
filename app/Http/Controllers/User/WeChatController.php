@@ -97,6 +97,7 @@ class WeChatController extends  Controller
      */
     public function serve()
     {
+        dd($this->app->server->serve());
         $this->app->server->push(function($message){
             return "欢迎关注愚公帮帮";
         });
